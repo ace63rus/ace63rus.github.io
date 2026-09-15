@@ -1192,9 +1192,17 @@ document.querySelectorAll('.faq-item').forEach(item => {
     const sec  = document.getElementById('video');
     const wrap = document.getElementById('videoWrap');
 
+    // #video скрыт через CSS. Значит на момент io.observe() у его .reveal-элементов
+    // не было бокса, и наблюдатель их пропустил — секция оставалась opacity:0 (пустой).
+    // Поэтому показываем секцию и подписываем её элементы заново, когда бокс уже есть.
+    const show = () => {
+        sec.style.display = 'block';
+        sec.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    };
+
     if (!/\.(mp4|webm|mov)(\?|#|$)/i.test(VIDEO_URL)) {
         wrap.innerHTML = '<iframe src="' + VIDEO_URL + '" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>';
-        sec.style.display = 'block';
+        show();
         return;
     }
 
@@ -1222,7 +1230,7 @@ document.querySelectorAll('.faq-item').forEach(item => {
         v.play().catch(() => {});
     });
 
-    sec.style.display = 'block';
+    show();
 })();
 
 // --- CHAT WIDGET ---
