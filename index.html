@@ -401,6 +401,9 @@
     }
     .contact-link:hover { border-color: var(--accent); background: var(--bg-card-hover); transform: translateY(-2px); }
     .contact-link svg { width: 18px; height: 18px; }
+    /* кнопка MAX: в MAX нет ссылки «написать по номеру», поэтому это кнопка, а не ссылка */
+    button.contact-link { cursor: pointer; font-family: inherit; }
+    button.contact-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
     footer {
         text-align: center; padding: 32px 0; margin-top: 40px;
@@ -1069,6 +1072,10 @@
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
                     Telegram
                 </a>
+                <button type="button" class="contact-link" id="maxBtn" title="MAX: нажмите, чтобы скопировать номер — в MAX найдите меня по номеру">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="6" fill="currentColor"/><path d="M7.5 16.5v-9l4.5 5 4.5-5v9" fill="none" stroke="var(--bg-card)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span id="maxLabel">MAX</span>
+                </button>
                 <a href="https://github.com/ace63rus" target="_blank" rel="noopener" class="contact-link">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.607.069-.607 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.087.636-1.337-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
                     GitHub
@@ -1135,6 +1142,14 @@ const VIDEO_POSTER = "assets/video-poster.jpg";
 
 // Чип с длительностью в углу заставки. Пустая строка = чипа нет.
 const VIDEO_DURATION = "0:31";
+
+// --- MAX (мессенджер) ---
+// Ссылка на профиль вида https://max.ru/u/... — взять в приложении:
+// аватар → иконка QR → «Поделиться». Пустая строка = кнопка копирует номер.
+// ВАЖНО: прямой ссылки «написать по номеру» в MAX НЕТ (в отличие от wa.me) —
+// это ограничение самого мессенджера, поэтому без ссылки на профиль только номер.
+const MAX_URL = "";
+const MAX_PHONE = "+79170334584";
 
 // Адрес Cloudflare Worker с AI-ассистентом.
 // Пустая строка = бот отвечает заглушкой и зовёт в Telegram.
@@ -1231,6 +1246,43 @@ document.querySelectorAll('.faq-item').forEach(item => {
     });
 
     show();
+})();
+
+// --- MAX ---
+// Ссылка на профиль есть → кнопка становится обычной ссылкой.
+// Ссылки нет → копируем номер: в MAX людей находят через «Контакты → + → Найти по номеру».
+(function initMax() {
+    const btn = document.getElementById('maxBtn');
+    if (!btn) return;
+
+    if (MAX_URL) {
+        const a = document.createElement('a');
+        a.href = MAX_URL;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.className = 'contact-link';
+        a.title = 'Написать мне в MAX';
+        a.innerHTML = btn.innerHTML;
+        btn.replaceWith(a);
+        return;
+    }
+
+    const label = document.getElementById('maxLabel');
+    const original = label.textContent;
+    const flash = (text, ms) => {
+        label.textContent = text;
+        setTimeout(() => { label.textContent = original; }, ms);
+    };
+
+    btn.addEventListener('click', () => {
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(MAX_PHONE)
+                .then(() => flash('Номер скопирован', 2200))
+                .catch(() => flash(MAX_PHONE, 4000));
+        } else {
+            flash(MAX_PHONE, 4000);
+        }
+    });
 })();
 
 // --- CHAT WIDGET ---
