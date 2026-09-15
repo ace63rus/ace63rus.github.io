@@ -1192,9 +1192,9 @@ document.querySelectorAll('.faq-item').forEach(item => {
     const sec  = document.getElementById('video');
     const wrap = document.getElementById('videoWrap');
 
-    // #video скрыт через CSS. Значит на момент io.observe() у его .reveal-элементов
-    // не было бокса, и наблюдатель их пропустил — секция оставалась opacity:0 (пустой).
-    // Поэтому показываем секцию и подписываем её элементы заново, когда бокс уже есть.
+    // #video скрыт через CSS, поэтому на момент io.observe() у секции не было бокса.
+    // На практике Chrome это переживает, но повторная подписка — дешёвая страховка:
+    // без неё секция в редких случаях так и остаётся opacity:0.
     const show = () => {
         sec.style.display = 'block';
         sec.querySelectorAll('.reveal').forEach(el => io.observe(el));
