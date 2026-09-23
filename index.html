@@ -14,16 +14,16 @@
 <meta property="og:title" content="Олег Савин — AI-инженер: парсинг, Telegram-боты, AI-агенты под ключ">
 <meta property="og:description" content="Парсеры, Telegram-боты, AI-ассистенты с RAG и автоматизация бизнеса под ключ. Фиксированная цена, отчёт по каждой задаче.">
 <meta property="og:url" content="https://ace63rus.github.io/">
-<meta property="og:image" content="https://ace63rus.github.io/assets/video-poster.jpg">
-<meta property="og:image:width" content="720">
-<meta property="og:image:height" content="720">
-<meta property="og:image:alt" content="Видео-визитка: автоматизация бизнеса под ключ">
+<meta property="og:image" content="https://ace63rus.github.io/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Олег Савин — AI-инженер и автоматизация">
 <meta property="og:locale" content="ru_RU">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Олег Савин — AI-инженер и автоматизация">
 <meta name="twitter:description" content="Парсеры, Telegram-боты, AI-ассистенты с RAG и автоматизация бизнеса под ключ.">
-<meta name="twitter:image" content="https://ace63rus.github.io/assets/video-poster.jpg">
+<meta name="twitter:image" content="https://ace63rus.github.io/assets/og-cover.png">
 
 <link rel="canonical" href="https://ace63rus.github.io/">
 
@@ -122,6 +122,22 @@
     }
     .burger span { display: block; height: 2px; background: var(--text); border-radius: 2px; transition: 0.25s; }
 
+    /* ---------- LANGUAGE SWITCH ---------- */
+    .nav-right { display: flex; align-items: center; gap: 22px; }
+    .lang-switch {
+        display: flex; align-items: center; gap: 2px;
+        padding: 3px; border: 1px solid var(--border);
+        border-radius: 9px; background: var(--bg-card);
+    }
+    .lang-btn {
+        background: none; border: none; cursor: pointer; font-family: inherit;
+        font-size: 11.5px; font-weight: 700; letter-spacing: 0.06em;
+        color: var(--text-muted); padding: 5px 8px; border-radius: 6px;
+        line-height: 1; transition: background 0.2s, color 0.2s;
+    }
+    .lang-btn:hover { color: var(--text); }
+    .lang-btn.active { background: var(--accent); color: #fff; }
+    .lang-btn:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: 1px; }
     /* ---------- HERO ---------- */
     .hero { padding: 168px 0 96px; position: relative; }
     .hero::after {
@@ -292,59 +308,6 @@
     .guarantee .chk { color: var(--green); font-size: 15px; flex-shrink: 0; margin-top: 1px; }
     .guarantee p { font-size: 13.5px; color: var(--text-muted); line-height: 1.55; }
     .guarantee b { color: var(--text); font-weight: 600; }
-
-    /* ---------- VIDEO ---------- */
-    #video { display: none; }
-    .video-shell { max-width: 440px; margin: 0 auto; }
-    .video-wrap {
-        position: relative; border-radius: 20px; overflow: hidden;
-        border: 1px solid var(--border); background: var(--bg-card);
-        aspect-ratio: 1 / 1;
-        box-shadow: 0 26px 64px -34px rgba(0,0,0,0.9), 0 0 0 1px rgba(139,92,246,0.05);
-    }
-    .video-wrap iframe, .video-wrap video {
-        width: 100%; height: 100%; border: 0; display: block; object-fit: cover;
-    }
-    .video-facade {
-        position: absolute; inset: 0; width: 100%; height: 100%;
-        display: flex; align-items: center; justify-content: center;
-        border: 0; padding: 0; margin: 0; cursor: pointer; font: inherit; color: inherit;
-        background-color: var(--bg-card);
-        background-size: cover; background-position: center;
-        background-repeat: no-repeat;
-    }
-    /* мягкое затемнение: верх не трогаем (там текст заставки), низ приглушаем под чип */
-    .video-facade::after {
-        content: ''; position: absolute; inset: 0;
-        background: linear-gradient(180deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0) 42%, rgba(0,0,0,0.42) 100%);
-        transition: background 0.4s ease;
-    }
-    .video-facade:hover::after {
-        background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 42%, rgba(0,0,0,0.32) 100%);
-    }
-    .video-facade:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }
-    .video-play {
-        position: relative; z-index: 1;
-        width: 64px; height: 64px; border-radius: 50%;
-        display: flex; align-items: center; justify-content: center;
-        background: rgba(12,12,16,0.52); border: 1px solid rgba(255,255,255,0.38);
-        backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-        color: #fff;
-        box-shadow: 0 10px 28px -10px rgba(0,0,0,0.85);
-        transition: transform 0.4s cubic-bezier(.2,.8,.3,1), background 0.4s ease, border-color 0.4s ease;
-    }
-    .video-facade:hover .video-play {
-        transform: scale(1.07); background: rgba(139,92,246,0.62); border-color: rgba(255,255,255,0.65);
-    }
-    .video-play svg { width: 20px; height: 20px; margin-left: 3px; }
-    /* длительность — маленький чип в углу, как на видеоплеерах */
-    .video-time {
-        position: absolute; right: 12px; bottom: 12px; z-index: 2;
-        padding: 3px 8px; border-radius: 7px;
-        background: rgba(0,0,0,0.62); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-        font-size: 11.5px; font-weight: 500; line-height: 1.5;
-        letter-spacing: 0.02em; color: #fff; font-variant-numeric: tabular-nums;
-    }
 
     /* ---------- STACK ---------- */
     .stack-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
@@ -551,6 +514,10 @@
         .nav-links a { display: block; padding: 14px 0; font-size: 15px; border-bottom: 1px solid var(--border-soft); }
         .nav-cta { margin-top: 12px; text-align: center; border-bottom: none !important; }
 
+        .nav-right { gap: 14px; }
+        .lang-switch { padding: 2px; }
+        .lang-btn { padding: 5px 7px; font-size: 11px; }
+
         .services { grid-template-columns: 1fr; }
         .more-list { grid-template-columns: 1fr; }
         .guarantees { grid-template-columns: 1fr; }
@@ -569,17 +536,23 @@
 <nav id="nav">
     <div class="container nav-inner">
         <a href="#" class="logo"><span class="logo-mark">OS</span> Олег Савин</a>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#services">Услуги</a></li>
-            <li><a href="#cases">Кейсы</a></li>
-            <li><a href="#process">Как работаю</a></li>
-            <li><a href="#stack">Стек</a></li>
-            <li><a href="#faq">Вопросы</a></li>
-            <li><a href="#contact" class="nav-cta">Обсудить задачу</a></li>
-        </ul>
-        <button class="burger" id="burger" aria-label="Меню">
-            <span></span><span></span><span></span>
-        </button>
+        <div class="nav-right">
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#services">Услуги</a></li>
+                <li><a href="#cases">Кейсы</a></li>
+                <li><a href="#process">Как работаю</a></li>
+                <li><a href="#stack">Стек</a></li>
+                <li><a href="#faq">Вопросы</a></li>
+                <li><a href="#contact" class="nav-cta">Обсудить задачу</a></li>
+            </ul>
+            <div class="lang-switch" id="langSwitch" role="group" aria-label="Language">
+                <button type="button" class="lang-btn" data-lang="ru" aria-pressed="false">RU</button>
+                <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+            </div>
+            <button class="burger" id="burger" aria-label="Меню">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
     </div>
 </nav>
 
@@ -1001,18 +974,6 @@
     </div>
 </section>
 
-<!-- ============ VIDEO ============ -->
-<section id="video">
-    <div class="container">
-        <div class="sec-label reveal">Видео</div>
-        <h2 class="sec-title reveal">Видео-визитка</h2>
-        <p class="sec-sub reveal">Тридцать секунд о том, чем я занимаюсь. Включается по клику — страница грузится без видео.</p>
-        <div class="video-shell reveal">
-            <div class="video-wrap" id="videoWrap"></div>
-        </div>
-    </div>
-</section>
-
 <!-- ============ STACK ============ -->
 <section id="stack">
     <div class="container">
@@ -1146,17 +1107,6 @@
    НАСТРОЙКИ САЙТА
    ========================================================= */
 
-// Ссылка на видео: файл в assets либо TenChat / YouTube / VK / RuTube.
-// Пустая строка = блок видео скрыт. Вставьте ссылку, и блок появится сам.
-const VIDEO_URL = "assets/tenchat_videovizitka.mp4";
-
-// Заставка — кадр, который висит на карточке до нажатия play.
-// Пустая строка = тёмная карточка без картинки.
-const VIDEO_POSTER = "assets/video-poster.jpg";
-
-// Чип с длительностью в углу заставки. Пустая строка = чипа нет.
-const VIDEO_DURATION = "0:31";
-
 // --- MAX (мессенджер) ---
 // Кнопка MAX в контактах — обычная ссылка на профиль, она прописана прямо в HTML.
 // Ссылку выдаёт само приложение: аватар → иконка QR → «Поделиться».
@@ -1170,6 +1120,425 @@ const MAX_PHONE = "+79170334584";
 const BOT_ENDPOINT = "";
 
 /* ========================================================= */
+
+/* =========================================================
+   ЯЗЫК САЙТА: RU / EN
+   ---------------------------------------------------------
+   Как работает:
+   1) Язык выбирается по порядку: ?lang=ru|en в адресе →
+      сохранённый выбор (localStorage) → язык браузера.
+      Русский — для ru и языков СНГ, для остальных — английский.
+   2) Русский текст в разметке остаётся как есть. Словарь EN ниже
+      сопоставляет русскую строку с английской, а обход идёт по
+      текстовым узлам — разметку менять не нужно.
+   3) Переключатель RU|EN в правом верхнем углу и параметр ?lang=
+      дают ручное управление. Выбор запоминается.
+   ---------------------------------------------------------
+   ВАЖНО: поменяли русский текст в разметке — поправьте ключ
+   в I18N_TEXT_EN, иначе эта строка останется русской.
+   ========================================================= */
+const I18N_TEXT_EN = {
+  "Олег Савин — AI-инженер: парсинг, Telegram-боты, AI-агенты под ключ": "Oleg Savin — AI Engineer: scraping, Telegram bots, AI agents turnkey",
+  "Олег Савин": "Oleg Savin",
+  "Услуги": "Services",
+  "Кейсы": "Cases",
+  "Как работаю": "How I work",
+  "Стек": "Stack",
+  "Вопросы": "FAQ",
+  "Обсудить задачу": "Discuss your task",
+  "Свободен для новых проектов": "Available for new projects",
+  "Там, где другие видят стену,": "Where others see a wall,",
+  "я нахожу API": "I find an API",
+  "Инженер-архитектор. Решаю сложные задачи по автоматизации и сбору данных: парсеры защищённых источников, Telegram-боты, AI-ассистенты с памятью, верифицированные базы для отдела продаж. Пишу код сам, довожу до рабочего результата и передаю с документацией.": "Engineer-architect. I solve hard automation and data-collection problems: scrapers for protected sources, Telegram bots, AI assistants with memory, verified lead databases for sales teams. I write the code myself, take it to a working result and hand it over with documentation.",
+  "Смотреть кейсы": "View cases",
+  "рабочих продуктов в проде": "production-grade products built",
+  "тестов пройдено в AI-системе": "tests passed in the AI system",
+  "фактов обработано в RAG-пайплайне": "facts processed in the RAG pipeline",
+  "работают развёрнутые боты": "deployed bots running",
+  "Что я делаю": "What I do",
+  "Восемь направлений. По каждому есть рабочий код и запущенные проекты, а не только описание на словах.": "Eight directions. Each one has working code and live projects behind it — not just a description.",
+  "Парсинг и сбор данных": "Web scraping and data collection",
+  "Достаю данные оттуда, откуда их «нельзя достать»: динамические сайты, личные кабинеты, каталоги с защитой.": "I pull data from places it is «impossible» to get: dynamic sites, logged-in dashboards, protected catalogues.",
+  "Статические и JS-сайты (React, Vue) через Playwright": "Static and JS-heavy sites (React, Vue) via Playwright",
+  "Сайты с авторизацией: сессии, куки, токены": "Sites behind login: sessions, cookies, tokens",
+  "Обход антибот-защиты через реальный браузерный профиль": "Anti-bot bypass using a real browser profile",
+  "Выгрузка в CSV, Excel, JSON, базу данных": "Export to CSV, Excel, JSON or a database",
+  "Сбор по расписанию, автообновление": "Scheduled runs and automatic updates",
+  "Срок: от 1 дня": "Timeline: from 1 day",
+  "от": "from",
+  "OSINT-разведка B2B-лидов": "B2B lead OSINT",
+  "Собираю базы для отдела продаж там, где обычные выгрузки не работают: узкие ниши, региональные сети, франчайзи.": "I build sales databases where off-the-shelf exports fail: narrow niches, regional chains, franchise networks.",
+  "Анализ десятков открытых источников": "Dozens of open sources analysed",
+  "Франчайзи и партнёрские сети по бренду": "Franchise and partner networks by brand",
+  "Очистка данных через AI, удаление дублей": "AI-assisted cleanup and deduplication",
+  "Финальная валидация по ИНН": "Final validation by company tax ID",
+  "Бесплатный мини-аудит вашей ниши": "Free mini-audit of your niche",
+  "Срок: от 2 дней": "Timeline: from 2 days",
+  "Telegram-боты": "Telegram bots",
+  "Боты, которые снимают с вас рутину: заявки, уведомления, каталоги, оплата, поддержка клиентов.": "Bots that take the routine off your hands: orders, notifications, catalogues, payments, customer support.",
+  "Приём заявок и пересылка в чат или CRM": "Order intake routed to a chat or your CRM",
+  "Каталог товаров и услуг внутри бота": "Product and service catalogue inside the bot",
+  "Оплата: ЮKassa, Stripe, крипта": "Payments: YooKassa, Stripe, crypto",
+  "Рассылки и сегментация подписчиков": "Broadcasts and subscriber segmentation",
+  "AI-бот, отвечающий по вашей базе знаний": "AI bot answering from your knowledge base",
+  "Срок: от 3 дней": "Timeline: from 3 days",
+  "AI-ассистент с RAG": "AI assistant with RAG",
+  "Ассистент, обученный на ваших документах. Отвечает по факту, а не выдумывает, и ссылается на источник.": "An assistant trained on your documents. It answers from the source material instead of making things up, and cites where the answer came from.",
+  "Загрузка PDF, DOCX, таблиц, сайта": "Ingests PDF, DOCX, spreadsheets and your website",
+  "Векторный поиск: Supabase, pgvector": "Vector search: Supabase, pgvector",
+  "Подключение к Telegram, сайту, CRM": "Connected to Telegram, your site or CRM",
+  "Ответы строго по вашей базе знаний": "Answers strictly from your knowledge base",
+  "Логи диалогов и разбор частых вопросов": "Chat logs and analysis of frequent questions",
+  "Срок: от 1 недели": "Timeline: from 1 week",
+  "Автоматизация и интеграции": "Automation and integrations",
+  "Связываю сервисы между собой, чтобы данные ходили сами и никто не переносил их руками.": "I connect your services so data moves on its own and nobody copies it by hand.",
+  "Связки через REST API и webhooks": "Integrations via REST API and webhooks",
+  "Сценарии автоматизации: n8n, Make, свой код": "Automation flows: n8n, Make or custom code",
+  "Автоотчёты, документы, рассылки": "Automated reports, documents and mailings",
+  "Уведомления в Telegram по событиям": "Event notifications to Telegram",
+  "Мониторинг цен и конкурентов": "Price and competitor monitoring",
+  "Видите, что делают конкуренты, раньше, чем они успевают что-то изменить. Данные обновляются сами.": "See what competitors are doing before they finish changing it. The data updates itself.",
+  "Wildberries и Ozon: карточки, цены, наличие": "Wildberries and Ozon: listings, prices, stock",
+  "Любые каталоги и маркетплейсы": "Any catalogue or marketplace",
+  "Отслеживание изменений и истории цен": "Change tracking and price history",
+  "Алерты в Telegram при изменении": "Telegram alerts on every change",
+  "Готовая таблица или дашборд": "A ready-made sheet or dashboard",
+  "Большие данные и ETL": "Large datasets and ETL",
+  "Обновляю и собираю базы на миллионы строк. Работаю так, чтобы ваши рабочие таблицы не пострадали ни на одном этапе.": "I build and refresh databases with millions of rows — and work so your production tables are never touched along the way.",
+  "Отдельный staging-контур под каждую задачу": "A separate staging environment for every job",
+  "Загрузка, сверка и нормализация источников": "Loading, reconciling and normalising sources",
+  "Сборка финального набора-кандидата": "Assembling the final candidate dataset",
+  "Автоматическая валидация и отчёт по строкам": "Automatic validation and a row-level report",
+  "Сдача через приёмку с возможностью отката": "Handover through acceptance, with rollback available",
+  "Срок: от 2 недель": "Timeline: from 2 weeks",
+  "Инфраструктура и деплой": "Infrastructure and deployment",
+  "Разворачиваю так, чтобы работало круглосуточно и не падало. Плюс серверная часть для ваших задач.": "I deploy so it runs around the clock and stays up. Plus the server side your task needs.",
+  "Cloudflare Workers: API, TTS, боты": "Cloudflare Workers: APIs, TTS, bots",
+  "Прокси и обход гео-блокировок": "Proxies and geo-block bypass",
+  "Автозапуск, мониторинг, бэкапы": "Auto-start, monitoring, backups",
+  "Серверless — платите только за запросы": "Serverless — you pay only per request",
+  "Проекты": "Projects",
+  "Системы, которые я спроектировал и собрал. Показываю цифры и стек, а не только скриншоты.": "Systems I designed and built. I show numbers and the stack, not just screenshots.",
+  "Archivist — память AI-агента с семантическим поиском": "Archivist — AI agent memory with semantic search",
+  "Пайплайн, который сам собирает знания из рабочих сессий: извлекает факты, убирает дубли, раскладывает по слоям и складывает в векторную базу. Дальше агент достаёт нужный контекст по смыслу, а не по ключевым словам. Заменил ручное ведение заметок на автоматическую систему.": "A pipeline that harvests knowledge from working sessions on its own: it extracts facts, removes duplicates, sorts them into layers and stores them in a vector database. The agent then retrieves context by meaning rather than by keywords. It replaced manual note-keeping with an automated system.",
+  "тестов пройдено": "tests passed",
+  "фактов обработано": "facts processed",
+  "хранилищ в маршрутизации": "stores in routing",
+  "Jarvis / VADIM — мультиагентный AI Tech Lead": "Jarvis / VADIM — multi-agent AI Tech Lead",
+  "Система из нескольких агентов с долгосрочной памятью, которая ведёт проект как партнёр: помнит договорённости, держит архитектурный контекст, сама делегирует задачи специализированным воркерам и не теряет нить между сессиями.": "A multi-agent system with long-term memory that runs a project like a partner: it remembers agreements, holds the architectural context, delegates tasks to specialised workers and never loses the thread between sessions.",
+  "слоёв памяти": "memory layers",
+  "режим работы": "uptime",
+  "специализированных воркера": "specialised workers",
+  "Web Scraper — парсинг Wildberries и Ozon": "Web Scraper — Wildberries and Ozon scraping",
+  "Сборщик карточек, цен и результатов поиска с двух крупнейших маркетплейсов. Работает через реальный профиль Chrome с сохранёнными куками, поэтому проходит там, где обычные запросы и headless-браузеры упираются в защиту.": "A collector for listings, prices and search results from the two largest marketplaces. It runs through a real Chrome profile with saved cookies, so it gets through where plain requests and headless browsers hit the wall.",
+  "маркетплейса": "marketplaces",
+  "формата выгрузки": "export formats",
+  "обход ограничений": "bypassing restrictions",
+  "AutoDelivery — автовыдача цифровых товаров": "AutoDelivery — automatic delivery of digital goods",
+  "Автоматизация продаж": "Sales automation",
+  "Связка магазина цифровых товаров с почтой и платежами: покупатель оплачивает, система сама проверяет платёж и отдаёт товар. Человек из цепочки убран полностью, продажи идут ночью и в выходные.": "A digital-goods store wired to email and payments: the buyer pays, the system verifies the payment and delivers the goods. No human in the chain — sales run at night and on weekends.",
+  "2 сек": "2 sec",
+  "время выдачи": "delivery time",
+  "участия человека": "human involvement",
+  "приём платежей": "payment acceptance",
+  "Arsenal — сбор аудитории из Telegram": "Arsenal — Telegram audience collection",
+  "Telegram / Парсинг": "Telegram / Scraping",
+  "Инструмент для поиска групп и каналов по ключевым словам и сбора участников с фильтром по активности. Дедупликация, чистка мусора, выгрузка готовой базы для холодного outreach.": "A tool that finds groups and channels by keyword and collects their members with an activity filter. Deduplication, junk removal and export of a ready-to-use list for cold outreach.",
+  "на больших объёмах": "at large scale",
+  "формата экспорта": "export formats",
+  "Фильтры": "Filters",
+  "по активности и мусору": "by activity and junk",
+  "MAX-бот и мост к рабочей системе": "MAX bot and a bridge to the working system",
+  "Bot / Интеграция": "Bot / Integration",
+  "Бот на официальном Bot API мессенджера MAX с мостом к внутренней системе: принимает сообщения, отдаёт их в обработку и возвращает ответ пользователю. Собран под площадку, куда сейчас массово переходит бизнес.": "A bot on the official MAX Bot API with a bridge to an internal system: it receives messages, passes them for processing and returns the answer to the user. Built for the messenger businesses are moving to in bulk.",
+  "официальный": "official API",
+  "обмен сообщениями": "two-way messaging",
+  "Мост": "Bridge",
+  "к внутренним сервисам": "to internal services",
+  "Обновление продуктовой базы на 11 млн записей": "Refreshing an 11M-record product database",
+  "Развернул отдельный staging-контур на выделенном сервере: загрузил и сверил источники, собрал финальный набор-кандидат, прогнал автоматическую валидацию и проверки перед сдачей. Рабочие таблицы заказчика оставались нетронутыми до подтверждения — обновление можно откатить на любом этапе. Отдельно собирал и распаковывал государственные реестровые выгрузки объёмом свыше 30 ГБ.": "Deployed a dedicated staging environment on a separate server: loaded and reconciled the sources, assembled the final candidate dataset, ran automatic validation and pre-handover checks. The client's production tables stayed untouched until sign-off, and the update could be rolled back at any point. I also assembled and unpacked government registry dumps exceeding 30 GB.",
+  "11,2 млн": "11.2M",
+  "записей в финальном наборе": "records in the final dataset",
+  "10,2 млн": "10.2M",
+  "строк на входе": "rows on input",
+  "8,1 млн": "8.1M",
+  "обновлённых карточек": "listings updated",
+  "этапов приёмки": "acceptance stages",
+  "Staging-контур": "Staging environment",
+  "Read-only валидация": "Read-only validation",
+  "Ещё в работе": "Also in progress",
+  "Пайплайн: веб-поиск по запросу, классификация найденного, обогащение данными и сборка в таблицу.": "A pipeline: web search for a query, classification of what is found, data enrichment and assembly into a table.",
+  "Озвучка текста на Cloudflare Workers. Без своего сервера, оплата только за запросы.": "Text-to-speech on Cloudflare Workers. No server of your own, you pay only per request.",
+  "Пакетная генерация обложек через Stability AI: один шаблон, меняется только текст.": "Batch cover generation via Stability AI: one template, only the text changes.",
+  "Цифровые личности": "Digital personas",
+  "Агенты под конкретные роли: исследователь, копирайтер. Со своей памятью, правилами и контекстом.": "Agents for specific roles: researcher, copywriter. Each with its own memory, rules and context.",
+  "Мобильное приложение-обёртка для доступа к рабочей AI-системе с телефона.": "A mobile shell app for reaching the working AI system from a phone.",
+  "Серверная часть агентной системы: REST API, очередь задач, логи и удалённый запуск.": "The server side of the agent system: REST API, task queue, logs and remote runs.",
+  "Пять шагов от задачи до результата": "Five steps from brief to result",
+  "Прозрачно на каждом этапе. Вы всегда знаете, что сделано, сколько это стоит и когда будет готово.": "Transparent at every stage. You always know what is done, what it costs and when it will be ready.",
+  "Бриф": "Brief",
+  "15–20 минут разговора. Разбираем задачу и то, какой результат вам нужен на выходе.": "A 15–20 minute call. We break down the task and the result you actually need.",
+  "Оценка": "Estimate",
+  "Фиксированная цена и срок. Разбивка по этапам, чтобы вы понимали, за что платите.": "A fixed price and deadline, split by stage so you know what you are paying for.",
+  "Прототип": "Prototype",
+  "Рабочий кусок на ваших реальных данных. Результат видно рано, а не в конце проекта.": "A working slice on your real data. You see the result early, not at the end of the project.",
+  "Внедрение": "Build",
+  "Пишу код, проверяю на тестах, разворачиваю на сервере и подключаю к вашим сервисам.": "I write the code, test it, deploy it to the server and connect it to your services.",
+  "Передача": "Handover",
+  "Документация, инструкция по запуску и 14 дней поддержки. Код остаётся у вас.": "Documentation, a runbook and 14 days of support. The code stays yours.",
+  "Фиксированная цена.": "Fixed price.",
+  "Стоимость не растёт в процессе. Изменения объёма — только по согласованию с вами.": "The price does not grow along the way. Any change of scope is agreed with you first.",
+  "Оплата по этапам.": "Payment by stage.",
+  "Не нужно платить всё вперёд. Не устроил прототип — не платите за следующий этап.": "No need to pay everything upfront. If the prototype is not right, you do not pay for the next stage.",
+  "Отчёт по каждой задаче.": "A report on every task.",
+  "Что сделано, где лежит, как проверить, какие есть риски.": "What was done, where it lives, how to verify it and what the risks are.",
+  "Код с документацией.": "Code with documentation.",
+  "Передаю читаемый код и объясняю, как он работает. Не чёрный ящик.": "I hand over readable code and explain how it works. No black box.",
+  "14 дней поддержки.": "14 days of support.",
+  "После сдачи бесплатно правлю то, что относится к задаче.": "After handover I fix anything related to the task free of charge.",
+  "Работаю официально.": "I work officially.",
+  "Договор, закрывающие документы. Формат обсуждаем на брифе.": "A contract and closing documents. We agree on the format at the brief.",
+  "Технологии": "Technologies",
+  "Не коллекция галочек, а инструменты, на которых реально собраны проекты выше.": "Not a collection of checkboxes — the tools the projects above are actually built on.",
+  "основной язык": "primary language",
+  "браузерная автоматизация": "browser automation",
+  "управление Chrome": "Chrome control",
+  "боты и парсинг TG": "bots and TG scraping",
+  "векторный поиск": "vector search",
+  "данные и большие объёмы": "data at scale",
+  "LLM и эмбеддинги": "LLMs and embeddings",
+  "сценарии и интеграции": "flows and integrations",
+  "серверless-сервисы": "serverless services",
+  "развёртывание": "deployment",
+  "сборка EXE для Windows": "Windows EXE builds",
+  "Частые вопросы": "Frequently asked questions",
+  "Если чего-то нет в списке — спросите бота в углу экрана или напишите напрямую.": "If something is missing here, ask the bot in the corner or message me directly.",
+  "Сколько будет стоить моя задача?": "How much will my task cost?",
+  "Цены «от» указаны в услугах выше. Точная стоимость зависит от объёма и сложности и называется после короткого брифа. Цена фиксируется и дальше не меняется.": "The «from» prices are listed in the services above. The exact figure depends on scope and complexity and is quoted after a short brief. Once fixed, the price does not change.",
+  "Сколько времени займёт работа?": "How long will it take?",
+  "Простой парсер — 1–3 дня. Telegram-бот — 3–7 дней. AI-ассистент с базой знаний — 1–3 недели. Обновление большой базы — от 2 недель. Точный срок называю после брифа и фиксирую в договорённостях.": "A simple scraper takes 1–3 days. A Telegram bot, 3–7 days. An AI assistant with a knowledge base, 1–3 weeks. Refreshing a large database, from 2 weeks. I give the exact deadline after the brief and put it in writing.",
+  "Что если результат меня не устроит?": "What if I am not happy with the result?",
+  "Поэтому работаю по этапам. Вы видите прототип на своих данных до того, как оплачиваете основную часть. Если прототип не подходит — расходимся, вы платите только за сделанный этап.": "That is why I work in stages. You see a prototype on your own data before paying the bulk of the fee. If the prototype is not right, we part ways and you pay only for the stage completed.",
+  "Работаете по договору?": "Do you work under a contract?",
+  "Да. Работаю официально, с договором и закрывающими документами. Подробности формата обсуждаем на брифе.": "Yes. I work officially, with a contract and closing documents. We agree the details at the brief.",
+  "А если сайт изменится и парсер сломается?": "What if the site changes and the scraper breaks?",
+  "14 дней после сдачи правлю бесплатно. Дальше — либо разовая доработка, либо поддержка по договорённости. В большинстве случаев делаю парсер устойчивым к мелким изменениям вёрстки.": "For 14 days after handover I fix it free. After that, either a one-off update or ongoing support by agreement. In most cases I build the scraper to survive minor markup changes.",
+  "Код будет мой?": "Will the code be mine?",
+  "Да. Передаю исходный код, документацию и инструкцию по запуску. Вы не привязаны ко мне и можете развивать проект сами или с другим разработчиком.": "Yes. You get the source code, documentation and a runbook. You are not tied to me and can develop the project yourself or with another developer.",
+  "Контакты": "Contact",
+  "Расскажите про задачу": "Tell me about your task",
+  "Опишите, что нужно сделать. Отвечу, скажу реально ли это, сколько будет стоить и за какой срок. Без воды и навязывания.": "Describe what you need. I will tell you whether it is realistic, what it costs and how long it takes. No fluff, no hard sell.",
+  "Архитектура системы": "System architecture",
+  "Номер для поиска в MAX:": "Phone number for MAX search:",
+  "— нажмите, чтобы скопировать.": "— click to copy.",
+  "© 2026 Олег Савин. AI-инженер и автоматизация.": "© 2026 Oleg Savin. AI engineer and automation.",
+  "AI-ассистент": "AI assistant",
+  "отвечает сразу": "replies instantly",
+  "Сколько стоит парсер?": "How much does a scraper cost?",
+  "Нужен Telegram-бот": "I need a Telegram bot",
+  "Хочу AI-ассистента": "I want an AI assistant"
+};
+
+const I18N_ATTR_EN = {
+  "Меню": "Menu",
+  "Написать мне в MAX — откроется мой профиль": "Message me on MAX — opens my profile",
+  "Скопировать номер": "Copy the number",
+  "Открыть чат": "Open chat",
+  "Опишите задачу...": "Describe your task...",
+  "Отправить": "Send"
+};
+
+const I18N_HEAD = {
+  "ru": {
+    "title": "Олег Савин — AI-инженер: парсинг, Telegram-боты, AI-агенты под ключ",
+    "meta": {
+      "description": "Собираю парсеры, Telegram-ботов, AI-ассистентов с RAG и автоматизацию бизнеса под ключ. Python, Playwright, n8n, Supabase, Cloudflare Workers. Фиксированная цена, отчёт по каждой задаче.",
+      "keywords": "парсинг сайтов, парсер под ключ, telegram бот разработка, ai ассистент rag, автоматизация бизнеса, python разработчик, playwright, мониторинг цен, wildberries парсинг, ozon парсинг",
+      "author": "Олег Савин",
+      "og:site_name": "Олег Савин — AI-инженер",
+      "og:title": "Олег Савин — AI-инженер: парсинг, Telegram-боты, AI-агенты под ключ",
+      "og:description": "Парсеры, Telegram-боты, AI-ассистенты с RAG и автоматизация бизнеса под ключ. Фиксированная цена, отчёт по каждой задаче.",
+      "og:locale": "ru_RU",
+      "og:image:alt": "Олег Савин — AI-инженер и автоматизация",
+      "twitter:title": "Олег Савин — AI-инженер и автоматизация",
+      "twitter:description": "Парсеры, Telegram-боты, AI-ассистенты с RAG и автоматизация бизнеса под ключ."
+    }
+  },
+  "en": {
+    "title": "Oleg Savin — AI Engineer: scraping, Telegram bots, AI agents",
+    "meta": {
+      "description": "I build scrapers, Telegram bots, AI assistants with RAG and business automation end to end. Python, Playwright, n8n, Supabase, Cloudflare Workers. Fixed price, a report on every task.",
+      "keywords": "web scraping, scraper development, telegram bot development, ai assistant rag, business automation, python developer, playwright, price monitoring, wildberries scraping, ozon scraping",
+      "author": "Oleg Savin",
+      "og:site_name": "Oleg Savin — AI Engineer",
+      "og:title": "Oleg Savin — AI Engineer: scraping, Telegram bots, AI agents",
+      "og:description": "Scrapers, Telegram bots, AI assistants with RAG and business automation end to end. Fixed price, a report on every task.",
+      "og:locale": "en_US",
+      "og:image:alt": "Oleg Savin — AI engineer and business automation",
+      "twitter:title": "Oleg Savin — AI engineer and automation",
+      "twitter:description": "Scrapers, Telegram bots, AI assistants with RAG and business automation end to end."
+    }
+  }
+};
+
+const I18N_JS = {
+  "ru": {
+    "phoneCopied": "Номер скопирован",
+    "greeting": "Здравствуйте. Я ассистент Олега.\n\nРасскажу про услуги, сроки и цены, помогу понять, реально ли решить вашу задачу. Опишите, что нужно сделать, или выберите вопрос ниже.",
+    "noEndpoint": "Ассистент ещё подключается. Напишите напрямую в Telegram, Олег ответит лично:\n",
+    "emptyAnswer": "Не получил ответ. Напишите в Telegram:\n",
+    "errorAnswer": "Не смог дозвониться до ассистента. Напишите напрямую в Telegram:\n"
+  },
+  "en": {
+    "phoneCopied": "Number copied",
+    "greeting": "Hello. I am Oleg's assistant.\n\nI can walk you through services, timelines and prices, and help you see whether your task is realistic. Describe what you need, or pick a question below.",
+    "noEndpoint": "The assistant is still being connected. Message me directly on Telegram and Oleg will reply personally:\n",
+    "emptyAnswer": "No answer came back. Message me on Telegram:\n",
+    "errorAnswer": "Could not reach the assistant. Message me directly on Telegram:\n"
+  }
+};
+
+// Коды, для которых показываем русскую версию. Остальным — английскую.
+const LANG_RU_CODES = ['ru', 'be', 'kk', 'ky', 'uz', 'tg', 'hy', 'az'];
+const LANG_STORE_KEY = 'site-lang';
+
+let currentLang = 'ru';
+
+// Строка из скрипта на текущем языке (для виджета чата).
+function tr(key) {
+    const pack = I18N_JS[currentLang] || I18N_JS.ru;
+    return pack[key] != null ? pack[key] : (I18N_JS.ru[key] || '');
+}
+
+function _normText(s) {
+    return String(s).replace(/\s+/g, ' ').trim();
+}
+
+function detectLang() {
+    let q = null;
+    try { q = new URLSearchParams(location.search).get('lang'); } catch (e) {}
+    if (q) {
+        q = String(q).toLowerCase().slice(0, 2);
+        if (q === 'ru' || q === 'en') return q;
+    }
+    let saved = null;
+    try { saved = localStorage.getItem(LANG_STORE_KEY); } catch (e) {}
+    if (saved === 'ru' || saved === 'en') return saved;
+
+    const list = (navigator.languages && navigator.languages.length)
+        ? navigator.languages
+        : [navigator.language || ''];
+    for (let i = 0; i < list.length; i++) {
+        const code = String(list[i] || '').toLowerCase().split('-')[0];
+        if (!code) continue;
+        if (LANG_RU_CODES.indexOf(code) !== -1) return 'ru';
+        if (code === 'en') return 'en';
+    }
+    return 'en';
+}
+
+function applyLang(lang) {
+    currentLang = (lang === 'en') ? 'en' : 'ru';
+    const en = currentLang === 'en';
+
+    // --- 1. Текстовые узлы ---
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode: function (node) {
+            const p = node.parentNode;
+            if (!p) return NodeFilter.FILTER_REJECT;
+            const tag = p.nodeName;
+            if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'NOSCRIPT' || tag === 'TEXTAREA') {
+                return NodeFilter.FILTER_REJECT;
+            }
+            return (node.nodeValue && node.nodeValue.trim())
+                ? NodeFilter.FILTER_ACCEPT
+                : NodeFilter.FILTER_REJECT;
+        }
+    });
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+
+    for (let i = 0; i < nodes.length; i++) {
+        const node = nodes[i];
+        if (node.__ru === undefined) node.__ru = node.nodeValue;
+        if (!en) { node.nodeValue = node.__ru; continue; }
+        const src = _normText(node.__ru);
+        const lead = node.__ru.match(/^\s*/)[0];
+        const trail = node.__ru.match(/\s*$/)[0];
+        node.nodeValue = lead + (I18N_TEXT_EN[src] || src) + trail;
+    }
+
+    // --- 2. title / placeholder / aria-label ---
+    const ATTRS = ['title', 'placeholder', 'aria-label'];
+    const attrEls = document.querySelectorAll('[title],[placeholder],[aria-label]');
+    for (let i = 0; i < attrEls.length; i++) {
+        const el = attrEls[i];
+        if (!el.__i18nAttr) {
+            el.__i18nAttr = {};
+            for (let a = 0; a < ATTRS.length; a++) {
+                if (el.hasAttribute(ATTRS[a])) el.__i18nAttr[ATTRS[a]] = el.getAttribute(ATTRS[a]);
+            }
+        }
+        for (let a = 0; a < ATTRS.length; a++) {
+            const name = ATTRS[a];
+            const ru = el.__i18nAttr[name];
+            if (ru === undefined) continue;
+            el.setAttribute(name, en ? (I18N_ATTR_EN[ru] || ru) : ru);
+        }
+    }
+
+    // --- 3. Заголовок вкладки и мета-теги ---
+    document.documentElement.lang = currentLang;
+    document.title = I18N_HEAD[currentLang].title;
+
+    const metas = document.querySelectorAll('meta[name],meta[property]');
+    for (let i = 0; i < metas.length; i++) {
+        const m = metas[i];
+        if (m.__ruContent === undefined) m.__ruContent = m.getAttribute('content');
+        const key = m.getAttribute('name') || m.getAttribute('property');
+        const translated = I18N_HEAD[currentLang].meta[key];
+        m.setAttribute('content', translated != null ? translated : (m.__ruContent || ''));
+    }
+
+    // --- 4. Микроразметка Schema.org ---
+    const ld = document.querySelector('script[type="application/ld+json"]');
+    if (ld) {
+        if (ld.__ruText === undefined) ld.__ruText = ld.textContent;
+        try {
+            const data = JSON.parse(ld.__ruText);
+            data.name = en ? 'Oleg Savin' : 'Олег Савин';
+            data.inLanguage = currentLang;
+            ld.textContent = JSON.stringify(data, null, 2);
+        } catch (e) { /* JSON не разобрался — оставляем как есть */ }
+    }
+
+    // --- 5. Состояние переключателя ---
+    const btns = document.querySelectorAll('.lang-btn');
+    for (let i = 0; i < btns.length; i++) {
+        const on = btns[i].getAttribute('data-lang') === currentLang;
+        btns[i].classList.toggle('active', on);
+        btns[i].setAttribute('aria-pressed', on ? 'true' : 'false');
+    }
+}
+
+// Переключатель
+(function initLangSwitch() {
+    const btns = document.querySelectorAll('.lang-btn');
+    for (let i = 0; i < btns.length; i++) {
+        btns[i].addEventListener('click', function () {
+            const lang = this.getAttribute('data-lang');
+            try { localStorage.setItem(LANG_STORE_KEY, lang); } catch (e) {}
+            try {
+                const url = new URL(location.href);
+                url.searchParams.set('lang', lang);
+                history.replaceState(null, '', url);
+            } catch (e) {}
+            applyLang(lang);
+        });
+    }
+})();
+
+applyLang(detectLang());
 
 // --- NAV ---
 const nav = document.getElementById('nav');
@@ -1213,55 +1582,6 @@ document.querySelectorAll('.faq-item').forEach(item => {
     });
 });
 
-// --- VIDEO ---
-// Фасад: до клика видео НЕ грузится (нет ни байта трафика, ничего не мигает).
-// Нажали — подставляем настоящий <video> и запускаем.
-(function initVideo() {
-    if (!VIDEO_URL) return;
-    const sec  = document.getElementById('video');
-    const wrap = document.getElementById('videoWrap');
-
-    // #video скрыт через CSS, поэтому на момент io.observe() у секции не было бокса.
-    // На практике Chrome это переживает, но повторная подписка — дешёвая страховка:
-    // без неё секция в редких случаях так и остаётся opacity:0.
-    const show = () => {
-        sec.style.display = 'block';
-        sec.querySelectorAll('.reveal').forEach(el => io.observe(el));
-    };
-
-    if (!/\.(mp4|webm|mov)(\?|#|$)/i.test(VIDEO_URL)) {
-        wrap.innerHTML = '<iframe src="' + VIDEO_URL + '" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>';
-        show();
-        return;
-    }
-
-    const facade = document.createElement('button');
-    facade.type = 'button';
-    facade.className = 'video-facade';
-    facade.setAttribute('aria-label', 'Включить видео-визитку');
-    if (VIDEO_POSTER) facade.style.backgroundImage = "url('" + VIDEO_POSTER + "')";
-    facade.innerHTML =
-        '<span class="video-play">' +
-            '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>' +
-        '</span>' +
-        (VIDEO_DURATION ? '<span class="video-time">' + VIDEO_DURATION + '</span>' : '');
-    wrap.appendChild(facade);
-
-    facade.addEventListener('click', () => {
-        const v = document.createElement('video');
-        v.src = VIDEO_URL;
-        if (VIDEO_POSTER) v.poster = VIDEO_POSTER;
-        v.controls = true;
-        v.playsInline = true;
-        v.preload = 'auto';
-        wrap.innerHTML = '';
-        wrap.appendChild(v);
-        v.play().catch(() => {});
-    });
-
-    show();
-})();
-
 // --- КОПИРОВАНИЕ НОМЕРА MAX ---
 // Номер на сайте — подстраховка: если ссылка на профиль почему-то не откроется
 // (нет приложения, закрытый профиль), человека всё равно найдут по номеру.
@@ -1278,7 +1598,7 @@ document.querySelectorAll('.faq-item').forEach(item => {
     btn.addEventListener('click', () => {
         if (navigator.clipboard && window.isSecureContext) {
             navigator.clipboard.writeText(MAX_PHONE)
-                .then(() => flash('Номер скопирован', 2200))
+                .then(() => flash(tr('phoneCopied'), 2200))
                 .catch(() => flash(MAX_PHONE, 4000));
         } else {
             // http или старый браузер: просто показываем номер, его выделят руками
@@ -1301,10 +1621,6 @@ document.querySelectorAll('.faq-item').forEach(item => {
     let started = false;
     let busy = false;
 
-    const GREETING =
-        'Здравствуйте. Я ассистент Олега.\n\n' +
-        'Расскажу про услуги, сроки и цены, помогу понять, реально ли решить вашу задачу. ' +
-        'Опишите, что нужно сделать, или выберите вопрос ниже.';
 
     function addMsg(text, cls) {
         const d = document.createElement('div');
@@ -1339,7 +1655,7 @@ document.querySelectorAll('.faq-item').forEach(item => {
 
         if (!BOT_ENDPOINT) {
             await new Promise(r => setTimeout(r, 500));
-            answer = 'Ассистент ещё подключается. Напишите напрямую в Telegram, Олег ответит лично:\n' + TG;
+            answer = tr('noEndpoint') + TG;
         } else {
             try {
                 const res = await fetch(BOT_ENDPOINT, {
@@ -1349,9 +1665,9 @@ document.querySelectorAll('.faq-item').forEach(item => {
                 });
                 if (!res.ok) throw new Error('HTTP ' + res.status);
                 const data = await res.json();
-                answer = (data.reply || '').trim() || 'Не получил ответ. Напишите в Telegram:\n' + TG;
+                answer = (data.reply || '').trim() || tr('emptyAnswer') + TG;
             } catch (e) {
-                answer = 'Не смог дозвониться до ассистента. Напишите напрямую в Telegram:\n' + TG;
+                answer = tr('errorAnswer') + TG;
             }
         }
 
@@ -1368,7 +1684,7 @@ document.querySelectorAll('.faq-item').forEach(item => {
         btn.classList.toggle('active', open);
         if (open && !started) {
             started = true;
-            setTimeout(() => addMsg(GREETING, 'bot'), 180);
+            setTimeout(() => addMsg(tr('greeting'), 'bot'), 180);
         }
         if (open) setTimeout(() => input.focus(), 260);
     });
@@ -1399,7 +1715,7 @@ document.querySelectorAll('.faq-item').forEach(item => {
         if (!panel.classList.contains('open')) {
             panel.classList.add('open');
             btn.classList.add('active');
-            if (!started) { started = true; addMsg(GREETING, 'bot'); }
+            if (!started) { started = true; addMsg(tr('greeting'), 'bot'); }
         }
         ask(q);
     });
