@@ -1519,6 +1519,9 @@ function applyLang(lang) {
         btns[i].classList.toggle('active', on);
         btns[i].setAttribute('aria-pressed', on ? 'true' : 'false');
     }
+
+    // --- 6. Сообщаем виджету чата: язык сменился ---
+    if (typeof window.onSiteLangChange === 'function') window.onSiteLangChange(currentLang);
 }
 
 // Переключатель
@@ -1620,6 +1623,8 @@ document.querySelectorAll('.faq-item').forEach(item => {
     const history = [];
     let started = false;
     let busy = false;
+    let asked = false;      // пользователь уже что-то спросил
+    let greetingEl = null;  // элемент с приветствием — перерисовываем при смене языка
 
 
     function addMsg(text, cls) {
@@ -1643,12 +1648,27 @@ document.querySelectorAll('.faq-item').forEach(item => {
         return d;
     }
 
+    // Приветствие бота. Держим ссылку на элемент, чтобы перевести его
+    // при переключении языка, пока диалог ещё не начался.
+    function showGreeting() {
+        started = true;
+        greetingEl = addMsg(tr('greeting'), 'bot');
+    }
+
+    // Хук из блока «ЯЗЫК САЙТА»: сменился язык — обновляем приветствие.
+    window.onSiteLangChange = function () {
+        if (!greetingEl || asked || !greetingEl.parentNode) return;
+        greetingEl.remove();
+        greetingEl = addMsg(tr('greeting'), 'bot');
+    };
+
     async function ask(text) {
         if (busy) return;
         busy = true;
         send.disabled = true;
         addMsg(text, 'me');
         history.push({ role: 'user', content: text });
+        asked = true;
 
         const typing = addTyping();
         let answer;
@@ -1683,8 +1703,7 @@ document.querySelectorAll('.faq-item').forEach(item => {
         const open = panel.classList.toggle('open');
         btn.classList.toggle('active', open);
         if (open && !started) {
-            started = true;
-            setTimeout(() => addMsg(tr('greeting'), 'bot'), 180);
+            setTimeout(showGreeting, 180);
         }
         if (open) setTimeout(() => input.focus(), 260);
     });
@@ -1715,7 +1734,7 @@ document.querySelectorAll('.faq-item').forEach(item => {
         if (!panel.classList.contains('open')) {
             panel.classList.add('open');
             btn.classList.add('active');
-            if (!started) { started = true; addMsg(tr('greeting'), 'bot'); }
+            if (!started) { showGreeting(); }
         }
         ask(q);
     });
