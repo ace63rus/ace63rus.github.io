@@ -566,8 +566,8 @@
         <h1>Там, где другие видят стену,<br><span class="grad">я нахожу API</span></h1>
         <p class="hero-sub">
             Инженер-архитектор. Решаю сложные задачи по автоматизации и сбору данных:
-            парсеры защищённых источников, Telegram-боты, AI-ассистенты с памятью,
-            верифицированные базы для отдела продаж. Пишу код сам, довожу до рабочего
+            парсеры сложных источников, Telegram-боты, AI-ассистенты с памятью,
+            B2B-базы для отдела продаж. Пишу код сам, довожу до рабочего
             результата и передаю с документацией.
         </p>
         <div class="hero-cta">
@@ -611,11 +611,11 @@
             <div class="service reveal">
                 <div class="service-icon">🕸️</div>
                 <h3>Парсинг и сбор данных</h3>
-                <p>Достаю данные оттуда, откуда их «нельзя достать»: динамические сайты, личные кабинеты, каталоги с защитой.</p>
+                <p>Собираю данные с динамических сайтов, личных кабинетов заказчика и каталогов.</p>
                 <ul>
                     <li>Статические и JS-сайты (React, Vue) через Playwright</li>
-                    <li>Сайты с авторизацией: сессии, куки, токены</li>
-                    <li>Обход антибот-защиты через реальный браузерный профиль</li>
+                    <li>Сайты с авторизацией по доступам заказчика</li>
+                    <li>Работа с сайтами, где нужна авторизация и корректная эмуляция браузера</li>
                     <li>Выгрузка в CSV, Excel, JSON, базу данных</li>
                     <li>Сбор по расписанию, автообновление</li>
                 </ul>
@@ -625,7 +625,7 @@
             <div class="service reveal">
                 <div class="service-icon">🎯</div>
                 <h3>OSINT-разведка B2B-лидов</h3>
-                <p>Собираю базы для отдела продаж там, где обычные выгрузки не работают: узкие ниши, региональные сети, франчайзи.</p>
+                <p>Собираю B2B-базы по открытым источникам там, где обычные выгрузки не работают: узкие ниши, региональные сети, франчайзи.</p>
                 <ul>
                     <li>Анализ десятков открытых источников</li>
                     <li>Франчайзи и партнёрские сети по бренду</li>
@@ -782,13 +782,13 @@
                 </div>
                 <p>
                     Сборщик карточек, цен и результатов поиска с двух крупнейших маркетплейсов.
-                    Работает через реальный профиль Chrome с сохранёнными куками, поэтому проходит там,
-                    где обычные запросы и headless-браузеры упираются в защиту.
+                    Собирает данные с открытых витрин — без входа в личный кабинет и без лишней
+                    нагрузки на площадки. Результат — готовая таблица или выгрузка в базу.
                 </p>
                 <div class="case-stats">
                     <div><div class="stat-val">2</div><div class="stat-lbl">маркетплейса</div></div>
                     <div><div class="stat-val">3</div><div class="stat-lbl">формата выгрузки</div></div>
-                    <div><div class="stat-val">Chrome 136+</div><div class="stat-lbl">обход ограничений</div></div>
+                    <div><div class="stat-val">Chrome 136+</div><div class="stat-lbl">совместимость</div></div>
                 </div>
                 <div class="tech">
                     <span>Python</span><span>CDP</span><span>Playwright</span>
@@ -819,13 +819,12 @@
 
             <div class="case reveal">
                 <div class="case-head">
-                    <h3>Arsenal — сбор аудитории из Telegram</h3>
+                    <h3>Arsenal — поиск сообществ в Telegram</h3>
                     <span class="tag">Telegram / Парсинг</span>
                 </div>
                 <p>
-                    Инструмент для поиска групп и каналов по ключевым словам и сбора участников
-                    с фильтром по активности. Дедупликация, чистка мусора, выгрузка готовой базы
-                    для холодного outreach.
+                    Инструмент для поиска групп и каналов по ключевым словам, выгрузка публичных
+                    данных с фильтром по активности. Дедупликация и чистка мусора.
                 </p>
                 <div class="case-stats">
                     <div><div class="stat-val">Telethon</div><div class="stat-lbl">на больших объёмах</div></div>
@@ -1158,7 +1157,7 @@ const I18N_TEXT_EN = {
   "Свободен для новых проектов": "Available for new projects",
   "Там, где другие видят стену,": "Where others see a wall,",
   "я нахожу API": "I find an API",
-  "Инженер-архитектор. Решаю сложные задачи по автоматизации и сбору данных: парсеры защищённых источников, Telegram-боты, AI-ассистенты с памятью, верифицированные базы для отдела продаж. Пишу код сам, довожу до рабочего результата и передаю с документацией.": "Engineer-architect. I solve hard automation and data-collection problems: scrapers for protected sources, Telegram bots, AI assistants with memory, verified lead databases for sales teams. I write the code myself, take it to a working result and hand it over with documentation.",
+  "Инженер-архитектор. Решаю сложные задачи по автоматизации и сбору данных: парсеры сложных источников, Telegram-боты, AI-ассистенты с памятью, B2B-базы для отдела продаж. Пишу код сам, довожу до рабочего результата и передаю с документацией.": "Engineer-architect. I solve hard automation and data-collection problems: scrapers for complex sources, Telegram bots, AI assistants with memory, B2B lead databases for sales teams. I write the code myself, take it to a working result and hand it over with documentation.",
   "Смотреть кейсы": "View cases",
   "рабочих продуктов в проде": "production-grade products built",
   "тестов пройдено в AI-системе": "tests passed in the AI system",
@@ -1167,10 +1166,10 @@ const I18N_TEXT_EN = {
   "Что я делаю": "What I do",
   "Восемь направлений. По каждому есть рабочий код и запущенные проекты, а не только описание на словах.": "Eight directions. Each one has working code and live projects behind it — not just a description.",
   "Парсинг и сбор данных": "Web scraping and data collection",
-  "Достаю данные оттуда, откуда их «нельзя достать»: динамические сайты, личные кабинеты, каталоги с защитой.": "I pull data from places it is «impossible» to get: dynamic sites, logged-in dashboards, protected catalogues.",
+  "Собираю данные с динамических сайтов, личных кабинетов заказчика и каталогов.": "I collect data from dynamic sites, client-provided dashboards and catalogues.",
   "Статические и JS-сайты (React, Vue) через Playwright": "Static and JS-heavy sites (React, Vue) via Playwright",
-  "Сайты с авторизацией: сессии, куки, токены": "Sites behind login: sessions, cookies, tokens",
-  "Обход антибот-защиты через реальный браузерный профиль": "Anti-bot bypass using a real browser profile",
+  "Сайты с авторизацией по доступам заказчика": "Sites behind login, using access provided by the client",
+  "Работа с сайтами, где нужна авторизация и корректная эмуляция браузера": "Working with sites that require login and accurate browser emulation",
   "Выгрузка в CSV, Excel, JSON, базу данных": "Export to CSV, Excel, JSON or a database",
   "Сбор по расписанию, автообновление": "Scheduled runs and automatic updates",
   "Срок: от 1 дня": "Timeline: from 1 day",
@@ -1185,7 +1184,7 @@ const I18N_TEXT_EN = {
   "40 000 ₽": "$480",
   "80 000 ₽": "$950",
   "OSINT-разведка B2B-лидов": "B2B lead OSINT",
-  "Собираю базы для отдела продаж там, где обычные выгрузки не работают: узкие ниши, региональные сети, франчайзи.": "I build sales databases where off-the-shelf exports fail: narrow niches, regional chains, franchise networks.",
+  "Собираю B2B-базы по открытым источникам там, где обычные выгрузки не работают: узкие ниши, региональные сети, франчайзи.": "I build B2B databases from open sources where off-the-shelf exports fail: narrow niches, regional chains, franchise networks.",
   "Анализ десятков открытых источников": "Dozens of open sources analysed",
   "Франчайзи и партнёрские сети по бренду": "Franchise and partner networks by brand",
   "Очистка данных через AI, удаление дублей": "AI-assisted cleanup and deduplication",
@@ -1248,10 +1247,10 @@ const I18N_TEXT_EN = {
   "режим работы": "uptime",
   "специализированных воркера": "specialised workers",
   "Web Scraper — парсинг Wildberries и Ozon": "Web Scraper — Wildberries and Ozon scraping",
-  "Сборщик карточек, цен и результатов поиска с двух крупнейших маркетплейсов. Работает через реальный профиль Chrome с сохранёнными куками, поэтому проходит там, где обычные запросы и headless-браузеры упираются в защиту.": "A collector for listings, prices and search results from the two largest marketplaces. It runs through a real Chrome profile with saved cookies, so it gets through where plain requests and headless browsers hit the wall.",
+  "Сборщик карточек, цен и результатов поиска с двух крупнейших маркетплейсов. Собирает данные с открытых витрин — без входа в личный кабинет и без лишней нагрузки на площадки. Результат — готовая таблица или выгрузка в базу.": "A collector for listings, prices and search results from the two largest marketplaces. It gathers data from public storefronts — no login, no extra load on the platforms. The result is a ready-made sheet or a database export.",
   "маркетплейса": "marketplaces",
   "формата выгрузки": "export formats",
-  "обход ограничений": "bypassing restrictions",
+  "совместимость": "compatibility",
   "AutoDelivery — автовыдача цифровых товаров": "AutoDelivery — automatic delivery of digital goods",
   "Автоматизация продаж": "Sales automation",
   "Связка магазина цифровых товаров с почтой и платежами: покупатель оплачивает, система сама проверяет платёж и отдаёт товар. Человек из цепочки убран полностью, продажи идут ночью и в выходные.": "A digital-goods store wired to email and payments: the buyer pays, the system verifies the payment and delivers the goods. No human in the chain — sales run at night and on weekends.",
@@ -1259,9 +1258,9 @@ const I18N_TEXT_EN = {
   "время выдачи": "delivery time",
   "участия человека": "human involvement",
   "приём платежей": "payment acceptance",
-  "Arsenal — сбор аудитории из Telegram": "Arsenal — Telegram audience collection",
+  "Arsenal — поиск сообществ в Telegram": "Arsenal — finding communities on Telegram",
   "Telegram / Парсинг": "Telegram / Scraping",
-  "Инструмент для поиска групп и каналов по ключевым словам и сбора участников с фильтром по активности. Дедупликация, чистка мусора, выгрузка готовой базы для холодного outreach.": "A tool that finds groups and channels by keyword and collects their members with an activity filter. Deduplication, junk removal and export of a ready-to-use list for cold outreach.",
+  "Инструмент для поиска групп и каналов по ключевым словам, выгрузка публичных данных с фильтром по активности. Дедупликация и чистка мусора.": "A tool that finds groups and channels by keyword and exports public data with an activity filter. Deduplication and junk removal.",
   "на больших объёмах": "at large scale",
   "формата экспорта": "export formats",
   "Фильтры": "Filters",
