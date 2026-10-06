@@ -52,6 +52,20 @@
     border:1px solid #dfe4ec;background:#fff;color:#48566d}
   .pill.go{border-color:#bfe4d3;background:#eefaf4;color:#0d6b48}
   .pill.no{border-color:#f0dcb0;background:#fff8ec;color:#8a5a00}
+
+  .foot{margin-top:34px;padding-top:20px;border-top:1px solid #e8ecf3;
+    color:#8b97a8;font-size:12.5px;text-align:center}
+
+  /* Адаптив под телефон: заказчик вполне может открыть ссылку с мобильного. */
+  @media (max-width:640px){
+    body{padding:16px 10px}
+    .sheet{padding:24px 18px 28px;border-radius:12px}
+    h1{font-size:20px}
+    .fork{grid-template-columns:1fr}
+    .step{padding-left:48px}
+    .qrow{padding:15px 16px;gap:12px}
+    .chip{margin-left:0;margin-top:6px;display:inline-block}
+  }
 </style>
 </head>
 <body>
@@ -142,6 +156,8 @@
       </div>
     </div>
   </section>
+
+  <div class="foot">Ответьте на три вопроса — и я начну.</div>
 
 </div>
 </body>
