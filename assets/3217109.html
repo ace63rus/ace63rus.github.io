@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Транспорт для парсера: проверка и четыре вопроса</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:36px 20px;background:#eef1f6;color:#1a2233;
+    font:15px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .sheet{max-width:940px;margin:0 auto;background:#fff;border:1px solid #dfe4ec;
+    border-radius:16px;padding:38px 44px 42px;box-shadow:0 1px 3px rgba(20,30,60,.07)}
+  .top{border-bottom:1px solid #e8ecf3;padding-bottom:22px;margin-bottom:34px}
+  h1{font-size:25px;margin:0 0 7px;font-weight:650;letter-spacing:-.3px}
+  .lead{color:#5b6779;font-size:15px;margin:0}
+  h2{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#8b97a8;
+    font-weight:650;margin:0 0 18px}
+  section{margin-bottom:38px}
+  section:last-child{margin-bottom:0}
+
+  .step{position:relative;padding:0 0 20px 58px}
+  .step:last-child{padding-bottom:0}
+  .step::before{content:"";position:absolute;left:17px;top:38px;bottom:0;width:2px;background:#e6eaf1}
+  .step:last-child::before{display:none}
+  .num{position:absolute;left:0;top:0;width:36px;height:36px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:650;font-size:15px}
+  .step.q .num{background:#fdf2de;color:#8a5a00;border:1px solid #f0dcb0}
+  .step.ok .num{background:#e6f5ee;color:#0d6b48;border:1px solid #bfe4d3}
+  .st{font-size:16px;font-weight:600;line-height:1.3}
+  .ss{color:#66738a;font-size:13.5px;margin-top:3px}
+  .chip{display:inline-block;margin-left:10px;padding:2px 10px;border-radius:20px;
+    font-size:11px;font-weight:650;letter-spacing:.3px;vertical-align:2px;white-space:nowrap}
+  .chip.q{background:#fdf2de;color:#8a5a00}
+  .chip.ok{background:#e6f5ee;color:#0d6b48}
+
+  .fork{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .card{border:1px solid #dfe4ec;border-radius:12px;padding:18px 20px;background:#fbfcfe}
+  .card.a{border-color:#f0dcb0;background:#fffcf6}
+  .card.b{border-color:#bfe4d3;background:#f7fdfa}
+  .card .ct{font-size:15px;font-weight:650;margin-bottom:6px}
+  .card .cs{font-size:13.5px;color:#66738a}
+
+  .qrow{display:flex;gap:16px;border:1px solid #dfe4ec;border-radius:12px;
+    padding:17px 20px;background:#fbfcfe;margin-bottom:13px}
+  .qrow:last-child{margin-bottom:0}
+  .qn{flex:0 0 30px;height:30px;border-radius:50%;background:#2f6bff;color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:650;font-size:14px}
+  .qt{font-size:15.5px;font-weight:650;margin-bottom:4px}
+  .qs2{font-size:13.5px;color:#66738a}
+  .pills{display:flex;gap:8px;margin-top:11px;flex-wrap:wrap}
+  .pill{font-size:12px;font-weight:600;padding:5px 12px;border-radius:8px;
+    border:1px solid #dfe4ec;background:#fff;color:#48566d}
+  .pill.go{border-color:#bfe4d3;background:#eefaf4;color:#0d6b48}
+  .pill.no{border-color:#f0dcb0;background:#fff8ec;color:#8a5a00}
+
+  .foot{margin-top:34px;padding-top:20px;border-top:1px solid #e8ecf3;
+    color:#8b97a8;font-size:12.5px;text-align:center}
+
+  @media (max-width:640px){
+    body{padding:16px 10px}
+    .sheet{padding:24px 18px 28px;border-radius:12px}
+    h1{font-size:20px}
+    .fork{grid-template-columns:1fr}
+    .step{padding-left:48px}
+    .qrow{padding:15px 16px;gap:12px}
+    .chip{margin-left:0;margin-top:6px;display:inline-block}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="top">
+    <h1>Транспорт для парсера: что уже работает и четыре вопроса</h1>
+    <p class="lead">Разобрал вашу задачу по шагам и проверил все три площадки вживью. Две из трёх отдают данные прямо сейчас без прокси и без браузера, транспорт нужен для одной. Четыре вопроса внизу — от них зависит цена.</p>
+  </div>
+
+  <section>
+    <h2>Что показала проверка сегодня</h2>
+    <div class="fork">
+      <div class="card b">
+        <div class="ct">drom.ru — работает</div>
+        <div class="cs">Данные приходят обычным запросом, прокси не нужен. Прогнал 25 запросов подряд, ни одного блока, по две-три штуки в секунду.</div>
+      </div>
+      <div class="card b">
+        <div class="ct">auto.ru — работает</div>
+        <div class="cs">Данные приходят обычным запросом, прокси не нужен. 2,9 МБ выдачи, больше 11 000 ссылок на фото за один заход.</div>
+      </div>
+      <div class="card a">
+        <div class="ct">av.by — не пускает</div>
+        <div class="cs">Отдаёт код 468 и проверяет, кто заходит. Ловит и обычный запрос, и настоящий браузер одинаково.</div>
+      </div>
+      <div class="card a">
+        <div class="ct">Старая ссылка drom</div>
+        <div class="cs">drom.ru/cars/all не открывается даже в браузере. Живой адрес auto.drom.ru. Проверю, не прописан ли у вас в парсере тот первый.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Цепочка</h2>
+
+    <div class="step q">
+      <div class="num">1</div>
+      <div class="st">Разбор вашего парсера<span class="chip q">вопрос</span></div>
+      <div class="ss">Смотрю, как он ходит, чем и куда. От этого зависит, меняем адрес или пишем код заново</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">2</div>
+      <div class="st">Забираем текст и фото<span class="chip ok">решено</span></div>
+      <div class="ss">Цена, год, пробег, VIN и ссылки на фото лежат прямо в ответе площадки. Транспорт для этого не покупается</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">3</div>
+      <div class="st">Работа с антиботом на двух площадках<span class="chip ok">решено</span></div>
+      <div class="ss">drom.ru и auto.ru отдают данные обычным запросом. ZenRows для них не нужен</div>
+    </div>
+
+    <div class="step q">
+      <div class="num">4</div>
+      <div class="st">Транспорт под av.by<span class="chip q">вопрос</span></div>
+      <div class="ss">Код 468 и проверка входящего. Не проверено, пустит ли площадка хоть какой-то адрес. Честный вывод дам после теста, обещать вслепую не буду</div>
+    </div>
+
+    <div class="step q">
+      <div class="num">5</div>
+      <div class="st">Где работает парсер<span class="chip q">вопрос</span></div>
+      <div class="ss">На арендованном сервере или на домашней машине. Это меняет всё сильнее остального</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">6</div>
+      <div class="st">Выгрузка в приложение<span class="chip ok">решено</span></div>
+      <div class="ss">Текст и фото уходят в ваш PWA или Mini App по вашему запросу. Это выгрузка, а не транспорт</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Развилка на av.by</h2>
+    <div class="fork">
+      <div class="card b">
+        <div class="ct">А. Адрес в России</div>
+        <div class="cs">Мобильный трафик, телефон с сим-картой. Расходы ваши. Если площадка режет по репутации адреса, это снимает вопрос</div>
+      </div>
+      <div class="card b">
+        <div class="ct">Б. Адрес в Беларуси</div>
+        <div class="cs">Если av.by режет всех, кроме белорусских адресов, то российский трафик не поможет и нужен другой. Тогда уточним у вас, какой вариант вам ближе</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Чего я не обещаю</h2>
+    <div class="qrow">
+      <div class="qn">!</div>
+      <div>
+        <div class="qt">av.by может не открыться ни с одного адреса</div>
+        <div class="qs2">Это единственная площадка, где я не смогу гарантировать результат заранее. Поэтому av.by идёт отдельным пунктом: либо собираем, либо даю честный вывод с цифрой и альтернативой. Остальные две площадки работают уже сегодня.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Четыре вопроса</h2>
+
+    <div class="qrow">
+      <div class="qn">1</div>
+      <div>
+        <div class="qt">Сколько карточек в сутки и по каким маркам и городам?</div>
+        <div class="qs2">От этого зависит, нужен ли транспорт вообще.</div>
+        <div class="pills">
+          <span class="pill go">До 50 в день — транспорт не нужен совсем</span>
+          <span class="pill">500 в день — хватит бесплатного</span>
+          <span class="pill no">50 000 в день — считаем цену и лимиты</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qn">2</div>
+      <div>
+        <div class="qt">На чём написан парсер и как он ходит?</div>
+        <div class="qs2">Если транспорт отделён от логики, я просто подменю адрес. Если нет, придётся переносить код, и это меняет цену в разы.</div>
+        <div class="pills">
+          <span class="pill">Через библиотеку ZenRows</span>
+          <span class="pill">Напрямую своими запросами</span>
+          <span class="pill">Покажу код, сам пока не разобрался</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qn">3</div>
+      <div>
+        <div class="qt">Где будет работать парсер?</div>
+        <div class="qs2">Это влияет на цену сильнее всего остального: адрес арендованного сервера площадки режут чаще, домашний адрес реже.</div>
+        <div class="pills">
+          <span class="pill no">На арендованном сервере</span>
+          <span class="pill go">На домашнем компьютере</span>
+          <span class="pill">Ещё не решил</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qn">4</div>
+      <div>
+        <div class="qt">По av.by: Минск это площадка или адрес?</div>
+        <div class="qs2">Нужны белорусские объявления в выдаче, или нужен белорусский адрес как способ обхода. Это разные задачи с разными ценами.</div>
+        <div class="pills">
+          <span class="pill">Нужны белорусские объявления</span>
+          <span class="pill">Нужен белорусский адрес</span>
+          <span class="pill">Нужно и то и другое</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">Ответьте на четыре вопроса — и начну с аудита.</div>
+
+</div>
+</body>
+</html>
