@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Тендеры: что решено, где нужен ваш ответ</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:36px 20px;background:#eef1f6;color:#1a2233;
+    font:15px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .sheet{max-width:940px;margin:0 auto;background:#fff;border:1px solid #dfe4ec;
+    border-radius:16px;padding:38px 44px 42px;box-shadow:0 1px 3px rgba(20,30,60,.07)}
+  .top{border-bottom:1px solid #e8ecf3;padding-bottom:22px;margin-bottom:34px}
+  h1{font-size:25px;margin:0 0 7px;font-weight:650;letter-spacing:-.3px}
+  .lead{color:#5b6779;font-size:15px;margin:0}
+  h2{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#8b97a8;
+    font-weight:650;margin:0 0 18px}
+  section{margin-bottom:38px}
+  section:last-child{margin-bottom:0}
+
+  .step{position:relative;padding:0 0 20px 58px}
+  .step:last-child{padding-bottom:0}
+  .step::before{content:"";position:absolute;left:17px;top:38px;bottom:0;width:2px;background:#e6eaf1}
+  .step:last-child::before{display:none}
+  .num{position:absolute;left:0;top:0;width:36px;height:36px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:650;font-size:15px}
+  .step.q .num{background:#fdf2de;color:#8a5a00;border:1px solid #f0dcb0}
+  .step.ok .num{background:#e6f5ee;color:#0d6b48;border:1px solid #bfe4d3}
+  .st{font-size:16px;font-weight:600;line-height:1.3}
+  .ss{color:#66738a;font-size:13.5px;margin-top:3px}
+  .chip{display:inline-block;margin-left:10px;padding:2px 10px;border-radius:20px;
+    font-size:11px;font-weight:650;letter-spacing:.3px;vertical-align:2px;white-space:nowrap}
+  .chip.q{background:#fdf2de;color:#8a5a00}
+  .chip.ok{background:#e6f5ee;color:#0d6b48}
+
+  .fork{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+  .card{border:1px solid #dfe4ec;border-radius:12px;padding:18px 20px;background:#fbfcfe}
+  .card.a{border-color:#bfe4d3;background:#f7fdfa}
+  .card.b{border-color:#f0dcb0;background:#fffcf6}
+  .card.c{border-color:#dfe4ec;background:#fbfcfe}
+  .card .ct{font-size:15px;font-weight:650;margin-bottom:6px}
+  .card .cs{font-size:13.5px;color:#66738a}
+
+  .plan{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  .p{border:1px solid #dfe4ec;border-radius:12px;padding:16px 14px;background:#fbfcfe}
+  .p .pn{font-size:11px;font-weight:650;letter-spacing:1px;color:#8b97a8}
+  .p .pt{font-size:14.5px;font-weight:650;margin:5px 0 5px}
+  .p .ps{font-size:13px;color:#66738a;line-height:1.45}
+
+  .qrow{display:flex;gap:16px;border:1px solid #dfe4ec;border-radius:12px;
+    padding:17px 20px;background:#fbfcfe;margin-bottom:13px}
+  .qrow:last-child{margin-bottom:0}
+  .qn{flex:0 0 30px;height:30px;border-radius:50%;background:#2f6bff;color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:650;font-size:14px}
+  .qt{font-size:15.5px;font-weight:650;margin-bottom:4px}
+  .qs2{font-size:13.5px;color:#66738a}
+
+  .foot{margin-top:34px;padding-top:20px;border-top:1px solid #e8ecf3;
+    color:#8b97a8;font-size:12.5px;text-align:center}
+
+  @media (max-width:640px){
+    body{padding:16px 10px}
+    .sheet{padding:24px 18px 28px;border-radius:12px}
+    h1{font-size:20px}
+    .fork{grid-template-columns:1fr}
+    .plan{grid-template-columns:1fr}
+    .step{padding-left:48px}
+    .qrow{padding:15px 16px;gap:12px}
+    .chip{margin-left:0;margin-top:6px;display:inline-block}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="top">
+    <h1>Сбор тендеров, разбор и подача заявок</h1>
+    <p class="lead">Разобрал ваше ТЗ по шагам. Главное видно сразу: отправить заявку от вашего имени машина не сможет, подписывает человек. Всё остальное в задаче автоматизируется полностью. Четыре шага из семи закрыты, по трём нужен ваш ответ.</p>
+  </div>
+
+  <section>
+    <h2>Цепочка</h2>
+
+    <div class="step q">
+      <div class="num">1</div>
+      <div class="st">Откуда беру новые лоты<span class="chip q">вопрос</span></div>
+      <div class="ss">Единая информационная система отдаёт ленту новых закупок официально, без ключей и регистрации. Дальше подключаю ваши площадки. Нужен список доменами</div>
+    </div>
+
+    <div class="step q">
+      <div class="num">2</div>
+      <div class="st">Отбор по ключевым словам<span class="chip q">вопрос</span></div>
+      <div class="ss">Проектирование, архитектура, инженерные разделы. Фильтры настраиваю под вас, без переделки кода. Пришлите слова и признаки, по которым вы сами отбрасываете лоты</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">3</div>
+      <div class="st">Разбор документации и вердикт<span class="chip ok">решено</span></div>
+      <div class="ss">Читаю PDF, DOCX и XLSX из закупки, отвечаю по вашему промпту: подходит или нет, причины отказа, риски по допускам, лицензиям, опыту и выездам</div>
+    </div>
+
+    <div class="step q">
+      <div class="num">4</div>
+      <div class="st">Отклик под конкретный тендер<span class="chip q">вопрос</span></div>
+      <div class="ss">Собираю черновик отклика из вашего шаблона и данных закупки. Нужен пример того, как вы откликаетесь сейчас</div>
+    </div>
+
+    <div class="step q">
+      <div class="num">5</div>
+      <div class="st">Подпись под заявкой<span class="chip q">вопрос</span></div>
+      <div class="ss">Форму заполняю и довожу заявку до подписи. Подпись электронной подписью ставит человек, у которого есть полномочия действовать от вашего имени. Обойти это нельзя, так устроены закупки. Скажите, есть ли подпись и кто ею пользуется</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">6</div>
+      <div class="st">Панель: тендеры, очередь, статусы<span class="chip ok">решено</span></div>
+      <div class="ss">Веб-интерфейс с историей действий и ошибок, как в пункте 6 вашего ТЗ. Фильтры, промпты и шаблоны меняете вы сами</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">7</div>
+      <div class="st">Защита от повторов и режим работы<span class="chip ok">решено</span></div>
+      <div class="ss">Каждый лот обрабатывается один раз. Частоту проверок и паузы настраиваете вы</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Что сделает машина, а что останется за вами</h2>
+    <div class="fork">
+      <div class="card a">
+        <div class="ct">Полностью на автомате</div>
+        <div class="cs">Сбор новых лотов, отбор по словам, разбор документов, черновик отклика, панель и история.</div>
+      </div>
+      <div class="card b">
+        <div class="ct">Через браузер, с вашей проверкой</div>
+        <div class="cs">Вход в личный кабинет и заполнение форм на площадках. Формы меняются, поэтому на первых площадках смотрю вместе с вами.</div>
+      </div>
+      <div class="card c">
+        <div class="ct">Всегда вручную у вас</div>
+        <div class="cs">Подпись электронной подписью, ответы на вопросы комиссии, решение «подавать или нет» по спорным лотам.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Порядок работ</h2>
+    <div class="plan">
+      <div class="p">
+        <div class="pn">ШАГ 1</div>
+        <div class="pt">Пилот на ваших лотах</div>
+        <div class="ps">Собираю, отбираю, разбираю по вашим словам. Ни одной заявки не подаю.</div>
+      </div>
+      <div class="p">
+        <div class="pn">ШАГ 2</div>
+        <div class="pt">Мозг и шаблоны</div>
+        <div class="ps">Разбор документов, база по вашему профилю, отклик под каждый лот.</div>
+      </div>
+      <div class="p">
+        <div class="pn">ШАГ 3</div>
+        <div class="pt">Подача на двух площадках</div>
+        <div class="ps">Две площадки подряд, чтобы отладить механику на серии.</div>
+      </div>
+      <div class="p">
+        <div class="pn">ШАГ 4</div>
+        <div class="pt">Панель</div>
+        <div class="ps">Вы сами меняете фильтры, промпты и шаблоны.</div>
+      </div>
+      <div class="p">
+        <div class="pn">ШАГ 5</div>
+        <div class="pt">Остальные площадки</div>
+        <div class="ps">Подключаю остальные из вашего списка по той же схеме.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Четыре вопроса</h2>
+
+    <div class="qrow">
+      <div class="qn">1</div>
+      <div>
+        <div class="qt">Какие именно площадки, доменами?</div>
+        <div class="qs2">Важно: zakupki.gov.ru это витрина, заявки подаются на площадки, а не туда. Если он в вашем списке, разберём, что с ним делать.</div>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qn">2</div>
+      <div>
+        <div class="qt">Есть ли электронная подпись и кто подписывает заявки?</div>
+        <div class="qs2">От этого зависит, что можно довести до отправки автоматически, а что заканчивается нажатием кнопки у вас.</div>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qn">3</div>
+      <div>
+        <div class="qt">Пришлите промпт и ключевые слова</div>
+        <div class="qs2">То, что должно попадать в разбор закупки: что считать подходящим, а что сразу отбрасывать.</div>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qn">4</div>
+      <div>
+        <div class="qt">Подача заявки это ваше предложение цены или отметка об интересе?</div>
+        <div class="qs2">От ответа зависит режим работы всей системы и то, как я настрою отбор.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">Ответьте на четыре вопроса — вернусь со сметой по этапам.</div>
+
+</div>
+</body>
+</html>
