@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Регламентник PHOTO LAB: что закрыто, где нужен ваш ответ</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:36px 20px;background:#eef1f6;color:#1a2233;
+    font:15px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .sheet{max-width:940px;margin:0 auto;background:#fff;border:1px solid #dfe4ec;
+    border-radius:16px;padding:38px 44px 42px;box-shadow:0 1px 3px rgba(20,30,60,.07)}
+  .top{border-bottom:1px solid #e8ecf3;padding-bottom:22px;margin-bottom:34px}
+  h1{font-size:25px;margin:0 0 7px;font-weight:650;letter-spacing:-.3px}
+  .lead{color:#5b6779;font-size:15px;margin:0}
+  h2{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#8b97a8;
+    font-weight:650;margin:0 0 18px}
+  section{margin-bottom:38px}
+  section:last-child{margin-bottom:0}
+
+  .step{position:relative;padding:0 0 20px 58px}
+  .step:last-child{padding-bottom:0}
+  .step::before{content:"";position:absolute;left:17px;top:38px;bottom:0;width:2px;background:#e6eaf1}
+  .step:last-child::before{display:none}
+  .num{position:absolute;left:0;top:0;width:36px;height:36px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:650;font-size:15px}
+  .step.q .num{background:#fdf2de;color:#8a5a00;border:1px solid #f0dcb0}
+  .step.ok .num{background:#e6f5ee;color:#0d6b48;border:1px solid #bfe4d3}
+  .st{font-size:16px;font-weight:600;line-height:1.3}
+  .ss{color:#66738a;font-size:13.5px;margin-top:3px}
+  .chip{display:inline-block;margin-left:10px;padding:2px 10px;border-radius:20px;
+    font-size:11px;font-weight:650;letter-spacing:.3px;vertical-align:2px;white-space:nowrap}
+  .chip.q{background:#fdf2de;color:#8a5a00}
+  .chip.ok{background:#e6f5ee;color:#0d6b48}
+
+  .fork{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+  .card{border:1px solid #dfe4ec;border-radius:12px;padding:18px 20px;background:#fbfcfe}
+  .card.a{border-color:#bfe4d3;background:#f7fdfa}
+  .card.b{border-color:#f0dcb0;background:#fffcf6}
+  .card.c{border-color:#dfe4ec;background:#fbfcfe}
+  .card .ct{font-size:15px;font-weight:650;margin-bottom:6px}
+  .card .cs{font-size:13.5px;color:#66738a}
+
+  .plan{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  .p{border:1px solid #dfe4ec;border-radius:12px;padding:16px 14px;background:#fbfcfe}
+  .p .pn{font-size:11px;font-weight:650;letter-spacing:1px;color:#8b97a8}
+  .p .pt{font-size:14.5px;font-weight:650;margin:5px 0 5px}
+  .p .ps{font-size:13px;color:#66738a;line-height:1.45}
+
+  .qrow{display:flex;gap:16px;border:1px solid #dfe4ec;border-radius:12px;
+    padding:17px 20px;background:#fbfcfe;margin-bottom:13px}
+  .qrow:last-child{margin-bottom:0}
+  .qn{flex:0 0 30px;height:30px;border-radius:50%;background:#2f6bff;color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:650;font-size:14px}
+  .qt{font-size:15.5px;font-weight:650;margin-bottom:4px}
+  .qs2{font-size:13.5px;color:#66738a}
+
+  .foot{margin-top:34px;padding-top:20px;border-top:1px solid #e8ecf3;
+    color:#8b97a8;font-size:12.5px;text-align:center}
+
+  @media (max-width:640px){
+    body{padding:16px 10px}
+    .sheet{padding:24px 18px 28px;border-radius:12px}
+    h1{font-size:20px}
+    .fork{grid-template-columns:1fr}
+    .plan{grid-template-columns:1fr}
+    .step{padding-left:48px}
+    .qrow{padding:15px 16px;gap:12px}
+    .chip{margin-left:0;margin-top:6px;display:inline-block}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="top">
+    <h1>Регламентник PHOTO LAB: шесть ролей, поиск, закрытый вход</h1>
+    <p class="lead">Разобрал ваше ТЗ по пунктам. Все пять требований закрываются готовым движком, писать сайт с нуля не нужно. От этого и срок, и цена. Три вопроса внизу — от них зависит точная смета.</p>
+  </div>
+
+  <section>
+    <h2>Цепочка</h2>
+
+    <div class="step ok">
+      <div class="num">1</div>
+      <div class="st">Навигация по блокам и ролям<span class="chip ok">решено</span></div>
+      <div class="ss">Шесть разделов по вашим ролям: фотограф, печатник, продажник, старший смены, управляющий, офис. Внутри раздела — содержание, внутри регламента — оглавление. Сотрудник открывает свою роль и сразу видит своё</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">2</div>
+      <div class="st">Поиск по ключевым словам<span class="chip ok">решено</span></div>
+      <div class="ss">Ищет по тексту всех регламентов сразу, не по названиям. Запрос «брак» должен находить и «брака», и «бракованные» — это проверю на вашей главе до сдачи и покажу живым примером. Если движок не потянет русские окончания, подключу отдельный поиск: это моя задача, а не ваша</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">3</div>
+      <div class="st">Мобильный вид<span class="chip ok">решено</span></div>
+      <div class="ss">Читается с телефона в зале: крупный текст, широкие кнопки, содержание одной прокруткой. Проверяю на узком экране, а не только на компьютере</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">4</div>
+      <div class="st">Администратор правит текст сам<span class="chip ok">решено</span></div>
+      <div class="ss">Редактор как в Ворде: открыл регламент, поправил абзац, нажал «сохранить» — сотрудники видят новую версию. Программист для этого не нужен и не будет нужен. Этот пункт обычно и съедает бюджет, если делать его отдельной системой — здесь он уже есть</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">5</div>
+      <div class="st">Закрытый доступ<span class="chip ok">решено</span></div>
+      <div class="ss">Вход по рабочей почте сотрудника, сессия на месяц: люди не вводят пароль каждый день. Ссылку-приглашение не использую — её пересылают дальше, и регламенты уходят наружу</div>
+    </div>
+
+    <div class="step q">
+      <div class="num">6</div>
+      <div class="st">Перенос регламентов из ваших файлов<span class="chip q">вопрос</span></div>
+      <div class="ss">Переношу тексты в веб-формат с сохранением структуры: заголовки, нумерация, таблицы. Если файл — скан или картинка, понадобится распознавание, это дольше и дороже. Нужна одна глава, чтобы оценить объём честно</div>
+    </div>
+
+    <div class="step q">
+      <div class="num">7</div>
+      <div class="st">Сервер и домен<span class="chip q">вопрос</span></div>
+      <div class="ss">Движок живёт на сервере, аренда стоит недорого и оплачивается напрямую хостингу. Сервер и домен остаются вашими, я поднимаю на них регламентник, настраиваю и отдаю вам доступы. Скажите, есть уже свой или заводить новый</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Что сделаю я, а что останется за вами</h2>
+    <div class="fork">
+      <div class="card a">
+        <div class="ct">Сделаю полностью</div>
+        <div class="cs">Установка движка, структура под шесть ролей, перенос текстов, поиск, мобильный вид, закрытый вход, обучение администратора.</div>
+      </div>
+      <div class="card b">
+        <div class="ct">Вместе, на первой главе</div>
+        <div class="cs">Согласуем вид, навигацию и поиск на вашем живом тексте. Дальше остальные главы идут по тому же образцу без переделок.</div>
+      </div>
+      <div class="card c">
+        <div class="ct">Останется за вами</div>
+        <div class="cs">Какие регламенты публиковать, у кого есть доступ, где размещаем. Тексты правите сами — для этого и пункт четвёртый.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Порядок работ</h2>
+    <div class="plan">
+      <div class="p">
+        <div class="pn">ШАГ 1</div>
+        <div class="pt">Прототип на одной главе</div>
+        <div class="ps">Меню по ролям, страница раздела, страница регламента. Два рабочих дня.</div>
+      </div>
+      <div class="p">
+        <div class="pn">ШАГ 2</div>
+        <div class="pt">Согласование вида</div>
+        <div class="ps">Смотрите прототип, говорите что поправить. Правлю до устраивающего вида.</div>
+      </div>
+      <div class="p">
+        <div class="pn">ШАГ 3</div>
+        <div class="pt">Перенос всех регламентов</div>
+        <div class="ps">Остальные главы по образцу первой, с сохранением структуры.</div>
+      </div>
+      <div class="p">
+        <div class="pn">ШАГ 4</div>
+        <div class="pt">Поиск и мобильный вид</div>
+        <div class="ps">Проверяю русские окончания и чтение с телефона на реальных запросах.</div>
+      </div>
+      <div class="p">
+        <div class="pn">ШАГ 5</div>
+        <div class="pt">Доступ и обучение</div>
+        <div class="ps">Подключаю сотрудников, показываю администратору, как править текст.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Три вопроса</h2>
+
+    <div class="qrow">
+      <div class="qn">1</div>
+      <div>
+        <div class="qt">Пришлите одну главу Корпоративной книги</div>
+        <div class="qs2">На ней делаю прототип. Нужен файл или текст: если это скан, скажите сразу — срок и смета изменятся.</div>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qn">2</div>
+      <div>
+        <div class="qt">Сколько всего регламентов?</div>
+        <div class="qs2">Остальные главы пойдут по образцу первой. Объём нужен, чтобы назвать срок по всему проекту.</div>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qn">3</div>
+      <div>
+        <div class="qt">Есть уже сервер и домен или заводить новые?</div>
+        <div class="qs2">Аренда стоит недорого и оплачивается напрямую хостингу. Сервер ваш, я поднимаю на нём регламентник и отдаю доступы.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">Гарантия 14 дней: всё, что не будет работать так, как на схеме, починю бесплатно. Ответьте на три вопроса — вернусь со сроком по остальным главам.</div>
+
+</div>
+</body>
+</html>
