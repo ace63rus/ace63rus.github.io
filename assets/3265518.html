@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Тестирование продажи билетов: что проверено и что нужно от вас</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:36px 20px;background:#eef1f6;color:#1a2233;
+    font:15px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .sheet{max-width:940px;margin:0 auto;background:#fff;border:1px solid #dfe4ec;
+    border-radius:16px;padding:38px 44px 42px;box-shadow:0 1px 3px rgba(20,30,60,.07)}
+  .top{border-bottom:1px solid #e8ecf3;padding-bottom:22px;margin-bottom:34px}
+  h1{font-size:25px;margin:0 0 7px;font-weight:650;letter-spacing:-.3px}
+  .lead{color:#5b6779;font-size:15px;margin:0}
+  h2{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#8b97a8;
+    font-weight:650;margin:0 0 18px}
+  section{margin-bottom:38px}
+  section:last-child{margin-bottom:0}
+
+  .step{position:relative;padding:0 0 20px 58px}
+  .step:last-child{padding-bottom:0}
+  .step::before{content:"";position:absolute;left:17px;top:38px;bottom:0;width:2px;background:#e6eaf1}
+  .step:last-child::before{display:none}
+  .num{position:absolute;left:0;top:0;width:36px;height:36px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:650;font-size:15px}
+  .step.q .num{background:#fdf2de;color:#8a5a00;border:1px solid #f0dcb0}
+  .step.ok .num{background:#e6f5ee;color:#0d6b48;border:1px solid #bfe4d3}
+  .st{font-size:16px;font-weight:600;line-height:1.3}
+  .ss{color:#66738a;font-size:13.5px;margin-top:3px}
+  .chip{display:inline-block;margin-left:10px;padding:2px 10px;border-radius:20px;
+    font-size:11px;font-weight:650;letter-spacing:.3px;vertical-align:2px;white-space:nowrap}
+  .chip.q{background:#fdf2de;color:#8a5a00}
+  .chip.ok{background:#e6f5ee;color:#0d6b48}
+
+  .fork{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .card{border:1px solid #dfe4ec;border-radius:12px;padding:18px 20px;background:#fbfcfe}
+  .card.a{border-color:#f0dcb0;background:#fffcf6}
+  .card.b{border-color:#bfe4d3;background:#f7fdfa}
+  .card .ct{font-size:15px;font-weight:650;margin-bottom:6px}
+  .card .cs{font-size:13.5px;color:#66738a}
+
+  .found{display:grid;grid-template-columns:1fr;gap:12px}
+  .fitem{border:1px solid #dfe4ec;border-left:4px solid #2f6bff;border-radius:10px;
+    padding:15px 18px;background:#fbfcfe}
+  .ft{font-size:15px;font-weight:650;margin-bottom:4px}
+  .fs{font-size:13.5px;color:#66738a}
+
+  .qrow{display:flex;gap:16px;border:1px solid #dfe4ec;border-radius:12px;
+    padding:17px 20px;background:#fbfcfe;margin-bottom:13px}
+  .qrow:last-child{margin-bottom:0}
+  .qn{flex:0 0 30px;height:30px;border-radius:50%;background:#2f6bff;color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:650;font-size:14px}
+  .qt{font-size:15.5px;font-weight:650;margin-bottom:4px}
+  .qs2{font-size:13.5px;color:#66738a}
+  .pills{display:flex;gap:8px;margin-top:11px;flex-wrap:wrap}
+  .pill{font-size:12px;font-weight:600;padding:5px 12px;border-radius:8px;
+    border:1px solid #dfe4ec;background:#fff;color:#48566d}
+  .pill.go{border-color:#bfe4d3;background:#eefaf4;color:#0d6b48}
+  .pill.no{border-color:#f0dcb0;background:#fff8ec;color:#8a5a00}
+
+  .foot{margin-top:34px;padding-top:20px;border-top:1px solid #e8ecf3;
+    color:#8b97a8;font-size:12.5px;text-align:center}
+
+  @media (max-width:640px){
+    body{padding:16px 10px}
+    .sheet{padding:24px 18px 28px;border-radius:12px}
+    h1{font-size:20px}
+    .fork{grid-template-columns:1fr}
+    .step{padding-left:48px}
+    .qrow{padding:15px 16px;gap:12px}
+    .chip{margin-left:0;margin-top:6px;display:inline-block}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="top">
+    <h1>Тестирование продажи билетов: что проверено и что нужно от вас</h1>
+    <p class="lead">Зашёл в систему по вашим доступам и прошёл 12 разделов: 50 рейсов, 32 брони, 8 платежей. Часть вопросов снял сам, четыре остались за вами, они отмечены на схеме.</p>
+  </div>
+
+  <section>
+    <h2>Что я уже проверил</h2>
+
+    <div class="step ok">
+      <div class="num">1</div>
+      <div class="st">Карта системы<span class="chip ok">проверено</span></div>
+      <div class="ss">Рейсы, серии рейсов, аренда теплохода, теплоходы, причалы, типы тарифа, заявки и брони, оплаты и статусы, реквизиты, чёрный список IP, документация. Плюс карточка рейса с рассадкой, выручкой и отчётом</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">2</div>
+      <div class="st">Объём данных<span class="chip ok">проверено</span></div>
+      <div class="ss">50 рейсов, 32 брони, 8 платежей. Наполнение демо: серии, теплоходы и клиенты с тестовыми названиями. Значит, работать можно без риска задеть живые продажи</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">3</div>
+      <div class="st">Простой проход по разделам<span class="chip ok">проверено</span></div>
+      <div class="ss">Ни одной ошибки в консоли браузера и ни одного сбоя на сервере. Вывод: ошибки осмотром не найти, их надо выбивать сценариями. Ниже показано, какими</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Где искать ошибки</h2>
+    <div class="fork">
+      <div class="card a">
+        <div class="ct">А. Осмотр экранов</div>
+        <div class="cs">Уже пройден. Результат: чисто. Этот путь даёт мало, потому что система не падает сама по себе, она ломается на граничных ситуациях.</div>
+      </div>
+      <div class="card b">
+        <div class="ct">Б. Прогон сценариев покупателя</div>
+        <div class="cs">Покупка, отказ банка, отмена после оплаты, возврат, последнее место, два покупателя на одно место одновременно. Здесь и находятся настоящие ошибки.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Что нашёл сразу</h2>
+    <div class="found">
+      <div class="fitem">
+        <div class="ft">Платежи уходят не туда, куда указано в ТЗ</div>
+        <div class="fs">В задании написано про тестовую ЮKassa. В разделе «Оплаты и статусы» ссылки на оплату ведут на шлюз Сбербанка. Проверю тот шлюз, который реально подключён, но сначала нужно уточнить, какой из них боевой, а какой тестовый.</div>
+      </div>
+      <div class="fitem">
+        <div class="ft">Режим «оплата с подтверждением» держит места по таймеру</div>
+        <div class="fs">Клиент оформляет заявку без оплаты, билеты уходят в статус «на проверке» и становятся недоступны другим. Если менеджер не подтвердит за сутки, места освобождаются. Проверю, что будет на границе суток и что будет с уже оплаченными билетами.</div>
+      </div>
+      <div class="fitem">
+        <div class="ft">Справочник цен пустой, а цены в рейсах есть</div>
+        <div class="fs">В «Типах тарифа» ни одной записи, при этом рейсы продаются по 400-3200 рублей. Значит цены задаются в другом месте. Проверю, откуда они берутся и не расходятся ли между рейсом и серией.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Что проверю по шагам</h2>
+
+    <div class="step q">
+      <div class="num">1</div>
+      <div class="st">Покупка билета глазами покупателя<span class="chip q">нужен адрес</span></div>
+      <div class="ss">Выбор рейса, выбор места, данные пассажира, оплата, получение билета. Без адреса публичной части этот шаг не выполнить</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">2</div>
+      <div class="st">Отказ и отмена<span class="chip ok">готов прогонять</span></div>
+      <div class="ss">Отклонённая оплата, закрытая на оплате вкладка, отмена после оплаты. Смотрю, освобождается ли место и возвращаются ли деньги</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">3</div>
+      <div class="st">Подтверждение менеджером<span class="chip ok">готов прогонять</span></div>
+      <div class="ss">Заявка без оплаты, сутки на подтверждение, автоосвобождение мест. Ищу, что происходит на границе суток</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">4</div>
+      <div class="st">Создание рейса<span class="chip ok">готов прогонять</span></div>
+      <div class="ss">Разовый рейс и рейс из серии: дата, время, маршрут, рассадка, цены</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">5</div>
+      <div class="st">Замена рейса с проданными билетами<span class="chip ok">готов прогонять</span></div>
+      <div class="ss">Куда деваются уже проданные места при замене теплохода и при уменьшении вместимости. Самое частое место поломки в таких системах</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">6</div>
+      <div class="st">Аренда теплохода<span class="chip ok">готов прогонять</span></div>
+      <div class="ss">Почасовая сетка по неделям, два теплохода в одно время, оформление второго судна на тот же час</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">7</div>
+      <div class="st">Отчёт по результатам<span class="chip ok">готов</span></div>
+      <div class="ss">Таблица со всеми находками, по каждой: шаг, что делал, что ждал, что получилось, скриншот и оценка важности. Ручная проверка, без автоматической генерации текста</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Четыре вопроса к вам</h2>
+
+    <div class="qrow">
+      <div class="qn">1</div>
+      <div>
+        <div class="qt">Адрес публичной части, где покупатель берёт билет</div>
+        <div class="qs2">В админке ссылки на неё нет, а она упоминается в документации и в чёрном списке IP. Без адреса шаг 1 не выполнить.</div>
+        <div class="pills"><span class="pill go">дам ссылку</span><span class="pill">проверять только админку</span></div>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qn">2</div>
+      <div>
+        <div class="qt">Какой платёжный шлюз сейчас в тестовом режиме</div>
+        <div class="qs2">В ТЗ указана ЮKassa, в платежах ссылки на шлюз Сбербанка. Уточните, какой из них тестовый, чтобы не упереться в настоящий эквайринг.</div>
+        <div class="pills"><span class="pill go">ЮKassa</span><span class="pill go">Сбер</span><span class="pill">оба</span><span class="pill no">не знаю</span></div>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qn">3</div>
+      <div>
+        <div class="qt">Включён ли режим оплаты с подтверждением на рабочих сериях</div>
+        <div class="qs2">От этого зависит, проверять ли суточный таймер как боевой сценарий или как выключенную функцию.</div>
+        <div class="pills"><span class="pill go">да</span><span class="pill go">нет</span><span class="pill no">не знаю</span></div>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qn">4</div>
+      <div>
+        <div class="qt">Можно ли создавать тестовые рейсы и заявки</div>
+        <div class="qs2">Чтобы прогонять сценарии, мне нужны свои рейсы и брони. Иначе придётся трогать ваши данные.</div>
+        <div class="pills"><span class="pill go">можно, создавайте</span><span class="pill">только чтение</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">Ответьте на четыре вопроса, и начну с аудита.</div>
+
+</div>
+</body>
+</html>
