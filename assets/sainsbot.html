@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Почему парсер встал: что сломалось и что починим</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:36px 20px;background:#eef1f6;color:#1a2233;
+    font:15px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .sheet{max-width:940px;margin:0 auto;background:#fff;border:1px solid #dfe4ec;
+    border-radius:16px;padding:38px 44px 42px;box-shadow:0 1px 3px rgba(20,30,60,.07)}
+  .top{border-bottom:1px solid #e8ecf3;padding-bottom:22px;margin-bottom:34px}
+  h1{font-size:25px;margin:0 0 7px;font-weight:650;letter-spacing:-.3px}
+  .lead{color:#5b6779;font-size:15px;margin:0}
+  h2{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#8b97a8;
+    font-weight:650;margin:0 0 18px}
+  section{margin-bottom:38px}
+  section:last-child{margin-bottom:0}
+
+  .step{position:relative;padding:0 0 20px 58px}
+  .step:last-child{padding-bottom:0}
+  .step::before{content:"";position:absolute;left:17px;top:38px;bottom:0;width:2px;background:#e6eaf1}
+  .step:last-child::before{display:none}
+  .num{position:absolute;left:0;top:0;width:36px;height:36px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:650;font-size:15px}
+  .step.q .num{background:#fdf2de;color:#8a5a00;border:1px solid #f0dcb0}
+  .step.ok .num{background:#e6f5ee;color:#0d6b48;border:1px solid #bfe4d3}
+  .st{font-size:16px;font-weight:600;line-height:1.3}
+  .ss{color:#66738a;font-size:13.5px;margin-top:3px}
+  .chip{display:inline-block;margin-left:10px;padding:2px 10px;border-radius:20px;
+    font-size:11px;font-weight:650;letter-spacing:.3px;vertical-align:2px;white-space:nowrap}
+  .chip.q{background:#fdf2de;color:#8a5a00}
+  .chip.ok{background:#e6f5ee;color:#0d6b48}
+  code{font:12.5px/1.4 Consolas,"SF Mono",Menlo,monospace;background:#f2f5fa;
+    border:1px solid #e3e9f2;border-radius:5px;padding:1px 6px;color:#3d4a60;white-space:nowrap}
+
+  .fork{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .card{border:1px solid #dfe4ec;border-radius:12px;padding:18px 20px;background:#fbfcfe}
+  .card.a{border-color:#f0dcb0;background:#fffcf6}
+  .card.b{border-color:#bfe4d3;background:#f7fdfa}
+  .card .ct{font-size:15px;font-weight:650;margin-bottom:6px}
+  .card .cs{font-size:13.5px;color:#66738a}
+  .card .cn{font-size:26px;font-weight:700;color:#1a2233;line-height:1.1;margin-bottom:4px}
+  .card .cl{font-size:12px;color:#8b97a8;text-transform:uppercase;letter-spacing:.6px;font-weight:650}
+
+  .qrow{display:flex;gap:16px;border:1px solid #dfe4ec;border-radius:12px;
+    padding:17px 20px;background:#fbfcfe;margin-bottom:13px}
+  .qrow:last-child{margin-bottom:0}
+  .qn{flex:0 0 30px;height:30px;border-radius:50%;background:#2f6bff;color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:650;font-size:14px}
+  .qt{font-size:15.5px;font-weight:650;margin-bottom:4px}
+  .qs2{font-size:13.5px;color:#66738a}
+  .pills{display:flex;gap:8px;margin-top:11px;flex-wrap:wrap}
+  .pill{font-size:12px;font-weight:600;padding:5px 12px;border-radius:8px;
+    border:1px solid #dfe4ec;background:#fff;color:#48566d}
+  .pill.go{border-color:#bfe4d3;background:#eefaf4;color:#0d6b48}
+  .pill.no{border-color:#f0dcb0;background:#fff8ec;color:#8a5a00}
+
+  .foot{margin-top:34px;padding-top:20px;border-top:1px solid #e8ecf3;
+    color:#8b97a8;font-size:12.5px;text-align:center}
+
+  @media (max-width:640px){
+    body{padding:16px 10px}
+    .sheet{padding:24px 18px 28px;border-radius:12px}
+    h1{font-size:20px}
+    .fork{grid-template-columns:1fr}
+    .step{padding-left:48px}
+    .qrow{padding:15px 16px;gap:12px}
+    .chip{margin-left:0;margin-top:6px;display:inline-block}
+    code{white-space:normal}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="top">
+    <h1>Почему парсер встал: что сломалось и что починим</h1>
+    <p class="lead">Разобрал ваш архив и проверил Sainsbury's вживую сегодня. Дело не в прокси и не в блокировке — магазин сменил вёрстку, а парсер ищет ссылки по старым правилам. Ниже: что именно сломалось, что уже проверено и что предлагаю починить.</p>
+  </div>
+
+  <section>
+    <h2>Что показала проверка сегодня</h2>
+    <div class="fork">
+      <div class="card b">
+        <div class="ct">Магазин жив, каталог грузится</div>
+        <div class="cs">Взял категорию из вашего лога и открыл её. Страница отдаёт полный список товаров: <b>240 ссылок</b> на первой странице, <b>196</b> на второй. Никакой блокировки нет.</div>
+      </div>
+      <div class="card a">
+        <div class="ct">Правило поиска ссылок умерло</div>
+        <div class="cs">Парсер ищет блок с классом <code>pt-image__link</code>. Такого на странице больше нет — <b>ноль совпадений</b>. Магазин перешёл на новую разметку: <code>ds-c-product-card</code>.</div>
+      </div>
+      <div class="card b">
+        <div class="ct">Переход по страницам работает</div>
+        <div class="cs">Адрес вида <code>…/opt/page:2</code> открывается и отдаёт следующий набор товаров. Саму механику менять не нужно — сломан только способ определить, сколько страниц и где кнопка «дальше».</div>
+      </div>
+      <div class="card a">
+        <div class="ct">Прогон рассыпается на ровном месте</div>
+        <div class="cs">В вашем логе <b>70 сетевых ошибок</b>: браузер поднимается заново на каждую категорию. Из <b>1187</b> категорий прогон дошёл до <b>402-й</b>, ссылки собрались только по <b>3</b>.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Разбор по шагам</h2>
+
+    <div class="step ok">
+      <div class="num">1</div>
+      <div class="st">Открытие страницы категории<span class="chip ok">работает</span></div>
+      <div class="ss">Сайт отдаёт каталог целиком. Прокси и обход блокировок в этой поломке не участвуют</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">2</div>
+      <div class="st">Ссылки на товары<span class="chip ok">чиню</span></div>
+      <div class="ss">Сломано: старое правило не находит ничего. Чиню: перевожу на новую разметку и добавляю запасное правило — чтобы следующая смена вёрстки давала не ноль, а результат</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">3</div>
+      <div class="st">Переход по страницам<span class="chip ok">чиню</span></div>
+      <div class="ss">Сломано: определение числа страниц и кнопки «дальше». Чиню: перевожу на новую разметку. Сам адрес страниц рабочий, его не трогаю</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">4</div>
+      <div class="st">Меню категорий<span class="chip ok">чиню</span></div>
+      <div class="ss">Сломано целиком: все правила поиска устарели вместе с вёрсткой. Чиню: пересобираю сбор ссылок и названий категорий на новой разметке</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">5</div>
+      <div class="st">Отметка «+» в Excel и выгрузка в CSV<span class="chip ok">работает</span></div>
+      <div class="ss">Логика на месте, не трогаю. Останется ровно такой же</div>
+    </div>
+
+  </section>
+
+  <section>
+    <h2>Чего я не обещаю</h2>
+    <div class="qrow">
+      <div class="qn">!</div>
+      <div>
+        <div class="qt">Магазин может снова сменить вёрстку</div>
+        <div class="qs2">От этого не застрахован ни один парсер, ни на Playwright, ни на чём угодно другом. Правило поиска живёт ровно столько, сколько живёт вёрстка магазина. Если она сменится снова, парсер придётся поправить так же, как сейчас. Обещать, что починю и больше никогда не сломается, я не буду.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Четыре вопроса</h2>
+
+    <div class="qrow">
+      <div class="qn">1</div>
+      <div>
+        <div class="qt">Сколько категорий прогнать для приёмки?</div>
+        <div class="qs2">Мне нужно понимать, что считаем результатом работы.</div>
+        <div class="pills">
+          <span class="pill">20 категорий</span>
+          <span class="pill go">50 категорий</span>
+          <span class="pill">все 1187</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qn">2</div>
+      <div>
+        <div class="qt">Прокси остаются ваши?</div>
+        <div class="qs2">Ваш список прокси есть в архиве, и часть адресов в нём уже мёртвая — это видно по логу. Работать на вашем пуле или подобрать рабочие?</div>
+        <div class="pills">
+          <span class="pill">на моём пуле</span>
+          <span class="pill">без прокси</span>
+          <span class="pill go">подобрать рабочие</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qn">3</div>
+      <div>
+        <div class="qt">Меню категорий — сейчас или потом?</div>
+        <div class="qs2">Это отдельный блок работы, сбору товаров он не мешает.</div>
+        <div class="pills">
+          <span class="pill go">нужно сейчас</span>
+          <span class="pill">можно потом</span>
+          <span class="pill">пока не нужно</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qn">4</div>
+      <div>
+        <div class="qt">Где будет работать парсер после починки?</div>
+        <div class="qs2">Свою проверку я делаю у себя, дальше парсер работает у вас. От места зависит, как настроить браузер и как часто его перезапускать.</div>
+        <div class="pills">
+          <span class="pill go">на вашем компьютере</span>
+          <span class="pill">на сервере</span>
+          <span class="pill">ещё не решил</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">Ответьте на четыре вопроса — подтвержу объём и сроки.</div>
+
+</div>
+</body>
+</html>
