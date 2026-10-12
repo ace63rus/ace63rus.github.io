@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TescoBot: как убрать ноутбуки и уложить сбор в одну ночь</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:36px 20px;background:#eef1f6;color:#1a2233;
+    font:15px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .sheet{max-width:940px;margin:0 auto;background:#fff;border:1px solid #dfe4ec;
+    border-radius:16px;padding:38px 44px 42px;box-shadow:0 1px 3px rgba(20,30,60,.07)}
+  .top{border-bottom:1px solid #e8ecf3;padding-bottom:22px;margin-bottom:34px}
+  h1{font-size:25px;margin:0 0 7px;font-weight:650;letter-spacing:-.3px}
+  .lead{color:#5b6779;font-size:15px;margin:0}
+  h2{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#8b97a8;
+    font-weight:650;margin:0 0 18px}
+  section{margin-bottom:38px}
+  section:last-child{margin-bottom:0}
+  .note{font-size:12.5px;color:#8b97a8;margin-top:10px;line-height:1.5}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+  .box{border:1px solid #dfe4ec;border-radius:12px;padding:16px 18px;background:#fbfcfe}
+  .box .bt{font-size:14.5px;font-weight:650;margin-bottom:5px}
+  .box .bs{font-size:13.5px;color:#66738a}
+  .box .bn{font-size:24px;font-weight:700;line-height:1.15;margin-bottom:3px}
+
+  /* полоса-таймлайн */
+  .strip{display:flex;height:46px;border-radius:9px;overflow:hidden;border:1px solid #dfe4ec}
+  .seg{display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:650;
+    color:#fff;white-space:nowrap;overflow:hidden}
+  .s-menu{background:#2f6bff;flex:0 0 1.1%}
+  .s-cat{background:#5b8def;flex:0 0 2.2%}
+  .s-prod{background:#8a5a00;flex:1}
+  .lg{display:flex;gap:20px;flex-wrap:wrap;margin-top:12px;font-size:12.5px;color:#5b6779}
+  .lg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:7px}
+  .i-menu{background:#2f6bff}.i-cat{background:#5b8def}.i-prod{background:#8a5a00}
+
+  /* вторая полоса: из чего 180 часов */
+  .strip2{display:flex;height:52px;border-radius:9px;overflow:hidden;border:1px solid #dfe4ec}
+  .s-excel{background:#a3413a;flex:0 0 67.7%;color:#fff;font-size:12.5px;font-weight:650}
+  .s-parse{background:#e6f5ee;flex:1;color:#0d6b48;font-size:12.5px;font-weight:650;border-left:2px solid #fff}
+
+  /* третья полоса: до и после */
+  .cmp{display:grid;gap:11px}
+  .crow{display:grid;grid-template-columns:150px 1fr 86px;gap:14px;align-items:center}
+  .crow .cl{font-size:13px;font-weight:650;color:#48566d;text-align:right}
+  .cbar{height:34px;border-radius:8px;min-width:5px}
+  .cbar.before{background:#a3413a;width:100%}
+  .cbar.after{background:#0d6b48;width:5.4%}
+  .cbar.mid{background:#8a5a00;width:32%}
+  .cval{font-size:13.5px;font-weight:650;color:#48566d;white-space:nowrap}
+
+  /* расписание ночи */
+  .tl{margin-top:4px}
+  .tlrow{display:grid;grid-template-columns:88px 1fr;gap:14px;align-items:center;margin-bottom:10px}
+  .tlrow:last-child{margin-bottom:0}
+  .tt{font-size:12.5px;font-weight:650;color:#48566d;text-align:right}
+  .tb{height:30px;border-radius:7px;background:#eef2f9;border:1px solid #dfe4ec;position:relative}
+  .tb span{position:absolute;left:0;top:0;bottom:0;border-radius:6px;
+    display:flex;align-items:center;padding:0 10px;font-size:12px;font-weight:650;color:#fff;white-space:nowrap}
+  .b-menu span{background:#2f6bff;width:29%}
+  .b-cat span{background:#5b8def;width:57%}
+  .b-prod span{background:#0d6b48;width:92%}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{text-align:left;font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:#8b97a8;
+    font-weight:650;padding:0 12px 9px 0;border-bottom:1px solid #e8ecf3}
+  td{padding:11px 12px 11px 0;border-bottom:1px solid #f1f4f8;vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  .was{color:#a3413a;font-weight:600;white-space:nowrap}
+  .now{color:#0d6b48;font-weight:600;white-space:nowrap}
+
+  .qrow{display:flex;gap:16px;border:1px solid #dfe4ec;border-radius:12px;
+    padding:17px 20px;background:#fbfcfe;margin-bottom:13px}
+  .qrow:last-child{margin-bottom:0}
+  .qn{flex:0 0 30px;height:30px;border-radius:50%;background:#2f6bff;color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:650;font-size:14px}
+  .qrow.warn .qn{background:#8a5a00}
+  .qt{font-size:15.5px;font-weight:650;margin-bottom:4px}
+  .qs2{font-size:13.5px;color:#66738a}
+
+  /* замена трёх ноутбуков одним сервером */
+  .swap{display:grid;grid-template-columns:1fr 52px 1fr;gap:12px;align-items:center}
+  .side{border:1px solid #dfe4ec;border-radius:12px;padding:16px 18px;background:#fbfcfe}
+  .side.new{border-color:#bfe4d3;background:#f7fdfa}
+  .slab{font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:#8b97a8;
+    font-weight:650;margin-bottom:11px}
+  .lap{border:1px dashed #e0b9b5;background:#fdf6f5;border-radius:8px;padding:8px 12px;
+    font-size:13px;color:#a3413a;font-weight:600;margin-bottom:7px}
+  .lap::after{content:" — не доживает до конца";font-weight:400;color:#b9847f}
+  .srv{border:1px solid #bfe4d3;background:#eefaf4;border-radius:8px;padding:11px 12px;
+    font-size:14px;color:#0d6b48;font-weight:650;margin-bottom:7px}
+  .snote{font-size:12.5px;color:#66738a;line-height:1.5;margin-top:9px}
+  .arw{text-align:center;font-size:22px;color:#8b97a8;font-weight:300}
+
+  /* путь файла */
+  .path{display:grid;grid-template-columns:1fr 34px 1fr 34px 1fr;gap:8px;align-items:center}
+  .pbox{border:1px solid #dfe4ec;border-radius:11px;padding:14px 16px;background:#fbfcfe;text-align:center}
+  .pbox .pi{font-size:19px;margin-bottom:6px}
+  .pbox .pt2{font-size:13px;font-weight:650;margin-bottom:3px}
+  .pbox .ps3{font-size:12px;color:#66738a;line-height:1.45}
+  .parr{text-align:center;color:#8b97a8;font-size:16px}
+
+  .price{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;
+    border:1px solid #bfe4d3;background:#f7fdfa;border-radius:14px;padding:22px 24px}
+  .price .pt{font-size:16px;font-weight:650;margin-bottom:5px}
+  .price .ps{font-size:13.5px;color:#5b6779}
+  .price .pv{text-align:right;white-space:nowrap}
+  .price .pn{font-size:32px;font-weight:700;color:#0d6b48;line-height:1}
+  .price .pl{font-size:12px;color:#8b97a8;text-transform:uppercase;letter-spacing:.6px;font-weight:650;margin-top:4px}
+
+  ul.work{margin:0;padding-left:20px;font-size:13.5px;color:#3d4a60;line-height:1.9}
+  ul.work li::marker{color:#0d6b48}
+  code{font:12.5px/1.4 Consolas,"SF Mono",Menlo,monospace;background:#f2f5fa;
+    border:1px solid #e3e9f2;border-radius:5px;padding:1px 6px;color:#3d4a60}
+
+  .foot{margin-top:34px;padding-top:20px;border-top:1px solid #e8ecf3;
+    color:#8b97a8;font-size:12.5px;text-align:center}
+
+  @media (max-width:640px){
+    body{padding:16px 10px}
+    .sheet{padding:24px 18px 28px;border-radius:12px}
+    h1{font-size:20px}
+    .two,.three{grid-template-columns:1fr}
+    .strip,.strip2{height:38px}
+    .seg,.s-excel,.s-parse{font-size:10.5px}
+    .crow{grid-template-columns:104px 1fr 74px;gap:9px}
+    .crow .cl{font-size:11.5px}
+    .cval{font-size:12px}
+    .tlrow{grid-template-columns:64px 1fr}
+    .tb span{font-size:10.5px}
+    .price{grid-template-columns:1fr}
+    .price .pv{text-align:left}
+    .swap{grid-template-columns:1fr;gap:10px}
+    .arw{transform:rotate(90deg)}
+    .path{grid-template-columns:1fr;gap:8px}
+    .parr{transform:rotate(90deg)}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="top">
+    <h1>Почему всё упирается в ноутбуки, и как уложить сбор в одну ночь</h1>
+    <p class="lead">Посчитал полный цикл вашего бота на ваших же файлах и логах. Ниже арифметика, из которой видно, где на самом деле уходит время.</p>
+  </div>
+
+  <section>
+    <h2>Сколько идёт один полный цикл</h2>
+    <div class="strip">
+      <div class="seg s-menu" title="Меню, 2 ч"></div>
+      <div class="seg s-cat" title="Категории, 4 ч"></div>
+      <div class="seg s-prod">Карточки товаров — 180 часов</div>
+    </div>
+    <div class="lg">
+      <span><i class="i-menu"></i>Меню, 4 уровня — 2 ч</span>
+      <span><i class="i-cat"></i>Категории — 4 ч</span>
+      <span><i class="i-prod"></i>Карточки товаров — 180 ч</span>
+    </div>
+    <p class="note">Итого около 186 часов, то есть почти 8 суток непрерывной работы. Полоса выше нарисована в масштабе: меню и категории занимают 3% от всего цикла, всё остальное это карточки. 60 758 товаров, по 48 штук на страницу.</p>
+  </section>
+
+  <section>
+    <h2>Но парсинг здесь почти ни при чём</h2>
+    <div class="strip2">
+      <div class="seg s-excel">Перезапись таблицы — 126 ч</div>
+      <div class="s-parse">Разбор магазина — 54 ч</div>
+    </div>
+    <div class="lg">
+      <span><i style="background:#a3413a"></i>Перезапись таблицы — 126 ч</span>
+      <span><i style="background:#e6f5ee;border:1px solid #bfe4d3"></i>Реальный разбор магазина — 54 ч</span>
+    </div>
+    <p class="note">На каждый товар бот заново открывает файл со всеми 60 758 строками, ставит одну букву «+» и заново сохраняет файл целиком. Это занимает 7,45 секунды. Умножаем на 60 758 товаров — получаем 126 часов только на то, чтобы перекладывать одну и ту же таблицу. В 2,3 раза больше, чем занимает сама работа с сайтом. И чем больше у вас товаров, тем хуже становится эта пропорция.</p>
+  </section>
+
+  <section>
+    <h2>Что это даёт, если поправить</h2>
+    <div class="cmp">
+      <div class="crow">
+        <div class="cl">Сейчас</div>
+        <div class="cbar before"></div>
+        <div class="cval">186 часов</div>
+      </div>
+      <div class="crow">
+        <div class="cl">Поправить таблицу</div>
+        <div class="cbar mid"></div>
+        <div class="cval">60 часов</div>
+      </div>
+      <div class="crow">
+        <div class="cl">И запустить в потоки</div>
+        <div class="cbar after"></div>
+        <div class="cval">10 часов</div>
+      </div>
+    </div>
+    <p class="note">Первое изменение не трогает логику парсинга вообще — только то, как записываются отметки. Цикл падает с 8 суток до 2,5. Второй шаг — запускать несколько потоков одновременно, каждому свой прокси: тогда 10 часов, и это уже одна ночь. Сколько потоков получится, зависит от количества прокси: их нужно не меньше, чем потоков.</p>
+  </section>
+
+  <section>
+    <h2>Три ноутбука не нужны. Хватит одного сервера</h2>
+    <div class="swap">
+      <div class="side old">
+        <div class="slab">Как сейчас</div>
+        <div class="lap">ноутбук 1</div>
+        <div class="lap">ноутбук 2</div>
+        <div class="lap">ноутбук 3</div>
+        <div class="snote">Цикл идёт 8 суток. Ни один ноутбук не доживает до конца: крышка закрывается, Wi-Fi отваливается, Windows уходит в перезагрузку после обновления.</div>
+      </div>
+      <div class="arw">→</div>
+      <div class="side new">
+        <div class="slab">Как надо</div>
+        <div class="srv">один сервер</div>
+        <div class="snote">Работает круглосуточно, не засыпает, запускается сам по расписанию. Несколько потоков крутятся внутри одного сервера, а не на разных машинах.</div>
+      </div>
+    </div>
+    <p class="note">Ни одна часть бота не требует экрана. Все четыре этапа это скрипты, а браузер для корзины работает без окна. Мощности здесь нужно меньше, чем вы думаете: весь проект на диске занимает 3 мегабайта, а в памяти в один момент живёт либо один браузер, либо одна открытая таблица. Этапы идут по очереди и друг с другом не пересекаются. Три ноутбука никогда не были про мощность — они были костылём против того, что одна машина не может не спать восемь суток. Сервер может. Это ровно его работа.</p>
+  </section>
+
+  <section>
+    <h2>Куда складывать результат</h2>
+    <div class="path">
+      <div class="pbox">
+        <div class="pi">⚙</div>
+        <div class="pt2">Сервер</div>
+        <div class="ps3">Ночью собирает данные и складывает готовую таблицу</div>
+      </div>
+      <div class="parr">→</div>
+      <div class="pbox">
+        <div class="pi">☁</div>
+        <div class="pt2">Облачный диск</div>
+        <div class="ps3">Яндекс.Диск или Google Диск, файл уезжает сразу после прогона</div>
+      </div>
+      <div class="parr">→</div>
+      <div class="pbox">
+        <div class="pi">💻</div>
+        <div class="pt2">Ваш ноутбук</div>
+        <div class="ps3">Утром открываете таблицу как обычно. К серверу не заходите вообще</div>
+      </div>
+    </div>
+    <p class="note">Синхронизация настраивается один раз и дальше работает сама. Плюс робот-наблюдатель может присылать файл прямо в Telegram каждое утро: открыли, посмотрели, ничего нигде не искали. Ваш ноутбук из процесса сборки выходит полностью и остаётся только местом, где вы смотрите готовое.</p>
+  </section>
+
+  <section>
+    <h2>Как это выглядит на сервере</h2>
+    <div class="tl">
+      <div class="tlrow">
+        <div class="tt">00:00</div>
+        <div class="tb b-menu"><span>Меню категорий, 2 ч</span></div>
+      </div>
+      <div class="tlrow">
+        <div class="tt">02:00</div>
+        <div class="tb b-cat"><span>Сбор ссылок, 4 ч</span></div>
+      </div>
+      <div class="tlrow">
+        <div class="tt">06:00</div>
+        <div class="tb b-prod"><span>Карточки товаров</span></div>
+      </div>
+    </div>
+    <p class="note">Ночью уходит меню и сбор ссылок, это ровно 6 часов. Товары идут отдельно: 60 тысяч карточек это 10 часов в потоках, их логично ставить раз в неделю или на выходные. Корзина запускается по требованию и занимает две минуты. Утром вы просто смотрите готовую таблицу.</p>
+  </section>
+
+  <section>
+    <h2>Что для этого нужно</h2>
+    <table>
+      <tr>
+        <th>Вариант сервера</th>
+        <th>Что потянет</th>
+        <th>Цена</th>
+      </tr>
+      <tr>
+        <td>2 ГБ / 1 ядро</td>
+        <td>Этапы по очереди. Браузер для корзины упрётся в нехватку памяти</td>
+        <td>300–500 ₽/мес</td>
+      </tr>
+      <tr>
+        <td><b>4 ГБ / 2 ядра / 40 ГБ</b></td>
+        <td><b>Весь цикл, 3–4 потока, браузер влезает. Тот вариант, где 10 часов реальны</b></td>
+        <td><b>400–800 ₽/мес</b></td>
+      </tr>
+      <tr>
+        <td>8 ГБ / 4 ядра</td>
+        <td>8–10 потоков, товары можно ужать до 6 часов</td>
+        <td>1 000–1 500 ₽/мес</td>
+      </tr>
+    </table>
+    <p class="note">Сервер лучше брать в Европе: прокси у вас британские, и если сервер стоит в России, каждый запрос идёт лишнее плечо через всю Европу. Данных на диске всего 3 мегабайта, так что размер диска значения не имеет. Прокси у вас в коде уже поддержаны, включая автоматическую замену тех, что сломались, — список надо только наполнить, в присланном архиве он пустой.</p>
+  </section>
+
+  <section>
+    <h2>Что входит в обслуживание</h2>
+    <ul class="work">
+      <li>Перенос всего бота на сервер, который вы арендуете сами, и настройка расписания</li>
+      <li>Ночные прогоны меню и ссылок, недельный прогон карточек</li>
+      <li>Робот-наблюдатель: проверяет, что прогон прошёл и данные обновились, и сразу пишет мне</li>
+      <li>Выгрузка готовой таблицы на облачный диск и в Telegram каждое утро</li>
+      <li>Починка, когда Tesco меняет вёрстку. Вы узнаёте о поломке от меня, а не утром от пустой таблицы</li>
+    </ul>
+    <div class="price" style="margin-top:18px">
+      <div>
+        <div class="pt">Наблюдение за работой</div>
+        <div class="ps">Сервер арендуете вы, он ваш. Эта сумма идёт только за то, что я за этим слежу. Починка при смене вёрстки входит. Можно и без подписки: тогда просто обращайтесь, когда что-то встанет.</div>
+      </div>
+      <div class="pv">
+        <div class="pn">2 500 ₽</div>
+        <div class="pl">в месяц</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Честно про деньги</h2>
+    <p class="note" style="font-size:13.5px;color:#3d4a60;line-height:1.75">
+      Я не знаю, сколько вы зарабатываете на этих данных, поэтому не буду рисовать «экономию». Считайте сами.
+      Полный цикл это 186 часов машинного времени. Даже если вы присматриваете за ним всего десятую часть,
+      это 19 часов вашего личного времени в месяц — не считая сорванных ночей, ручной склейки результатов
+      с разных ноутбуков и тех случаев, когда прогон умер и вы узнали об этом утром.
+      Если ваш час стоит дороже 130 рублей, подписка дешевле вашего времени. Если ваше время дешёвое
+      и процесс не мешает — скажите прямо, и мы ничего не будем менять. Мне интересна автоматизация,
+      которая реально освобождает время, а не подписка ради подписки.
+    </p>
+  </section>
+
+  <section>
+    <h2>Два вопроса</h2>
+    <div class="qrow">
+      <div class="qn">1</div>
+      <div>
+        <div class="qt">Сколько категорий вы гоняете и как часто?</div>
+        <div class="qs2">От этого зависит, ночная это задача или недельная, и какой сервер брать.</div>
+      </div>
+    </div>
+    <div class="qrow warn">
+      <div class="qn">2</div>
+      <div>
+        <div class="qt">Что вы делаете с собранными товарами дальше?</div>
+        <div class="qs2">Это и есть ответ на вопрос, окупается ли автоматизация. Пока я его не знаю, любые мои цифры по деньгам будут выдумкой.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">Расчёт сделан на ваших файлах и логах от 08.09.2026 и 15.05.2026. Все цифры воспроизводимы.</div>
+
+</div>
+</body>
+</html>
