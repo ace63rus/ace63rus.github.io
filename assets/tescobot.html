@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TescoBot: почему не собирает ссылки — и что починим</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:36px 20px;background:#eef1f6;color:#1a2233;
+    font:15px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .sheet{max-width:940px;margin:0 auto;background:#fff;border:1px solid #dfe4ec;
+    border-radius:16px;padding:38px 44px 42px;box-shadow:0 1px 3px rgba(20,30,60,.07)}
+  .top{border-bottom:1px solid #e8ecf3;padding-bottom:22px;margin-bottom:34px}
+  h1{font-size:25px;margin:0 0 7px;font-weight:650;letter-spacing:-.3px}
+  .lead{color:#5b6779;font-size:15px;margin:0}
+  h2{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#8b97a8;
+    font-weight:650;margin:0 0 18px}
+  section{margin-bottom:38px}
+  section:last-child{margin-bottom:0}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .box{border:1px solid #dfe4ec;border-radius:12px;padding:16px 18px;background:#fbfcfe}
+  .box .bt{font-size:14.5px;font-weight:650;margin-bottom:5px}
+  .box .bs{font-size:13.5px;color:#66738a}
+  .box .bn{font-size:22px;font-weight:700;line-height:1.15;margin-bottom:3px}
+
+  .step{position:relative;padding:0 0 20px 58px}
+  .step:last-child{padding-bottom:0}
+  .step::before{content:"";position:absolute;left:17px;top:38px;bottom:0;width:2px;background:#e6eaf1}
+  .step:last-child::before{display:none}
+  .num{position:absolute;left:0;top:0;width:36px;height:36px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:650;font-size:15px}
+  .step.q .num{background:#fdf2de;color:#8a5a00;border:1px solid #f0dcb0}
+  .step.ok .num{background:#e6f5ee;color:#0d6b48;border:1px solid #bfe4d3}
+  .st{font-size:16px;font-weight:600;line-height:1.3}
+  .ss{color:#66738a;font-size:13.5px;margin-top:3px}
+  .chip{display:inline-block;margin-left:10px;padding:2px 10px;border-radius:20px;
+    font-size:11px;font-weight:650;letter-spacing:.3px;vertical-align:2px;white-space:nowrap}
+  .chip.q{background:#fdf2de;color:#8a5a00}
+  .chip.ok{background:#e6f5ee;color:#0d6b48}
+  code{font:12.5px/1.4 Consolas,"SF Mono",Menlo,monospace;background:#f2f5fa;
+    border:1px solid #e3e9f2;border-radius:5px;padding:1px 6px;color:#3d4a60}
+
+  .break{border:1px solid #f0dcb0;background:#fffcf6;border-radius:12px;padding:20px 22px;margin-bottom:14px}
+  .break:last-child{margin-bottom:0}
+  .break .bh{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
+  .break .bn2{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:#8a5a00;color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+  .break .bt2{font-size:16px;font-weight:650}
+  .break .bd{font-size:13.5px;color:#5b6779;margin-bottom:11px}
+  .flow{font-size:13px;color:#3d4a60;background:#fff;border:1px solid #f0dcb0;border-radius:9px;
+    padding:11px 14px;line-height:1.75}
+  .flow b{color:#8a5a00}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{text-align:left;font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:#8b97a8;
+    font-weight:650;padding:0 12px 9px 0;border-bottom:1px solid #e8ecf3}
+  td{padding:11px 12px 11px 0;border-bottom:1px solid #f1f4f8;vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  .was{color:#a3413a;font-weight:600;white-space:nowrap}
+  .now{color:#0d6b48;font-weight:600;white-space:nowrap}
+
+  .qrow{display:flex;gap:16px;border:1px solid #dfe4ec;border-radius:12px;
+    padding:17px 20px;background:#fbfcfe;margin-bottom:13px}
+  .qrow:last-child{margin-bottom:0}
+  .qn{flex:0 0 30px;height:30px;border-radius:50%;background:#2f6bff;color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:650;font-size:14px}
+  .qrow.warn .qn{background:#8a5a00}
+  .qt{font-size:15.5px;font-weight:650;margin-bottom:4px}
+  .qs2{font-size:13.5px;color:#66738a}
+  .pills{display:flex;gap:8px;margin-top:11px;flex-wrap:wrap}
+  .pill{font-size:12px;font-weight:600;padding:5px 12px;border-radius:8px;
+    border:1px solid #dfe4ec;background:#fff;color:#48566d}
+  .pill.go{border-color:#bfe4d3;background:#eefaf4;color:#0d6b48}
+
+  .price{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;
+    border:1px solid #bfe4d3;background:#f7fdfa;border-radius:14px;padding:22px 24px}
+  .price .pt{font-size:16px;font-weight:650;margin-bottom:5px}
+  .price .ps{font-size:13.5px;color:#5b6779}
+  .price .pv{text-align:right;white-space:nowrap}
+  .price .pn{font-size:32px;font-weight:700;color:#0d6b48;line-height:1}
+  .price .pl{font-size:12px;color:#8b97a8;text-transform:uppercase;letter-spacing:.6px;font-weight:650;margin-top:4px}
+
+  ul.work{margin:0;padding-left:20px;font-size:13.5px;color:#3d4a60;line-height:1.9}
+  ul.work li::marker{color:#0d6b48}
+
+  .foot{margin-top:34px;padding-top:20px;border-top:1px solid #e8ecf3;
+    color:#8b97a8;font-size:12.5px;text-align:center}
+
+  @media (max-width:640px){
+    body{padding:16px 10px}
+    .sheet{padding:24px 18px 28px;border-radius:12px}
+    h1{font-size:20px}
+    .two{grid-template-columns:1fr}
+    .step{padding-left:48px}
+    .qrow{padding:15px 16px;gap:12px}
+    .price{grid-template-columns:1fr;gap:14px}
+    .price .pv{text-align:left}
+    .chip{margin-left:0;margin-top:6px;display:inline-block}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="top">
+    <h1>TescoBot: почему не собирает ссылки — и что починим</h1>
+    <p class="lead">Разобрал архив и проверил Tesco вживую сегодня. Магазин жив, вёрстка цела, товары на месте — сломан сам код бота. Ниже: что именно, с цифрами из контрольных прогонов.</p>
+  </div>
+
+  <section>
+    <h2>Что делает бот</h2>
+    <div class="two">
+      <div class="box">
+        <div class="bt">Сбор ссылок на товары</div>
+        <div class="bs">Идёт по 1427 категориям, собирает ссылки на товары, пишет в CSV и ставит «+» в Excel</div>
+      </div>
+      <div class="box">
+        <div class="bt">Обход меню категорий</div>
+        <div class="bs">Проходит меню в 4 уровня и выгружает названия подкатегорий и типов товара</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Что показала проверка сегодня</h2>
+    <div class="two">
+      <div class="box">
+        <div class="bn">133 товара</div>
+        <div class="bt">Магазин жив</div>
+        <div class="bs">Категория «Bouquets» отдаёт полный список: 48 ссылок на страницу, переход по страницам работает. Блокировки нет.</div>
+      </div>
+      <div class="box">
+        <div class="bn">0 ссылок</div>
+        <div class="bt">А бот их не видит</div>
+        <div class="bs">Тот же прогон бота по трём живым категориям: <b>ноль</b> собранных ссылок, ни одной отметки «+».</div>
+      </div>
+      <div class="box">
+        <div class="bn">52 ссылки</div>
+        <div class="bt">Меню цело</div>
+        <div class="bs">Панель отделов и подменю на месте — вёрстка не менялась. Правило поиска в коде работает.</div>
+      </div>
+      <div class="box">
+        <div class="bn">1 из 11</div>
+        <div class="bt">Меню теряет данные</div>
+        <div class="bs">Из 11 подкатегорий одной страницы в файл попадает одна. Остальные бот выбрасывает молча.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Две поломки — вот они</h2>
+
+    <div class="break">
+      <div class="bh"><div class="bn2">1</div><div class="bt2">Бот не видит, сколько всего товаров — и разворачивается</div></div>
+      <div class="bd">Перед сбором бот спрашивает у страницы: «сколько тут всего товаров?» Ответ он берёт из блока с надписью «Showing 1 to 48 of <b>133</b> items». Правило в коде смотрит на один уровень глубже, чем нужно, — и не находит цифру.</div>
+      <div class="flow">
+        цифра не найдена → бот считает «товаров <b>0</b>» →<br>
+        первая же ссылка: «уже собрал 0 из 0, хватит» → <b>выход</b> →<br>
+        в лог пишется «Ссылки не найдены», хотя товары на странице есть
+      </div>
+      <div class="bd" style="margin:11px 0 0">Одна не найденная цифра обнуляет весь сбор. При этом в логе стоит «No matches» — и это сбивает с толку сильнее всего: кажется, что страница пустая.</div>
+    </div>
+
+    <div class="break">
+      <div class="bh"><div class="bn2">2</div><div class="bt2">Бот считает страницу уже обработанной — и выбрасывает остальное</div></div>
+      <div class="bd">Перед записью бот проверяет: «эту страницу я уже вносил в файл?» Проверяет он <b>адрес страницы</b>, а не «адрес + название подкатегории». Если по странице в файле есть хотя бы одна строка — бот решает, что вносил всё, и остальное выбрасывает.</div>
+      <div class="flow">
+        в файле <b>1</b> строка из <b>11</b> по странице →<br>
+        бот: «всё уже записано» → <b>остальные 10 не добавляет</b> →<br>
+        страницу помечает пройденной → <b>потеря закрепляется навсегда</b>
+      </div>
+      <div class="bd" style="margin:11px 0 0">Это и есть «собирает не все ссылки в меню». Проверил экспериментом: оставил 1 запись из 11, прогнал заново — бот отчитался «все уже записаны», осталось 1 вместо 11.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Проверено прогоном: до и после</h2>
+    <table>
+      <tr><th>Что проверял</th><th>Сейчас</th><th>После починки</th></tr>
+      <tr>
+        <td>Сбор ссылок на товары<br><span style="color:#8b97a8;font-size:12.5px">три живые категории</span></td>
+        <td class="was">0 из 133</td><td class="now">133 из 133</td>
+      </tr>
+      <tr>
+        <td>Отметка «+» в Excel<br><span style="color:#8b97a8;font-size:12.5px">те же три категории</span></td>
+        <td class="was">0 из 3</td><td class="now">3 из 3</td>
+      </tr>
+      <tr>
+        <td>Переход по страницам<br><span style="color:#8b97a8;font-size:12.5px">категория на 3 страницы</span></td>
+        <td class="was">не доходит</td><td class="now">1 → 2 → 3</td>
+      </tr>
+      <tr>
+        <td>Меню, 4-й уровень<br><span style="color:#8b97a8;font-size:12.5px">подкатегории одной страницы</span></td>
+        <td class="was">1 из 11</td><td class="now">11 из 11</td>
+      </tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Что упадёт дальше, если не трогать</h2>
+    <div class="qrow warn">
+      <div class="qn">!</div>
+      <div>
+        <div class="qt">Правила поиска держатся на хеш-классах</div>
+        <div class="qs2">Часть правил в меню завязана на класс вида <code>bubEiCaWreJqI_A</code> — это сгенерированное имя, оно меняется при каждом обновлении сайта. Пока живо, но это мина: одна выкладка Tesco — и правило умрёт так же, как уже умерло правило поиска цифры. Рядом есть устойчивый якорь, на него и переведу.</div>
+      </div>
+    </div>
+    <div class="qrow warn">
+      <div class="qn">!</div>
+      <div>
+        <div class="qt">Два правила в карточке товара уже мертвы</div>
+        <div class="qs2">Поиск цены по карте и поиск категории в крошках не находят ничего (проверил вживую — ноль совпадений). Сейчас данные берутся запасным путём, поэтому вы этого не замечаете. Но запасной путь один, второго нет.</div>
+      </div>
+    </div>
+    <div class="qrow warn">
+      <div class="qn">!</div>
+      <div>
+        <div class="qt">Бот не запускается без файла прокси</div>
+        <div class="qs2">В архиве <code>proxy.txt</code> пустой, а в настройках прокси включены. При пустом списке бот не начинает работу вообще — просто выходит с сообщением, что список пуст. Если будете запускать у себя, файл с прокси нужен обязательно.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Что входит в работу</h2>
+    <ul class="work">
+      <li>Чиню определение количества товаров и страниц — без этого не собирается <b>ни одна</b> категория</li>
+      <li>Чиню дедупликацию в меню: сравнение по «страница + подкатегория», а не по одной странице</li>
+      <li>Убираю ложное «No matches», которое сбивает с толку в логах</li>
+      <li>Перевожу хрупкие правила меню на устойчивые якоря</li>
+      <li>Чиню два мёртвых правила в карточке товара</li>
+      <li>Убираю расхождение версий браузера в отпечатке</li>
+      <li>Понятное сообщение при пустом файле прокси</li>
+      <li><b>Контрольный прогон и отчёт:</b> лог, выгрузка, сравнение «до и после»</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="price">
+      <div>
+        <div class="pt">Починка TescoBot</div>
+        <div class="ps">Правки, контрольный прогон, отчёт по результату.<br>Срок — два дня.</div>
+      </div>
+      <div class="pv">
+        <div class="pn">2 000 ₽</div>
+        <div class="pl">за работу</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Чего не обещаю</h2>
+    <div class="qrow">
+      <div class="qn">!</div>
+      <div>
+        <div class="qt">Магазин может снова сменить вёрстку</div>
+        <div class="qs2">От этого не застрахован ни один парсер. Правило поиска живёт ровно столько, сколько живёт вёрстка магазина. Если она сменится снова, бот придётся поправить так же, как сейчас. Обещать, что починю и больше никогда не сломается, я не буду.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Два вопроса</h2>
+    <div class="qrow">
+      <div class="qn">1</div>
+      <div>
+        <div class="qt">Сколько категорий прогнать для приёмки?</div>
+        <div class="qs2">Полный прогон по 1427 категориям — около трёх часов. Для проверки хватит выборки из разных разделов.</div>
+        <div class="pills">
+          <span class="pill">20 категорий</span>
+          <span class="pill go">30 категорий</span>
+          <span class="pill">все 1427</span>
+        </div>
+      </div>
+    </div>
+    <div class="qrow">
+      <div class="qn">2</div>
+      <div>
+        <div class="qt">Файл с прокси дадите?</div>
+        <div class="qs2">В архиве он пустой. Мне он нужен только чтобы проверить, что бот поднимается через прокси так же, как без него. Не дадите — проверите этот путь сами первым прогоном у себя.</div>
+        <div class="pills">
+          <span class="pill go">дам рабочий список</span>
+          <span class="pill">проверю у себя сам</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">Скажите, что берёте — оформлю заказ и сяду за правки.</div>
+
+</div>
+</body>
+</html>
