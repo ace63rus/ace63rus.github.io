@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Сбор данных: три варианта, от починки до полной автономии</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:36px 20px;background:#eef1f6;color:#1a2233;
+    font:15px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .sheet{max-width:1000px;margin:0 auto;background:#fff;border:1px solid #dfe4ec;
+    border-radius:16px;padding:38px 44px 42px;box-shadow:0 1px 3px rgba(20,30,60,.07)}
+  .top{border-bottom:1px solid #e8ecf3;padding-bottom:22px;margin-bottom:34px}
+  h1{font-size:25px;margin:0 0 7px;font-weight:650;letter-spacing:-.3px}
+  .lead{color:#5b6779;font-size:15px;margin:0}
+  h2{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#8b97a8;
+    font-weight:650;margin:0 0 18px}
+  section{margin-bottom:38px}
+  section:last-child{margin-bottom:0}
+  .note{font-size:12.5px;color:#8b97a8;margin-top:10px;line-height:1.5}
+
+  .three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+  .stat{border:1px solid #dfe4ec;border-radius:12px;padding:16px 18px;background:#fbfcfe}
+  .stat .n{font-size:26px;font-weight:700;line-height:1.1;margin-bottom:4px}
+  .stat .t{font-size:13.5px;color:#66738a}
+  .stat.bad .n{color:#a3413a}
+  .stat.mid .n{color:#8a5a00}
+  .stat.ok .n{color:#0d6b48}
+
+  .cmp{display:grid;gap:11px}
+  .crow{display:grid;grid-template-columns:186px 1fr 96px;gap:14px;align-items:center}
+  .crow .cl{font-size:13px;font-weight:650;color:#48566d;text-align:right}
+  .cbar{height:34px;border-radius:8px;min-width:6px}
+  .cbar.before{background:#a3413a;width:100%}
+  .cbar.mid{background:#8a5a00;width:29.8%}
+  .cbar.after{background:#0d6b48;width:5.1%}
+  .cval{font-size:13.5px;font-weight:650;color:#48566d;white-space:nowrap}
+
+  .strip2{display:flex;height:52px;border-radius:9px;overflow:hidden;border:1px solid #dfe4ec}
+  .s-excel{background:#a3413a;flex:0 0 70.2%;color:#fff;font-size:12.5px;font-weight:650;
+    display:flex;align-items:center;justify-content:center}
+  .s-parse{background:#e6f5ee;flex:1;color:#0d6b48;font-size:12.5px;font-weight:650;
+    border-left:2px solid #fff;display:flex;align-items:center;justify-content:center}
+  .lg{display:flex;gap:20px;flex-wrap:wrap;margin-top:12px;font-size:12.5px;color:#5b6779}
+  .lg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:7px}
+
+  .opt{border:1px solid #dfe4ec;border-radius:14px;padding:20px 20px 18px;background:#fbfcfe;
+    display:flex;flex-direction:column}
+  .opt.best{border-color:#bfe4d3;background:#f7fdfa}
+  .opt .tag{font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:#8b97a8;
+    font-weight:650;margin-bottom:8px}
+  .opt.best .tag{color:#0d6b48}
+  .opt .name{font-size:17px;font-weight:650;margin-bottom:6px}
+  .opt .sub{font-size:13px;color:#66738a;margin-bottom:12px;line-height:1.45}
+  .opt .scope{display:inline-block;font-size:11.5px;font-weight:650;color:#2f6bff;
+    background:#eef3ff;border:1px solid #d7e3ff;border-radius:20px;padding:3px 11px;
+    margin-bottom:13px;align-self:flex-start}
+  .opt .price{font-size:27px;font-weight:700;color:#1a2233;line-height:1}
+  .opt.best .price{color:#0d6b48}
+  .opt .per{font-size:12px;color:#8b97a8;margin-top:4px}
+  .opt hr{border:0;border-top:1px solid #e8ecf3;margin:16px 0 14px}
+  .opt ul{margin:0;padding-left:18px;font-size:13px;color:#3d4a60;line-height:1.75}
+  .opt ul li::marker{color:#0d6b48}
+  .opt .minus{margin-top:14px;padding-top:13px;border-top:1px dashed #e8ecf3;
+    font-size:12.5px;color:#8b5a00;line-height:1.5}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{text-align:left;font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:#8b97a8;
+    font-weight:650;padding:0 12px 9px 0;border-bottom:1px solid #e8ecf3}
+  td{padding:11px 12px 11px 0;border-bottom:1px solid #f1f4f8;vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  .yes{color:#0d6b48;font-weight:600}
+  .no{color:#a3413a;font-weight:600}
+
+  .split{display:grid;grid-template-columns:1fr 44px 1fr;gap:12px;align-items:center}
+  .sp{border:1px solid #dfe4ec;border-radius:12px;padding:16px 18px;background:#fbfcfe}
+  .sp.sum{border-color:#bfe4d3;background:#f7fdfa}
+  .sp .sl{font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:#8b97a8;
+    font-weight:650;margin-bottom:9px}
+  .sp .sv{font-size:22px;font-weight:700;line-height:1.15}
+  .sp .sd{font-size:12.5px;color:#66738a;line-height:1.5;margin-top:6px}
+  .plus{text-align:center;font-size:20px;color:#8b97a8;font-weight:300}
+
+  .road{display:grid;grid-template-columns:1fr 34px 1fr 34px 1fr;gap:8px;align-items:center}
+  .rbox{border:1px solid #dfe4ec;border-radius:11px;padding:14px 16px;background:#fbfcfe;text-align:center}
+  .rbox.done{border-color:#bfe4d3;background:#f7fdfa}
+  .rbox .rn{font-size:13px;font-weight:650;margin-bottom:4px}
+  .rbox .rs{font-size:12px;color:#66738a;line-height:1.45}
+  .rarr{text-align:center;color:#8b97a8;font-size:16px}
+
+  .qrow{display:flex;gap:16px;border:1px solid #dfe4ec;border-radius:12px;
+    padding:17px 20px;background:#fbfcfe}
+  .qn{flex:0 0 30px;height:30px;border-radius:50%;background:#2f6bff;color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:650;font-size:14px}
+  .qt{font-size:15.5px;font-weight:650;margin-bottom:4px}
+  .qs2{font-size:13.5px;color:#66738a}
+
+  .foot{margin-top:34px;padding-top:20px;border-top:1px solid #e8ecf3;
+    color:#8b97a8;font-size:12.5px;text-align:center}
+
+  @media (max-width:640px){
+    body{padding:16px 10px}
+    .sheet{padding:24px 18px 28px;border-radius:12px}
+    h1{font-size:19px}
+    .three,.two{grid-template-columns:1fr}
+    .strip2{height:44px}
+    .s-excel,.s-parse{font-size:10.5px}
+    .crow{grid-template-columns:104px 1fr 76px;gap:9px}
+    .crow .cl{font-size:11.5px}
+    .cval{font-size:12px}
+    .split{grid-template-columns:1fr;gap:8px}
+    .plus{transform:rotate(90deg)}
+    .road{grid-template-columns:1fr;gap:8px}
+    .rarr{transform:rotate(90deg)}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="top">
+    <h1>Три варианта: от починки до полной автономии</h1>
+    <p class="lead">Спасибо за ответы. Из них видно главное: обновление нужно еженедельно, а через полтора-два месяца ежесуточно. Это и определяет выбор. Ниже три варианта - от самого простого до полного. Важное уточнение сразу: средний и полный варианты считаны на <b>оба ваших парсера</b>, а не на один.</p>
+  </div>
+
+  <section>
+    <h2>С чего всё начинается</h2>
+    <div class="three">
+      <div class="stat"><div class="n">92 349</div><div class="t">товаров в двух таблицах: 60 758 и 31 591</div></div>
+      <div class="stat bad"><div class="n">11,5 суток</div><div class="t">полный проход по двум сетям целиком</div></div>
+      <div class="stat mid"><div class="n">193 ч</div><div class="t">из них уходит на перекладывание таблиц</div></div>
+    </div>
+    <p class="note">60 758 - замер на вашем файле Tesco, 31 591 - размер вашей таблицы Sainsbury's. Последняя цифра - самая важная, и она есть в обоих парсерах. На каждый товар бот заново открывает файл со всей таблицей, ставит одну букву и сохраняет файл целиком. Это не работа с сайтом, это бухгалтерия. На большой таблице девять секунд на одну отметку, на вдвое меньшей - около пяти. Одна и та же схема в Sainsbury's и в Tesco, потому что код общий. Пока это так, ежесуточное обновление невозможно: цикл не влезает в сутки.</p>
+  </section>
+
+  <section>
+    <h2>Из чего складывается проход по товарам, две сети вместе</h2>
+    <div class="strip2">
+      <div class="s-excel">Перекладывание таблиц — 193 ч</div>
+      <div class="s-parse">Работа с сайтами — 82 ч</div>
+    </div>
+    <div class="lg">
+      <span><i style="background:#a3413a"></i>Перекладывание таблиц — 193 ч</span>
+      <span><i style="background:#e6f5ee;border:1px solid #bfe4d3"></i>Реальный разбор сайтов — 82 ч</span>
+    </div>
+    <p class="note">Работа с сайтами идёт нормально: в логе 1221 страница, 1219 прошли с первого раза, остальные бот сам дотянул повторами. Ускорять сам сбор не нужно. Нужно убрать перекладывание таблиц, и тогда цифры меняются так:</p>
+  </section>
+
+  <section>
+    <h2>Что даёт переделка записи</h2>
+    <div class="cmp">
+      <div class="crow">
+        <div class="cl">Две сети сейчас</div>
+        <div class="cbar before"></div>
+        <div class="cval">275 часов</div>
+      </div>
+      <div class="crow">
+        <div class="cl">После переделки записи</div>
+        <div class="cbar mid"></div>
+        <div class="cval">82 часа</div>
+      </div>
+      <div class="crow">
+        <div class="cl">И в несколько потоков</div>
+        <div class="cbar after"></div>
+        <div class="cval">14 часов</div>
+      </div>
+    </div>
+    <p class="note">Первое изменение не трогает логику поиска вообще - только то, как сохраняются отметки. Работа падает втрое с лишним, а на большой таблице вчетверо. Второй шаг - запускать несколько потоков одновременно, каждому свой прокси: тогда около четырнадцати часов на две сети, то есть одна ночь с запасом. Сколько потоков получится, зависит от количества прокси: их нужно не меньше, чем потоков. Меню и сбор ссылок добавляют ещё несколько часов, они идут до этого.</p>
+  </section>
+
+  <section>
+    <h2>Три варианта</h2>
+    <div class="three">
+
+      <div class="opt">
+        <div class="tag">Вариант 1</div>
+        <div class="name">Починить</div>
+        <div class="scope">один парсер — Tesco</div>
+        <div class="sub">Бот снова собирает всё, как раньше. Скорость не меняется.</div>
+        <div class="price">2 000 ₽</div>
+        <div class="per">срок 2 дня</div>
+        <hr>
+        <ul>
+          <li>обе поломки во втором боте</li>
+          <li>ложное «No matches» в логе</li>
+          <li>три места, которые упадут при обновлении сайта</li>
+          <li>понятное сообщение при пустом файле прокси</li>
+          <li>готовый exe с меню в консоли</li>
+          <li>контрольный прогон и отчёт</li>
+        </ul>
+        <div class="minus">Это про второй бот и только про него. Работает на ваших машинах, как сейчас, полный проход остаётся долгим. Для еженедельного обновления годится, для ежесуточного нет.</div>
+      </div>
+
+      <div class="opt">
+        <div class="tag">Вариант 2</div>
+        <div class="name">Починить и ускорить</div>
+        <div class="scope">два парсера — Sainsbury's и Tesco</div>
+        <div class="sub">Всё из первого плюс скорость, и сразу на обе сети.</div>
+        <div class="price">6 000 ₽</div>
+        <div class="per">срок 3 дня</div>
+        <hr>
+        <ul>
+          <li>всё, что в первом варианте</li>
+          <li>переделка записи отметок в обоих парсерах</li>
+          <li>полный проход по двум сетям за одну ночь</li>
+          <li>несколько потоков, каждому свой прокси</li>
+          <li>автозапуск по расписанию на вашем компьютере</li>
+          <li>проверка на живом прогоне по обеим сетям</li>
+        </ul>
+        <div class="minus">Компьютер должен быть включён в нужный час. Если он выключен или ушёл в перезагрузку, прогон пропускается, и об этом никто не узнаёт.</div>
+      </div>
+
+      <div class="opt best">
+        <div class="tag">Вариант 3 · рекомендую</div>
+        <div class="name">Полностью на сервере</div>
+        <div class="scope">два парсера, ваши машины не нужны</div>
+        <div class="sub">Всё из второго, но работает само.</div>
+        <div class="price">10 000 ₽</div>
+        <div class="per">срок 3 дня плюс приёмочный прогон</div>
+        <hr>
+        <ul>
+          <li>всё, что во втором варианте, на две сети</li>
+          <li>сервер в Европе, круглосуточно</li>
+          <li>сбор идёт ночью сам, по расписанию</li>
+          <li>утром готовые таблицы на облачном диске</li>
+          <li>в Телеграм приходит короткий отчёт за ночь и ссылка на файлы</li>
+          <li>видно, прошёл прогон или нет, не открывая компьютер</li>
+          <li>первый полный цикл по двум сетям прогоняю сам</li>
+        </ul>
+        <div class="minus">Сервер оформляете на себя. Порядок 400-800 рублей в месяц, расходы на вашей стороне. Подскажу, где и какой взять, и помогу с настройкой.</div>
+      </div>
+
+    </div>
+    <p class="note">Вариант 2 включает починку из первого, отдельно платить дважды не нужно. Вариант 3 - это второй плюс перенос на сервер, то есть 6 000 за работу по двум парсерам и 4 000 за серверную часть.</p>
+
+    <div class="split" style="margin-top:22px">
+      <div class="sp">
+        <div class="sl">Работа по двум парсерам</div>
+        <div class="sv">6 000 ₽</div>
+        <div class="sd">починка второго бота, переделка записи отметок в обоих, потоки, расписание, проверка на живом прогоне</div>
+      </div>
+      <div class="plus">+</div>
+      <div class="sp sum">
+        <div class="sl">Серверная часть</div>
+        <div class="sv">4 000 ₽</div>
+        <div class="sd">сервер, круглосуточное расписание, облако, Телеграм, наблюдатель, приёмочный прогон</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Разница в одну таблицу</h2>
+    <table>
+      <tr>
+        <th>Что</th>
+        <th>Вариант 1</th>
+        <th>Вариант 2</th>
+        <th>Вариант 3</th>
+      </tr>
+      <tr>
+        <td>Сколько парсеров</td>
+        <td class="no">один, Tesco</td>
+        <td class="yes">два</td>
+        <td class="yes">два</td>
+      </tr>
+      <tr>
+        <td>Полный проход по двум сетям</td>
+        <td class="no">11,5 суток</td>
+        <td>14 часов</td>
+        <td>14 часов</td>
+      </tr>
+      <tr>
+        <td>Где работает</td>
+        <td>ваши машины</td>
+        <td>ваши машины</td>
+        <td class="yes">сервер, машины не нужны</td>
+      </tr>
+      <tr>
+        <td>Кто запускает</td>
+        <td>вы, руками</td>
+        <td>компьютер сам по расписанию</td>
+        <td class="yes">сервер сам, круглосуточно</td>
+      </tr>
+      <tr>
+        <td>Если прогон не прошёл</td>
+        <td>узнаёте вы</td>
+        <td>узнаёте вы</td>
+        <td>узнаёте вы, из утреннего отчёта</td>
+      </tr>
+      <tr>
+        <td>Кто следит за прогонами</td>
+        <td>никто, пока вы не напишете</td>
+        <td>никто, пока вы не напишете</td>
+        <td>по желанию: отдельная услуга, 2 500 ₽ в месяц</td>
+      </tr>
+      <tr>
+        <td>Ежесуточное обновление</td>
+        <td class="no">невозможно</td>
+        <td>возможно, но зависит от включённого компьютера</td>
+        <td class="yes">работает штатно</td>
+      </tr>
+      <tr>
+        <td>Цена</td>
+        <td>2 000 ₽</td>
+        <td>6 000 ₽</td>
+        <td>10 000 ₽</td>
+      </tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Что приходит в Телеграм</h2>
+    <div class="two">
+      <div class="sp">
+        <div class="sl">В Телеграм</div>
+        <div class="sv">отчёт</div>
+        <div class="sd">пара строк за ночь: сколько собрано, сколько не прошло, ссылка на файлы. Читается с телефона за пять секунд.</div>
+      </div>
+      <div class="sp sum">
+        <div class="sl">На облачный диск</div>
+        <div class="sv">файлы</div>
+        <div class="sd">таблицы по каждой сети. Лежат и накапливаются, можно вернуться к любой дате.</div>
+      </div>
+    </div>
+    <p class="note">Тяжёлые таблицы через мессенджер не гоняем: у Телеграма жёсткий предел на файл от бота, и на пяти-шести сетях мы бы в него упёрлись. Поэтому файлы идут на облако, а в Телеграм - короткий отчёт и ссылка. Картинок в файлах нет: хранятся только ссылки на фото товаров, сам файл - чистый текст.</p>
+  </section>
+
+  <section>
+    <h2>Кто следит за прогонами</h2>
+    <div class="two">
+      <div class="opt">
+        <div class="tag">Без подписки</div>
+        <div class="name">Зовёте по факту</div>
+        <div class="price">2 000 ₽</div>
+        <div class="per">за каждый случай</div>
+        <hr>
+        <ul>
+          <li>за прогонами я не слежу</li>
+          <li>вы замечаете, что данные не обновились</li>
+          <li>пишете мне, я разбираюсь и чиню</li>
+          <li>первые 14 дней после сдачи - бесплатно</li>
+        </ul>
+        <div class="minus">Подходит, если вы и так каждый день смотрите в свои таблицы.</div>
+      </div>
+      <div class="opt best">
+        <div class="tag">Подписка</div>
+        <div class="name">Наблюдение</div>
+        <div class="price">2 500 ₽</div>
+        <div class="per">в месяц</div>
+        <hr>
+        <ul>
+          <li>за прогонами слежу я, каждый день</li>
+          <li>прогон не прошёл - узнаю я, а не вы</li>
+          <li>чиню до того, как вы это заметите</li>
+          <li>первые 14 дней после сдачи - бесплатно</li>
+        </ul>
+        <div class="minus">Смысл подписки именно в этом: следить и чинить, пока вы не смотрите.</div>
+      </div>
+    </div>
+    <p class="note">Это две разные вещи, и я их не смешиваю. Без подписки я к вашим прогонам не подхожу, пока вы не напишете. Наблюдение - это когда я сам проверяю их каждый день. Обязательным его не делаю: не нужно - просто обращаетесь, когда что-то встанет.</p>
+  </section>
+
+  <section>
+    <h2>Что это значит для вашего проекта</h2>
+    <div class="road">
+      <div class="rbox done">
+        <div class="rn">Sainsbury's</div>
+        <div class="rs">работает, сдан</div>
+      </div>
+      <div class="rarr">→</div>
+      <div class="rbox done">
+        <div class="rn">Tesco</div>
+        <div class="rs">чиним в этом заказе</div>
+      </div>
+      <div class="rarr">→</div>
+      <div class="rbox">
+        <div class="rn">Следующие сети</div>
+        <div class="rs">каждая - отдельный парсер: своя вёрстка, свои правила, своя проверка</div>
+      </div>
+    </div>
+    <p class="note">Вы описали конечную цель: сравнение цен по пяти-шести сетям с ежесуточным обновлением, отслеживанием изменений в торговой матрице и подбором корзины по наименьшей цене. Это дорога из этапов, и первые два магазина у вас уже есть. Каждую следующую сеть беру отдельной задачей: цену и срок назову по каждой, когда посмотрю сайт. Считать всё сразу смысла нет - вы сами написали, что подробностями пока рано загромождаться. Сначала пусть заработает этот этап.</p>
+  </section>
+
+  <section>
+    <h2>Что мне нужно от вас</h2>
+    <div class="qrow">
+      <div class="qn">1</div>
+      <div>
+        <div class="qt">Какой вариант берём</div>
+        <div class="qs2">Первый, второй или третий. Оформляю заказ и сажусь за работу в тот же день.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">Цифры по Tesco - замер на вашем файле: 60 758 товаров. По Sainsbury's - тот же код и ваша таблица на 31 591 строку. Время пересчитано по замеренной скорости записи, расчёт воспроизводим.</div>
+
+</div>
+</body>
+</html>
