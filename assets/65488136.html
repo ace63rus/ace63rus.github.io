@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TescoBot: прокси, прогрев и аккаунт — что меняю</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:36px 20px;background:#eef1f6;color:#1a2233;
+    font:15px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .sheet{max-width:960px;margin:0 auto;background:#fff;border:1px solid #dfe4ec;
+    border-radius:16px;padding:38px 44px 40px;box-shadow:0 1px 3px rgba(20,30,60,.07)}
+  .top{border-bottom:1px solid #e8ecf3;padding-bottom:22px;margin-bottom:32px}
+  h1{font-size:25px;margin:0 0 8px;font-weight:650;letter-spacing:-.3px}
+  .lead{color:#5b6779;font-size:14.5px;margin:0}
+  h2{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#8b97a8;
+    font-weight:650;margin:0 0 16px}
+  section{margin-bottom:34px}
+  section:last-child{margin-bottom:0}
+
+  .contours{display:grid;grid-template-columns:1fr 84px 1fr;gap:0;align-items:stretch}
+  .card{border:1px solid #dfe4ec;border-radius:14px;padding:18px 20px 16px;background:#fbfcfe}
+  .card.anon{border-color:#cfe0ff;background:#f7faff}
+  .card.acc{border-color:#bfe4d3;background:#f7fdfa}
+  .ct{font-size:11px;letter-spacing:.9px;text-transform:uppercase;font-weight:700;margin-bottom:4px}
+  .card.anon .ct{color:#2f6bff}
+  .card.acc .ct{color:#0d6b48}
+  .cn{font-size:16.5px;font-weight:650;margin-bottom:12px}
+  .node{border:1px solid #dfe4ec;background:#fff;border-radius:9px;padding:9px 12px;
+    font-size:13.5px;color:#3d4a60}
+  .node b{font-weight:650;color:#1a2233}
+  .card.anon .node{border-color:#dbe7ff}
+  .card.acc .node{border-color:#d3ecdf}
+  .arrow{height:22px;display:flex;align-items:center;justify-content:center}
+  .arrow i{width:8px;height:8px;border-right:2px solid #9db0cb;border-bottom:2px solid #9db0cb;
+    transform:rotate(45deg);margin-top:-4px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  .tag{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:7px;border:1px solid #dfe4ec;
+    background:#fff;color:#48566d}
+  .card.anon .tag{border-color:#cfe0ff;color:#2f4f8f}
+  .card.acc .tag{border-color:#bfe4d3;color:#0d6b48}
+  .divider{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+  .divider .line{flex:1;width:2px;background:repeating-linear-gradient(#d5dce8 0 5px,transparent 5px 10px)}
+  .divider .neq{width:30px;height:30px;border-radius:50%;border:1px solid #d5dce8;background:#fff;
+    color:#7e8b9f;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{text-align:left;font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:#8b97a8;
+    font-weight:650;padding:0 12px 9px 0;border-bottom:1px solid #e8ecf3}
+  td{padding:12px 14px 12px 0;border-bottom:1px solid #f1f4f8;vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  .was{color:#a3413a;font-weight:650}
+  .now{color:#0d6b48;font-weight:650}
+  .why{color:#7d8a9e;font-size:12.5px;margin-top:4px;line-height:1.45}
+
+  .ask{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .ask .item{border:1px solid #dfe4ec;border-radius:11px;padding:14px 15px;background:#fbfcfe}
+  .ask .k{font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:#8b97a8;font-weight:650;margin-bottom:5px}
+  .ask .v{font-size:13.5px;color:#3d4a60;line-height:1.45}
+  .ask .v b{color:#1a2233}
+
+  .chain{display:grid;grid-template-columns:1fr 26px 1fr 26px 1fr;gap:0;align-items:stretch}
+  .chain .step{border:1px solid #bfe4d3;background:#f7fdfa;border-radius:12px;padding:14px 16px 15px}
+  .chain .num{font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;font-weight:700;
+    color:#0d6b48;margin-bottom:6px}
+  .chain .st{font-size:14.5px;font-weight:650;margin-bottom:6px;color:#1a2233}
+  .chain .sd{font-size:12.5px;color:#5b6779;line-height:1.45}
+  .chain .sep{display:flex;align-items:center;justify-content:center}
+  .chain .sep i{width:9px;height:9px;border-right:2px solid #9db0cb;border-bottom:2px solid #9db0cb;
+    transform:rotate(-45deg);margin-right:4px}
+
+  .note{border:1px solid #f0dcb0;background:#fffcf6;border-radius:11px;padding:14px 18px;
+    font-size:13.5px;color:#5b6779}
+  .note b{color:#8a5a00}
+
+  .foot{margin-top:30px;padding-top:18px;border-top:1px solid #e8ecf3;
+    color:#8b97a8;font-size:12.5px;text-align:center}
+
+  @media (max-width:700px){
+    body{padding:16px 10px}
+    .sheet{padding:24px 18px 26px;border-radius:12px}
+    h1{font-size:20px}
+    .contours{grid-template-columns:1fr}
+    .divider{flex-direction:row;height:34px}
+    .divider .line{width:auto;height:2px;flex:1;
+      background:repeating-linear-gradient(90deg,#d5dce8 0 5px,transparent 5px 10px)}
+    .ask{grid-template-columns:1fr 1fr}
+    .chain{grid-template-columns:1fr}
+    .chain .sep{height:26px}
+    .chain .sep i{transform:rotate(45deg);margin:0}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="top">
+    <h1>Прокси, прогрев и аккаунт: что меняю и почему</h1>
+    <p class="lead">Коротко: при сборе бот в аккаунт не входит. Поэтому процедуру прогрева каждой прокси по одной я отменяю — она не нужна и как раз создавала тот след, которого вы не хотите.</p>
+  </div>
+
+  <section>
+    <h2>Два независимых контура</h2>
+    <div class="contours">
+      <div class="card anon">
+        <div class="ct">Контур 1</div>
+        <div class="cn">Сбор данных</div>
+        <div class="node"><b>Прокси-пул</b><br>адреса из proxy.txt</div>
+        <div class="arrow"><i></i></div>
+        <div class="node"><b>Анонимный браузер</b><br>как обычный посетитель</div>
+        <div class="arrow"><i></i></div>
+        <div class="node"><b>Каталог Tesco</b><br>категории, товары, цены</div>
+        <div class="tags">
+          <span class="tag">вход не выполняется</span>
+          <span class="tag">куки аккаунта не используются</span>
+        </div>
+      </div>
+
+      <div class="divider">
+        <div class="line"></div>
+        <div class="neq">≠</div>
+        <div class="line"></div>
+      </div>
+
+      <div class="card acc">
+        <div class="ct">Контур 2</div>
+        <div class="cn">Корзина</div>
+        <div class="node"><b>Ваш домашний IP</b><br>один постоянный адрес</div>
+        <div class="arrow"><i></i></div>
+        <div class="node"><b>Вход в аккаунт</b><br>логин и пароль, без прокси</div>
+        <div class="arrow"><i></i></div>
+        <div class="node"><b>Корзина</b><br>пункт 4 меню</div>
+        <div class="tags">
+          <span class="tag">без прокси</span>
+          <span class="tag">один аккаунт — один IP</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Что отменяю и что оставляю</h2>
+    <table>
+      <tr>
+        <th style="width:44%">Что я говорил раньше</th>
+        <th>Как сейчас</th>
+      </tr>
+      <tr>
+        <td><span class="was">Прогреть каждую прокси через пункт 5, по одной, оставить живые</span></td>
+        <td><span class="now">Отменено</span>
+          <div class="why">Сбор не логинится, прогревать нечего. А каждый вход — это запись «аккаунт зашёл с адреса X»: 14 прокси дали бы 14 таких записей.</div>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="was">Пункт 5 берёт адрес из proxy.txt</span></td>
+        <td><span class="now">Исправлено</span>
+          <div class="why">Вход идёт напрямую с вашего IP, прокси в этом шаге не участвует.</div>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="was">Сбор подхватывает сохранённую сессию, если файл лежит рядом</span></td>
+        <td><span class="now">Закрыто</span>
+          <div class="why">Отдельный переключатель, по умолчанию выключен. Даже с файлом сессии сбор пойдёт анонимно.</div>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="was">Один аккаунт — один постоянный IP</span></td>
+        <td><span class="now">Остаётся в силе</span>
+          <div class="why">Это про корзину. Там так и есть: без прокси, с вашего адреса.</div>
+        </td>
+      </tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Порядок для корзины: сначала пункт 5, потом пункт 4</h2>
+    <div class="chain">
+      <div class="step">
+        <div class="num">Шаг 1 · пункт 5</div>
+        <div class="st">Вход в аккаунт</div>
+        <div class="sd">Логин и пароль в видимом окне. Идёт с вашего домашнего адреса, прокси из пула в этом шаге не участвуют.</div>
+      </div>
+      <div class="sep"><i></i></div>
+      <div class="step">
+        <div class="num">Шаг 2</div>
+        <div class="st">Сессия сохраняется</div>
+        <div class="sd">Файл сессии рядом с программой. Это пропуск в аккаунт для следующего шага.</div>
+      </div>
+      <div class="sep"><i></i></div>
+      <div class="step">
+        <div class="num">Шаг 3 · пункт 4</div>
+        <div class="st">Корзина</div>
+        <div class="sd">Только после шага 1. Без сохранённой сессии пункт 4 не заработает.</div>
+      </div>
+    </div>
+    <div style="height:14px"></div>
+    <div class="note"><b>Обязательно.</b> Пункт 4 не работает сам по себе: он берёт готовую сессию, а создаёт её пункт 5. Вход идёт через ваше обычное подключение, не через купленные прокси из пула. Если для аккаунта нужен отдельный резидентский прокси, скажите сразу: это другая настройка.</div>
+  </section>
+
+  <div class="foot">TescoBot · контуры «аккаунт» и «сбор» · 18.10.2026</div>
+
+</div>
+</body>
+</html>
