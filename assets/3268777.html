@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Генератор учебных планов: цепочка и четыре вопроса</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:36px 20px;background:#eef1f6;color:#1a2233;
+    font:15px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .sheet{max-width:940px;margin:0 auto;background:#fff;border:1px solid #dfe4ec;
+    border-radius:16px;padding:38px 44px 42px;box-shadow:0 1px 3px rgba(20,30,60,.07)}
+  .top{border-bottom:1px solid #e8ecf3;padding-bottom:22px;margin-bottom:34px}
+  h1{font-size:25px;margin:0 0 7px;font-weight:650;letter-spacing:-.3px}
+  .lead{color:#5b6779;font-size:15px;margin:0}
+  h2{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#8b97a8;
+    font-weight:650;margin:0 0 18px}
+  section{margin-bottom:38px}
+  section:last-child{margin-bottom:0}
+
+  .step{position:relative;padding:0 0 20px 58px}
+  .step:last-child{padding-bottom:0}
+  .step::before{content:"";position:absolute;left:17px;top:38px;bottom:0;width:2px;background:#e6eaf1}
+  .step:last-child::before{display:none}
+  .num{position:absolute;left:0;top:0;width:36px;height:36px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:650;font-size:15px}
+  .step.q .num{background:#fdf2de;color:#8a5a00;border:1px solid #f0dcb0}
+  .step.ok .num{background:#e6f5ee;color:#0d6b48;border:1px solid #bfe4d3}
+  .st{font-size:16px;font-weight:600;line-height:1.3}
+  .ss{color:#66738a;font-size:13.5px;margin-top:3px}
+  .chip{display:inline-block;margin-left:10px;padding:2px 10px;border-radius:20px;
+    font-size:11px;font-weight:650;letter-spacing:.3px;vertical-align:2px;white-space:nowrap}
+  .chip.q{background:#fdf2de;color:#8a5a00}
+  .chip.ok{background:#e6f5ee;color:#0d6b48}
+
+  .fork{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .card{border:1px solid #dfe4ec;border-radius:12px;padding:18px 20px;background:#fbfcfe}
+  .card.a{border-color:#f0dcb0;background:#fffcf6}
+  .card.b{border-color:#bfe4d3;background:#f7fdfa}
+  .card .ct{font-size:15px;font-weight:650;margin-bottom:6px}
+  .card .cs{font-size:13.5px;color:#66738a}
+  .rec{display:inline-block;margin-top:10px;font-size:11px;font-weight:650;
+    padding:3px 9px;border-radius:20px;background:#e6f5ee;color:#0d6b48}
+
+  .qrow{display:flex;gap:16px;border:1px solid #dfe4ec;border-radius:12px;
+    padding:17px 20px;background:#fbfcfe;margin-bottom:13px}
+  .qrow:last-child{margin-bottom:0}
+  .qn{flex:0 0 30px;height:30px;border-radius:50%;background:#2f6bff;color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:650;font-size:14px}
+  .qt{font-size:15.5px;font-weight:650;margin-bottom:4px}
+  .qs2{font-size:13.5px;color:#66738a}
+  .pills{display:flex;gap:8px;margin-top:11px;flex-wrap:wrap}
+  .pill{font-size:12px;font-weight:600;padding:5px 12px;border-radius:8px;
+    border:1px solid #dfe4ec;background:#fff;color:#48566d}
+  .pill.go{border-color:#bfe4d3;background:#eefaf4;color:#0d6b48}
+  .pill.no{border-color:#f0dcb0;background:#fff8ec;color:#8a5a00}
+
+  .foot{margin-top:34px;padding-top:20px;border-top:1px solid #e8ecf3;
+    color:#8b97a8;font-size:12.5px;text-align:center}
+
+  /* Адаптив под телефон */
+  @media (max-width:640px){
+    body{padding:16px 10px}
+    .sheet{padding:24px 18px 28px;border-radius:12px}
+    h1{font-size:20px}
+    .fork{grid-template-columns:1fr}
+    .step{padding-left:48px}
+    .qrow{padding:15px 16px;gap:12px}
+    .chip{margin-left:0;margin-top:6px;display:inline-block}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="top">
+    <h1>Генератор учебных планов: цепочка и четыре вопроса</h1>
+    <p class="lead">Разобрал ваше ТЗ по шагам. Четыре шага из шести уже понятны, по двум нужен ваш ответ. Есть один момент по нормативке, который стоит решить до старта.</p>
+  </div>
+
+  <section>
+    <h2>Цепочка</h2>
+
+    <div class="step ok">
+      <div class="num">1</div>
+      <div class="st">Запуск из сделки<span class="chip ok">решено</span></div>
+      <div class="ss">Приложение внутри Битрикс24. Кнопка над лентой карточки сделки: менеджер не уходит из сделки и ничего не копирует руками</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">2</div>
+      <div class="st">Два поля на входе<span class="chip ok">решено</span></div>
+      <div class="ss">Название программы и часы. Например: Робототехника, 520 часов</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">3</div>
+      <div class="st">Генерация содержания<span class="chip ok">решено</span></div>
+      <div class="ss">Модель работает по вашим инструкциям и собирает модули, часы, практику и аттестацию в структуре дополнительной профессиональной программы</div>
+    </div>
+
+    <div class="step q">
+      <div class="num">4</div>
+      <div class="st">Сборка PDF<span class="chip q">вопрос</span></div>
+      <div class="ss">Нужен ваш шаблон. Пока его нет, форму итогового документа зафиксировать нельзя, а значит и приёмку тоже</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">5</div>
+      <div class="st">Возврат в сделку<span class="chip ok">решено</span></div>
+      <div class="ss">Готовый PDF появляется в ленте этой же сделки, рядом с перепиской. Скачивать из почты и искать по папкам не нужно</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">6</div>
+      <div class="st">Проверка перед выдачей<span class="chip ok">решено</span></div>
+      <div class="ss">Проверяю обязательные блоки: цель, планируемые результаты, учебный план, календарный график, формы аттестации, оценочные материалы</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Развилка: как модель собирает план</h2>
+    <div class="fork">
+      <div class="card a">
+        <div class="ct">А. Свободная генерация</div>
+        <div class="cs">Модель сама придумывает состав модулей под каждую программу. Быстро запустить, но два плана на одну и ту же программу будут разными, и проверять каждый придётся глазами.</div>
+      </div>
+      <div class="card b">
+        <div class="ct">Б. Каркас плюс наполнение</div>
+        <div class="cs">Структура жёсткая: блоки, доли часов, практика, аттестация. Модель заполняет содержание внутри каркаса. Результат предсказуемый, часы сходятся, проверка быстрая.</div>
+        <span class="rec">рекомендую этот путь</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Что важно по нормативке</h2>
+    <div class="qrow">
+      <div class="qn">i</div>
+      <div>
+        <div class="qt">Приказ 499 больше не действует</div>
+        <div class="qs2">С 1 сентября 2025 года вместо него работает приказ Минобрнауки 266 от 24 марта 2025 года. Перечень блоков почти тот же, но ссылаться в документе нужно на действующий. Плюс 520 часов по этому же приказу это профессиональная переподготовка, а не повышение квалификации, и набор обязательных блоков у них разный. Если ваши инструкции писались под 499, поправлю под 266.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Четыре вопроса</h2>
+
+    <div class="qrow">
+      <div class="qn">1</div>
+      <div>
+        <div class="qt">Пришлите шаблон PDF</div>
+        <div class="qs2">Тот файл, по которому должен собираться план. От него зависит вся вёрстка и то, что считается готовым результатом.</div>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qn">2</div>
+      <div>
+        <div class="qt">Пришлите инструкции для агента</div>
+        <div class="qs2">Посмотрю и скажу, что доработать под действующий приказ. Это снимает половину правок на приёмке.</div>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qn">3</div>
+      <div>
+        <div class="qt">Какой тариф Битрикс24</div>
+        <div class="qs2">Кнопка в сделке работает через REST-доступ, он включается на коммерческих тарифах. И нужен человек с правами администратора, чтобы поставить приложение на портал.</div>
+        <div class="pills">
+          <span class="pill go">Коммерческий тариф, доступ есть</span>
+          <span class="pill no">Пробный или бесплатный</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qn">4</div>
+      <div>
+        <div class="qt">Чей ключ модели</div>
+        <div class="qs2">Ваш ключ или работаем на моей стороне. От этого зависит, кто платит за каждую генерацию и куда уходят данные программ.</div>
+        <div class="pills">
+          <span class="pill">Ключ ваш</span>
+          <span class="pill">Работаем на моей стороне</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">Ответьте на четыре вопроса - и я начну с прототипа генератора на вашей программе.</div>
+
+</div>
+</body>
+</html>
