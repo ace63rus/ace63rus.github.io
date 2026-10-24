@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Схема автокликера — заказ 3269187</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #ffffff;
+    color: #1a1a1a;
+    font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 28px 20px 40px; }
+  h1 { font-size: 26px; margin: 0 0 6px; }
+  .sub { color: #555; font-size: 15px; margin: 0 0 24px; }
+  .step { display: flex; gap: 16px; margin-bottom: 16px; align-items: flex-start; }
+  .num {
+    flex: 0 0 38px; height: 38px; border-radius: 50%;
+    background: #1a1a1a; color: #fff; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; font-size: 17px;
+  }
+  .card {
+    flex: 1; background: #f7f8fa; border: 1px solid #e3e6ea; border-radius: 12px;
+    padding: 16px 18px;
+  }
+  .card h2 { font-size: 17px; margin: 0 0 6px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .badge { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; }
+  .badge.ok { background: #e6f4ea; color: #1a7f37; }
+  .badge.q { background: #fff1e6; color: #b54708; }
+  .card p { margin: 0; color: #333; font-size: 15px; }
+  .chip {
+    display: block; margin-top: 10px; padding: 9px 12px; border-radius: 10px;
+    background: #fff8e1; border: 1px solid #ffe7a3; color: #6b4e00; font-size: 14px;
+  }
+  .chip b { color: #8a5a00; }
+  .fork { display: flex; gap: 12px; margin-top: 12px; }
+  .fork .opt { flex: 1; background: #fff; border: 1px dashed #c9a227; border-radius: 10px; padding: 12px; font-size: 14px; }
+  .fork .opt span { display:block; font-weight: 700; margin-bottom: 4px; }
+  .final {
+    margin-top: 26px; background: #eef3ff; border: 1px solid #c7d6ff; border-radius: 14px;
+    padding: 20px; text-align: center; font-size: 17px; font-weight: 600;
+  }
+  .foot { margin-top: 22px; color: #888; font-size: 13px; text-align: center; }
+  @media (max-width: 640px) {
+    .step { flex-direction: column; gap: 8px; }
+    .fork { flex-direction: column; }
+    h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Как будет работать программа-автокликер</h1>
+  <p class="sub">Заказ 3269187 — разобрал по шагам. Зелёным отмечено, что уже ясно. Оранжевым — где нужен ваш ответ.</p>
+
+  <div class="step">
+    <div class="num">1</div>
+    <div class="card">
+      <h2>Запуск программы на компьютере <span class="badge ok">РЕШЕНО</span></h2>
+      <p>Это отдельная программа, которая ставится на ваш Windows-компьютер. Не сайт и не вкладка в браузере.</p>
+      <div class="chip"><b>Уточнить:</b> у вас Windows 10 или 11?</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">2</div>
+    <div class="card">
+      <h2>Ввод времени и настроек <span class="badge q">ВОПРОС</span></h2>
+      <p>Вы открываете программу и задаёте момент срабатывания, например 15:00:00, плюс нужные параметры.</p>
+      <div class="chip"><b>Вопрос:</b> сколько кликов нужно — один в один момент, повторять через интервал, или несколько разных времён?</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">3</div>
+    <div class="card">
+      <h2>Ожидание <span class="badge ok">РЕШЕНО</span></h2>
+      <p>Программа засыпает и ждёт нужного момента. Её можно свернуть, она работает в фоне.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">4</div>
+    <div class="card">
+      <h2>Сверка времени с сетью <span class="badge ok">РЕШЕНО</span></h2>
+      <p>Перед срабатыванием программа берёт точное время из интернета, а не из часов компьютера. Так попадает в заданный момент с точностью плюс-минус 0.1 секунды.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">5</div>
+    <div class="card">
+      <h2>Клик в заданный момент <span class="badge q">ВОПРОС</span></h2>
+      <p>Ровно в назначенное время программа делает один клик левой кнопкой мыши.</p>
+      <div class="chip"><b>Вопрос:</b> куда жать — туда, где в момент T стоит курсор, или заранее заданная точка на экране?</div>
+      <div class="chip"><b>Вопрос:</b> время вы вбиваете вручную, или момент привязан к событию на сайте — например, появилась нужная кнопка?</div>
+      <div class="fork">
+        <div class="opt"><span>Вариант А</span>Клик туда, где курсор в момент срабатывания.</div>
+        <div class="opt"><span>Вариант Б</span>Клик в заранее заданную точку экрана.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">6</div>
+    <div class="card">
+      <h2>Отчёт после клика <span class="badge q">ВОПРОС</span></h2>
+      <p>Программа показывает, сработал ли клик в окне плюс-минус 0.1 секунды от заданного времени.</p>
+      <div class="chip"><b>Вопрос:</b> нужен ли такой отчёт, чтобы вы потом видели, попал клик или нет?</div>
+    </div>
+  </div>
+
+  <div class="final">Ответьте на 5 вопросов со схемы — и начну сборку.</div>
+
+  <div class="foot">Схема под заказ 3269187. Без вас на этих шагах не обойтись.</div>
+</div>
+</body>
+</html>
