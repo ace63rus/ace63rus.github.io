@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Где рвётся сценарий в Make — заказ 3269194</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #ffffff;
+    color: #1a1a1a;
+    font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 28px 20px 40px; }
+  h1 { font-size: 26px; margin: 0 0 6px; }
+  .sub { color: #555; font-size: 15px; margin: 0 0 22px; }
+  h2.sec { font-size: 19px; margin: 28px 0 12px; }
+
+  .pain { background: #fdf1f0; border: 1px solid #f3c9c4; border-radius: 14px; padding: 18px 20px; }
+  .pain .t { font-weight: 700; font-size: 17px; color: #a12b1d; margin-bottom: 8px; }
+  .pain ul { margin: 0; padding-left: 20px; }
+  .pain li { margin-bottom: 6px; font-size: 15px; color: #333; }
+
+  .chain { border: 1px solid #e3e6ea; border-radius: 14px; overflow: hidden; }
+  .chain .t { padding: 12px 18px; font-weight: 700; font-size: 16px; background: #f7f8fa; border-bottom: 1px solid #e3e6ea; }
+  .row { display: flex; align-items: center; gap: 12px; padding: 10px 18px; border-bottom: 1px solid #eef0f2; }
+  .row:last-child { border-bottom: none; }
+  .row .n {
+    flex: 0 0 24px; height: 24px; border-radius: 50%; background: #e9ecef; color: #55606a;
+    font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+  }
+  .row .nm { flex: 1; font-size: 15px; }
+  .st { font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+  .st.ok { background: #e6f4ea; color: #1a7f37; }
+  .st.bad { background: #fdeceb; color: #b3261e; }
+  .st.dead { background: #f1f3f5; color: #7b8794; }
+  .row.dead .nm { color: #7b8794; }
+  .row.bad { background: #fffafa; }
+
+  .grid2 { display: flex; flex-wrap: wrap; gap: 12px; }
+  .card { flex: 1 1 300px; background: #f7f8fa; border: 1px solid #e3e6ea; border-radius: 12px; padding: 16px 18px; }
+  .card h3 { font-size: 16px; margin: 0 0 6px; }
+  .card p { margin: 0; font-size: 15px; color: #333; }
+
+  .gain { margin-top: 20px; background: #eef3ff; border: 1px solid #c7d6ff; border-radius: 14px; padding: 18px 20px; font-size: 16px; }
+  .gain b { color: #1a3fa0; }
+
+  .q { margin-bottom: 9px; padding: 11px 14px; border-radius: 10px; background: #fff8e1; border: 1px solid #ffe7a3; color: #6b4e00; font-size: 15px; }
+
+  .final { margin-top: 24px; background: #eef3ff; border: 1px solid #c7d6ff; border-radius: 14px; padding: 20px; text-align: center; font-size: 17px; font-weight: 600; }
+  .note { margin-top: 12px; text-align: center; color: #6b7480; font-size: 14px; }
+  .foot { margin-top: 22px; color: #8a929b; font-size: 13px; text-align: center; }
+
+  @media (max-width: 640px) {
+    h1 { font-size: 22px; }
+    .row { flex-wrap: wrap; }
+    .row .nm { flex: 1 1 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Где рвётся ваш сценарий и как это починить</h1>
+  <p class="sub">Заказ 3269194 — разобрал по вашим скринам. Красным — где ломается, серым — что уже не доходит, зелёным — что чиним.</p>
+
+  <div class="pain">
+    <div class="t">Что происходит сейчас</div>
+    <ul>
+      <li>Каждый день ваш канал должен получать свежий фундаментальный и технический анализ.</li>
+      <li>Сейчас цепочка не доходит до конца. По вашему описанию, первым отвалился поиск компании, дальше анализ не получает свежих данных, и пост не доходит до Telegram.</li>
+      <li>Итог: в группе тишина, а когда посты ещё выходили, они были на вчерашних данных.</li>
+    </ul>
+  </div>
+
+  <h2 class="sec">Цепочка по шагам, как она у вас устроена</h2>
+  <div class="chain">
+    <div class="t">Восемь модулей, и каждый следующий зависит от предыдущего</div>
+    <div class="row"><span class="n">1</span><span class="nm">Индексы: список тикеров</span><span class="st ok">работает</span></div>
+    <div class="row bad"><span class="n">2</span><span class="nm">Поиск компании: новости по тикеру</span><span class="st bad">ломается: свежие новости не приходят</span></div>
+    <div class="row dead"><span class="n">3</span><span class="nm">OpenAI: генерация фундаментального и технического анализа</span><span class="st dead">не доходит</span></div>
+    <div class="row dead"><span class="n">4</span><span class="nm">OpenAI: вёрстка поста в HTML для Telegram</span><span class="st dead">не доходит</span></div>
+    <div class="row dead"><span class="n">5</span><span class="nm">Telegram Bot: отправка по API</span><span class="st dead">не доходит</span></div>
+    <div class="row dead"><span class="n">6</span><span class="nm">Telegram Bot: ответ на сообщение</span><span class="st dead">не доходит</span></div>
+    <div class="row dead"><span class="n">7</span><span class="nm">Сведение индекса</span><span class="st dead">не доходит</span></div>
+    <div class="row dead"><span class="n">8</span><span class="nm">Обновление индекса в таблице</span><span class="st dead">не доходит</span></div>
+  </div>
+
+  <h2 class="sec">Что чиним</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>Свежие данные</h3>
+      <p>Восстанавливаю источник новостей и заодно заделаю так, чтобы его временный сбой не ронял весь сценарий целиком.</p>
+    </div>
+    <div class="card">
+      <h3>Свежие модели OpenAI с выходом в интернет</h3>
+      <p>Перевожу генерацию на актуальную модель и включаю веб-поиск, чтобы анализ дотягивал данные сам, а не зависел от отдельного поисковика.</p>
+    </div>
+    <div class="card">
+      <h3>Красивый пост</h3>
+      <p>Чиню вёрстку поста в HTML, который Telegram принимает, чтобы канал снова получал привычное оформление.</p>
+    </div>
+    <div class="card">
+      <h3>Чтобы больше не вставал молча</h3>
+      <p>Проверяю модель из сцены: если её убрали из списка, модуль OpenAI падает целиком. Прогоняю всю цепочку на нескольких индексах и смотрю, что посты идут каждый день.</p>
+    </div>
+  </div>
+
+  <div class="gain"><b>Что у вас будет в итоге:</b> канал снова ежедневно получает свежий фундаментальный и технический анализ в привычном оформлении, и сценарий больше не встаёт молча.</div>
+
+  <h2 class="sec">Вопросы, чтобы начать</h2>
+  <div class="q">Какой поиск новостей стоял в модуле поиска компании и есть ли от него ключ?</div>
+  <div class="q">Ищем новости отдельным модулем или переносим в модель через веб-поиск?</div>
+  <div class="q">Какая модель нужна: та, что стоит в сцене, или другая?</div>
+  <div class="q">Это группа или канал, и бот-токен остаётся тот же?</div>
+
+  <div class="final">Ответьте на вопросы со схемы, и я вернусь со сметой по этапам.</div>
+  <div class="note">Чтобы чинить, нужен доступ к сценарию в Make. Это единственное, что нужно от вас.</div>
+
+  <div class="foot">Схема под заказ 3269194.</div>
+</div>
+</body>
+</html>
