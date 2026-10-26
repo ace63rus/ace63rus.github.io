@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>РТС-тендер в Tendeo: из чего состоит подключение</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:36px 20px;background:#eef1f6;color:#1a2233;
+    font:15px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .sheet{max-width:940px;margin:0 auto;background:#fff;border:1px solid #dfe4ec;
+    border-radius:16px;padding:38px 44px 42px;box-shadow:0 1px 3px rgba(20,30,60,.07)}
+  .top{border-bottom:1px solid #e8ecf3;padding-bottom:22px;margin-bottom:32px}
+  h1{font-size:25px;margin:0 0 7px;font-weight:650;letter-spacing:-.3px}
+  .lead{color:#5b6779;font-size:15px;margin:0}
+  h2{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#8b97a8;
+    font-weight:650;margin:0 0 18px}
+  section{margin-bottom:36px}
+  section:last-child{margin-bottom:0}
+
+  .step{position:relative;padding:0 0 20px 58px}
+  .step:last-child{padding-bottom:0}
+  .step::before{content:"";position:absolute;left:17px;top:38px;bottom:0;width:2px;background:#e6eaf1}
+  .step:last-child::before{display:none}
+  .num{position:absolute;left:0;top:0;width:36px;height:36px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:650;font-size:15px}
+  .step.q .num{background:#fdf2de;color:#8a5a00;border:1px solid #f0dcb0}
+  .step.ok .num{background:#e6f5ee;color:#0d6b48;border:1px solid #bfe4d3}
+  .st{font-size:16px;font-weight:600;line-height:1.3}
+  .ss{color:#66738a;font-size:13.5px;margin-top:4px}
+  .ss b{color:#39445a;font-weight:600}
+  .ss code{background:#f2f5fa;border:1px solid #e3e9f2;border-radius:4px;
+    padding:1px 5px;font-size:12.5px;color:#3d4a63}
+  .chip{display:inline-block;margin-left:10px;padding:2px 10px;border-radius:20px;
+    font-size:11px;font-weight:650;letter-spacing:.3px;vertical-align:2px;white-space:nowrap}
+  .chip.q{background:#fdf2de;color:#8a5a00}
+  .chip.ok{background:#e6f5ee;color:#0d6b48}
+
+  .fork{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .card{border:1px solid #dfe4ec;border-radius:12px;padding:18px 20px;background:#fbfcfe}
+  .card.a{border-color:#f0dcb0;background:#fffcf6}
+  .card.b{border-color:#bfe4d3;background:#f7fdfa}
+  .card .ct{font-size:15px;font-weight:650;margin-bottom:6px}
+  .card .cs{font-size:13.5px;color:#66738a}
+
+  .fact{display:flex;gap:14px;border:1px solid #e2e7ef;border-radius:10px;
+    padding:13px 16px;background:#fbfcfe;margin-bottom:10px;font-size:13.5px;color:#4a566d}
+  .fact:last-child{margin-bottom:0}
+  .fact .fk{flex:0 0 auto;font-weight:650;color:#1a2233}
+  .fact .fv{color:#5b6779}
+
+  .ph{display:grid;grid-template-columns:52px 1fr;border:1px solid #e2e7ef;
+    border-radius:12px;overflow:hidden;margin-bottom:10px;background:#fff}
+  .ph:last-child{margin-bottom:0}
+  .phn{background:#f5f7fb;border-right:1px solid #e2e7ef;display:flex;align-items:center;
+    justify-content:center;font-weight:700;font-size:15px;color:#4a566d}
+  .phb{padding:13px 18px}
+  .pht{font-size:15px;font-weight:650;margin-bottom:3px}
+  .phs{font-size:13px;color:#66738a}
+  .tag{display:inline-block;margin-left:8px;font-size:10.5px;font-weight:700;
+    letter-spacing:.4px;text-transform:uppercase;padding:2px 8px;border-radius:5px;
+    background:#eef1f8;color:#5d6b85;vertical-align:2px}
+  .tag.first{background:#e6f0ff;color:#1d4ed8}
+
+  .qrow{display:flex;gap:16px;border:1px solid #dfe4ec;border-radius:12px;
+    padding:17px 20px;background:#fbfcfe;margin-bottom:12px}
+  .qrow:last-child{margin-bottom:0}
+  .qn{flex:0 0 30px;height:30px;border-radius:50%;background:#2f6bff;color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:650;font-size:14px}
+  .qt{font-size:15.5px;font-weight:650;margin-bottom:4px}
+  .qs2{font-size:13.5px;color:#66738a}
+
+  .note{border-left:3px solid #2f6bff;background:#f6f9ff;border-radius:0 10px 10px 0;
+    padding:14px 18px;font-size:13.5px;color:#3d4a63;margin-top:14px}
+  .note b{color:#1a2233}
+
+  .foot{margin-top:32px;padding-top:20px;border-top:1px solid #e8ecf3;
+    color:#8b97a8;font-size:12.5px;text-align:center}
+
+  @media (max-width:640px){
+    body{padding:16px 10px}
+    .sheet{padding:24px 18px 28px;border-radius:12px}
+    h1{font-size:20px}
+    .fork{grid-template-columns:1fr}
+    .step{padding-left:48px}
+    .qrow{padding:15px 16px;gap:12px}
+    .chip{margin-left:0;margin-top:6px;display:inline-block}
+    .ph{grid-template-columns:44px 1fr}
+    .fact{flex-direction:column;gap:3px}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="top">
+    <h1>РТС-тендер в Tendeo: из чего состоит подключение</h1>
+    <p class="lead">Прочитал регламент на десять страниц и файл с примером данных. Ниже — как источник встаёт в ваш пайплайн, что я проверил на площадке живьём и где нужен ваш ответ. Три вопроса внизу, остальное уже понятно.</p>
+  </div>
+
+  <section>
+    <h2>Куда встаёт источник</h2>
+
+    <div class="step ok">
+      <div class="num">1</div>
+      <div class="st">Парсер забирает данные<span class="chip ok">по вашему регламенту</span></div>
+      <div class="ss">Класс <code>RtsTenderParser</code> с ключом <code>rts_tender</code>. Отдаёт элементы через <code>yield</code>, в <code>payload</code> только сырые данные источника, без счётчиков и времени скачивания. <b>Ничего в общем пайплайне менять не нужно</b> — очередь, повторы и дедупликация уже есть.</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">2</div>
+      <div class="st">Нормализатор раскладывает по полям<span class="chip ok">по вашему регламенту</span></div>
+      <div class="ss">Класс <code>RtsTenderNormalizer</code> с тем же ключом: название, цена, даты, статус, заказчик по ИНН, регион и город через <code>App\Geo</code>, документы. Повторная нормализация обновляет существующий тендер и не плодит документы.</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">3</div>
+      <div class="st">Запись Source и расписание<span class="chip ok">само подхватится</span></div>
+      <div class="ss">Источник создаётся в админке с ключом <code>rts_tender</code> и попадает в общий обход через <code>ParseActiveSourcesMessage</code>. Отдельное расписание не требуется.</div>
+    </div>
+
+    <div class="step q">
+      <div class="num">4</div>
+      <div class="st">Откуда берём данные<span class="chip q">вопрос</span></div>
+      <div class="ss">Два пути, и они разной стоимости по времени. Выбор зависит от того, есть ли у вас доступ к API площадки.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Развилка: как забирать</h2>
+    <div class="fork">
+      <div class="card b">
+        <div class="ct">А. Через API площадки</div>
+        <div class="cs">Быстро, стабильно, без браузера. Нужен токен и договор с РТС. Если токен есть — это лучший путь и он заметно сокращает срок.</div>
+      </div>
+      <div class="card a">
+        <div class="ct">Б. Через браузер</div>
+        <div class="cs">Работает уже сейчас, без договора. Медленнее: страница открывается в реальном браузере, данные снимаются с готовой страницы. Так мы берём Wildberries и Ozon, схема отработанная.</div>
+      </div>
+    </div>
+    <div class="note"><b>Что проверил живьём 26 октября.</b> Поиск по 44-ФЗ открывается <b>без авторизации</b> и отдаёт всё, что нужно: номер закупки, название, начальную цену, обеспечение, статус, даты, лоты с ОКПД2 и количеством, организатора с ИНН и контактами, регион и адрес поставки. По запросу «компьютер» — 117 извещений. Прямой HTTP-запрос площадка режет защитой, в браузере страница открывается нормально. Внутренние JSON-методы у них есть, но списка закупок среди них нет — список приходит готовой страницей.</div>
+  </section>
+
+  <section>
+    <h2>Как идём: три блока</h2>
+
+    <div class="ph">
+      <div class="phn">1</div>
+      <div class="phb">
+        <div class="pht">Список извещений 44-ФЗ<span class="tag first">с этого начинаем</span></div>
+        <div class="phs">Парсер собирает список: номер, название, цена, даты, ссылка. Пагинация, стабильный <code>externalId</code>, защита от дублей. Тендеры появляются в админке, расписание подхватывает источник само.</div>
+      </div>
+    </div>
+
+    <div class="ph">
+      <div class="phn">2</div>
+      <div class="phb">
+        <div class="pht">Карточка закупки</div>
+        <div class="phs">Догрузка деталей: лоты с ОКПД2 и количеством, заказчик с ИНН и КПП, контакты, регион, адрес поставки, документы.</div>
+      </div>
+    </div>
+
+    <div class="ph">
+      <div class="phn">3</div>
+      <div class="phb">
+        <div class="pht">Нормализатор, тесты, выкатка</div>
+        <div class="phs">Раскидка по полям <code>Tender</code>, заказчик по ИНН, регион по ОКАТО, документы. Фикстуры в <code>tests/Fixtures/rts_tender/</code>, тесты, прогон на проде, запись в <code>ARCHITECTURE.md</code>.</div>
+      </div>
+    </div>
+
+    <div class="note"><b>Почему блоками.</b> Каждый блок заканчивается тем, что видно в вашей админке и можно проверить. Первый блок — это проверка: вы смотрите, как я работаю, на своём коде, за небольшие деньги. Не подошло — дальше не идём, и никто ничего не потерял.</div>
+  </section>
+
+  <section>
+    <h2>Три вопроса</h2>
+
+    <div class="qrow">
+      <div class="qn">1</div>
+      <div>
+        <div class="qt">Есть ли доступ к API площадки?</div>
+        <div class="qs2">Токен по договору с РТС. В вашем примере кода стоит переменная с токеном — если доступ есть, второй и третий блок пойдут заметно быстрее и дешевле.</div>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qn">2</div>
+      <div>
+        <div class="qt">Дадите доступ к репозиторию и тестовому окружению?</div>
+        <div class="qs2">Нужны код, <code>ARCHITECTURE.md</code> и возможность поднять локально через <code>docker compose</code>. Без этого работу начать нельзя, а доступ раньше оплаты — обычная практика по вашей же инструкции.</div>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qn">3</div>
+      <div>
+        <div class="qt">44-ФЗ и 223-ФЗ с площадки — точно нужны?</div>
+        <div class="qs2">Эти извещения уже приходят из ЕИС, а ЕИС-парсер у вас работает. Новые данные дают только коммерческие закупки, маркет малого объёма и 615 ПП. Если брать с РТС всё — часть базы задублируется.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">Ответьте на три вопроса — и я соберу первый блок.</div>
+
+</div>
+</body>
+</html>
