@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Кабинет под управлением: из чего состоит система</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:36px 20px;background:#eef1f6;color:#1a2233;
+    font:15px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .sheet{max-width:940px;margin:0 auto;background:#fff;border:1px solid #dfe4ec;
+    border-radius:16px;padding:38px 44px 42px;box-shadow:0 1px 3px rgba(20,30,60,.07)}
+  .top{border-bottom:1px solid #e8ecf3;padding-bottom:22px;margin-bottom:34px}
+  h1{font-size:25px;margin:0 0 7px;font-weight:650;letter-spacing:-.3px}
+  .lead{color:#5b6779;font-size:15px;margin:0}
+  h2{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#8b97a8;
+    font-weight:650;margin:0 0 18px}
+  section{margin-bottom:38px}
+  section:last-child{margin-bottom:0}
+
+  .step{position:relative;padding:0 0 22px 58px}
+  .step:last-child{padding-bottom:0}
+  .step::before{content:"";position:absolute;left:17px;top:38px;bottom:0;width:2px;background:#e6eaf1}
+  .step:last-child::before{display:none}
+  .num{position:absolute;left:0;top:0;width:36px;height:36px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:650;font-size:15px}
+  .step.q .num{background:#fdf2de;color:#8a5a00;border:1px solid #f0dcb0}
+  .step.ok .num{background:#e6f5ee;color:#0d6b48;border:1px solid #bfe4d3}
+  .st{font-size:16px;font-weight:600;line-height:1.3}
+  .ss{color:#66738a;font-size:13.5px;margin-top:4px}
+  .ss b{color:#39445a;font-weight:600}
+  .chip{display:inline-block;margin-left:10px;padding:2px 10px;border-radius:20px;
+    font-size:11px;font-weight:650;letter-spacing:.3px;vertical-align:2px;white-space:nowrap}
+  .chip.q{background:#fdf2de;color:#8a5a00}
+  .chip.ok{background:#e6f5ee;color:#0d6b48}
+
+  .fork{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .card{border:1px solid #dfe4ec;border-radius:12px;padding:18px 20px;background:#fbfcfe}
+  .card.a{border-color:#f0dcb0;background:#fffcf6}
+  .card.b{border-color:#bfe4d3;background:#f7fdfa}
+  .card .ct{font-size:15px;font-weight:650;margin-bottom:6px}
+  .card .cs{font-size:13.5px;color:#66738a}
+  .card .rec{display:inline-block;margin-top:10px;font-size:11.5px;font-weight:650;
+    color:#0d6b48;background:#e6f5ee;border-radius:6px;padding:3px 9px}
+
+  .ph{display:grid;grid-template-columns:56px 1fr;gap:0;border:1px solid #e2e7ef;
+    border-radius:12px;overflow:hidden;margin-bottom:11px;background:#fff}
+  .ph:last-child{margin-bottom:0}
+  .phn{background:#f5f7fb;border-right:1px solid #e2e7ef;display:flex;align-items:center;
+    justify-content:center;font-weight:700;font-size:15px;color:#4a566d}
+  .phb{padding:14px 18px}
+  .pht{font-size:15px;font-weight:650;margin-bottom:3px}
+  .phs{font-size:13px;color:#66738a}
+  .tag{display:inline-block;margin-left:8px;font-size:10.5px;font-weight:700;
+    letter-spacing:.4px;text-transform:uppercase;padding:2px 8px;border-radius:5px;
+    background:#eef1f8;color:#5d6b85;vertical-align:2px}
+  .tag.first{background:#e6f0ff;color:#1d4ed8}
+
+  .qrow{display:flex;gap:16px;border:1px solid #dfe4ec;border-radius:12px;
+    padding:17px 20px;background:#fbfcfe;margin-bottom:13px}
+  .qrow:last-child{margin-bottom:0}
+  .qn{flex:0 0 30px;height:30px;border-radius:50%;background:#2f6bff;color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:650;font-size:14px}
+  .qt{font-size:15.5px;font-weight:650;margin-bottom:4px}
+  .qs2{font-size:13.5px;color:#66738a}
+  .pills{display:flex;gap:8px;margin-top:11px;flex-wrap:wrap}
+  .pill{font-size:12px;font-weight:600;padding:5px 12px;border-radius:8px;
+    border:1px solid #dfe4ec;background:#fff;color:#48566d}
+
+  .note{border-left:3px solid #2f6bff;background:#f6f9ff;border-radius:0 10px 10px 0;
+    padding:14px 18px;font-size:13.5px;color:#3d4a63;margin-top:16px}
+  .note b{color:#1a2233}
+
+  .foot{margin-top:34px;padding-top:20px;border-top:1px solid #e8ecf3;
+    color:#8b97a8;font-size:12.5px;text-align:center}
+
+  @media (max-width:640px){
+    body{padding:16px 10px}
+    .sheet{padding:24px 18px 28px;border-radius:12px}
+    h1{font-size:20px}
+    .fork{grid-template-columns:1fr}
+    .step{padding-left:48px}
+    .qrow{padding:15px 16px;gap:12px}
+    .chip{margin-left:0;margin-top:6px;display:inline-block}
+    .ph{grid-template-columns:44px 1fr}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="top">
+    <h1>Кабинет под управлением: из чего состоит система</h1>
+    <p class="lead">Разобрал ваше ТЗ по пунктам. Ниже — как это выглядит целиком: шесть блоков, у каждого своя задача. Четыре места требуют вашего ответа — они помечены. Всё остальное уже понятно, можно собирать.</p>
+  </div>
+
+  <section>
+    <h2>Шесть блоков</h2>
+
+    <div class="step ok">
+      <div class="num">1</div>
+      <div class="st">Сбор данных из кабинетов<span class="chip ok">решено</span></div>
+      <div class="ss">Раз в сутки система забирает из каждой площадки: заказы, выручку, остатки, цены, рекламные кампании, ставки, показы. <b>Руками ничего выгружать не нужно.</b></div>
+    </div>
+
+    <div class="step q">
+      <div class="num">2</div>
+      <div class="st">Экономика товара<span class="chip q">вопрос</span></div>
+      <div class="ss">Чтобы считать прибыль, а не выручку, нужны себестоимость, комиссия площадки, логистика, хранение, возвраты. <b>В кабинетах этих цифр нет</b> — площадки их не отдают. Откуда берём: ваша таблица, учётная система или вводим вручную при заведении товара.</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">3</div>
+      <div class="st">Анализ рекламы<span class="chip ok">решено</span></div>
+      <div class="ss">По каждой кампании считается стоимость заказа и доля рекламных расходов в выручке. На выходе три решения: <b>где бюджет дал заказы и его стоит увеличить</b>, <b>где показов мало и надо поднять ставку</b>, <b>что горит в минус и отключается</b>. Рядом — цифры, на которых решение построено.</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">4</div>
+      <div class="st">План на месяц и три сценария<span class="chip ok">решено</span></div>
+      <div class="ss">Сначала разбор: динамика продаж, прибыль, маржа, сезонность, ассортимент, остатки. Потом план на месяц в трёх вариантах — осторожный, обычный, оптимистичный. <b>У каждого написано, за счёт чего он получается</b>, а не просто цифра.</div>
+    </div>
+
+    <div class="step q">
+      <div class="num">5</div>
+      <div class="st">Закупка под сезон<span class="chip q">вопрос</span></div>
+      <div class="ss">Сколько закупить и по какой цене, чтобы распродать до конца сезона с маржой не ниже 10 процентов. Считается по истории продаж и оборачиваемости. <b>Нужна история хотя бы за один прошлый сезон</b> — иначе это не расчёт, а гадание, и я не буду выдавать одно за другое.</div>
+    </div>
+
+    <div class="step ok">
+      <div class="num">6</div>
+      <div class="st">Журнал изменений<span class="chip ok">решено</span></div>
+      <div class="ss">Каждое изменение — что поменяли, на каком артикуле, когда, по какой причине и кто подтвердил. Хранится отдельно от площадки, <b>чтобы через месяц было видно, что сработало, а что нет</b>. Это ваша идея с комментариями к изменениям — она тут в основе.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Развилка: кто нажимает кнопку</h2>
+    <div class="fork">
+      <div class="card a">
+        <div class="ct">А. Меняет само</div>
+        <div class="cs">Ставки и цены уходят в кабинет без спроса. Быстро, но ошибка в расчёте сразу стоит денег, и разбираться с ней придётся вам.</div>
+      </div>
+      <div class="card b">
+        <div class="ct">Б. Советует, меняете вы</div>
+        <div class="cs">Система показывает: вот здесь поднять ставку, здесь снять. Вы жмёте подтвердить — уходит в кабинет. На один клик дольше, зато ничего не улетает в минус без вашего ведома.</div>
+        <div class="rec">Рекомендую на старте</div>
+      </div>
+    </div>
+    <div class="note"><b>Почему так.</b> Автоматику включаем не сразу, а по одному правилу: то, что месяц отработало без ошибок, можно переводить на автоподтверждение. Так вы получаете скорость, но не получаете сюрпризов в деньгах.</div>
+  </section>
+
+  <section>
+    <h2>Как идём — кусками, а не одним заходом</h2>
+
+    <div class="ph">
+      <div class="phn">1</div>
+      <div class="phb">
+        <div class="pht">Один кабинет, только реклама<span class="tag first">с этого начинаем</span></div>
+        <div class="phs">Забираем данные за 30 дней и отдаём разбор: что отключить, где поднять ставку, куда добавить бюджет. Ничего не меняем — только показываем на ваших цифрах.</div>
+      </div>
+    </div>
+
+    <div class="ph">
+      <div class="phn">2</div>
+      <div class="phb">
+        <div class="pht">Экономика</div>
+        <div class="phs">Заводим себестоимость и расходы. После этого видна настоящая прибыль по каждому артикулу, а не выручка.</div>
+      </div>
+    </div>
+
+    <div class="ph">
+      <div class="phn">3</div>
+      <div class="phb">
+        <div class="pht">Остальные кабинеты и вторая площадка</div>
+        <div class="phs">Подключаем остальные кабинеты и Ozon. Логика та же, поэтому идёт быстрее первого.</div>
+      </div>
+    </div>
+
+    <div class="ph">
+      <div class="phn">4</div>
+      <div class="phb">
+        <div class="pht">План, сценарии, закупка</div>
+        <div class="phs">То, ради чего всё собиралось: план на месяц в трёх вариантах и расчёт закупки под сезон.</div>
+      </div>
+    </div>
+
+    <div class="ph">
+      <div class="phn">5</div>
+      <div class="phb">
+        <div class="pht">Яндекс Маркет и автоправила</div>
+        <div class="phs">Последняя площадка и перевод проверенных правил на автоподтверждение.</div>
+      </div>
+    </div>
+
+    <div class="note"><b>Зачем дробить.</b> Каждый этап заканчивается работающей вещью, которую видно и можно проверить. Если на каком-то шаге что-то не так — правим только его, а не переделываем всё. И платите вы за шаг, а не за весь проект сразу.</div>
+  </section>
+
+  <section>
+    <h2>Четыре вопроса</h2>
+
+    <div class="qrow">
+      <div class="qn">1</div>
+      <div>
+        <div class="qt">Кабинеты ваши или клиентские?</div>
+        <div class="qs2">Сколько их всего и на кого они открыты. От этого зависит, кто подписывает изменения цен: вы как владелец или каждый клиент отдельно.</div>
+        <div class="pills">
+          <span class="pill">Мои кабинеты</span>
+          <span class="pill">Кабинеты клиентов</span>
+          <span class="pill">И те, и другие</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qn">2</div>
+      <div>
+        <div class="qt">Где лежит себестоимость и расходы?</div>
+        <div class="qs2">Таблица, учётная система, файл от бухгалтера — или пока нигде и надо заводить с нуля. Это второй блок, без него прибыль не считается.</div>
+        <div class="pills">
+          <span class="pill">Есть таблица</span>
+          <span class="pill">Есть учётная система</span>
+          <span class="pill">Нигде, заводим с нуля</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qn">3</div>
+      <div>
+        <div class="qt">Есть история продаж за прошлый сезон?</div>
+        <div class="qs2">Хотя бы год, в крайнем случае месяцев восемь. Без неё расчёт закупки под сезон сделать нельзя — только предположить.</div>
+        <div class="pills">
+          <span class="pill">Есть, год и больше</span>
+          <span class="pill">Есть, частично</span>
+          <span class="pill">Нет, только с этого года</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qn">4</div>
+      <div>
+        <div class="qt">С какого кабинета начинаем?</div>
+        <div class="qs2">Первый блок делаем на одном кабинете — на нём показываю, как это работает, и вы решаете, идти дальше или нет.</div>
+        <div class="pills">
+          <span class="pill">Самый проблемный</span>
+          <span class="pill">Самый крупный</span>
+          <span class="pill">Тот, где есть доступы</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">Ответьте на четыре вопроса — и я соберу первый блок.</div>
+
+</div>
+</body>
+</html>
